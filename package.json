@@ -1,0 +1,19 @@
+{
+  "name": "linguine-node",
+  "version": "0.0.0",
+  "description": "Express/Angular application for linguine.",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rigatoni/linguine-node"
+  },
+  "author": "Team Rigatoni",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rigatoni/linguine-node/issues"
+  },
+  "homepage": "https://github.com/rigatoni/linguine-node"
+}
