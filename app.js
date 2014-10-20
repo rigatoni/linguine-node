@@ -1,8 +1,11 @@
 var express = require('express');
+var mongoose = require('mongoose');
 var app = express();
 var path = require('path');
 var auth = require('./config/auth');
 var bodyParser = require('body-parser');
+
+mongoose.connect('mongodb://localhost/linguine-' + app.settings.env);
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
