@@ -15,7 +15,7 @@ gulp.task('clean', function(cb){
 });
 
 gulp.task('scripts', ['clean'], function(){
-  return gulp.src(paths.scripts)
+  gulp.src(paths.scripts)
     .pipe(ngAnnotate())
     .pipe(uglify())
     .pipe(concat('app.min.js'))
@@ -23,7 +23,7 @@ gulp.task('scripts', ['clean'], function(){
 });
 
 gulp.task('stylesheets', ['clean'], function(){
-  return gulp.src(paths.scripts)
+  gulp.src(paths.scripts)
     //TODO: Decide on CSS Preprocesser
     .pipe(gulp.dest('public/css'));
 })
@@ -38,4 +38,6 @@ gulp.task('watch', function(){
   });
 });
 
-gulp.task('default',['watch', 'scripts']);
+gulp.task('build', ['scripts', 'stylesheets'])
+
+gulp.task('default',['watch', 'build']);
