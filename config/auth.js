@@ -35,7 +35,7 @@ module.exports = function(app){
 
   app.post('/api/login', passport.authenticate('ldapauth'), function(req, res) {
     res.send({dce: req.user.dce});
-  }):
+  });
 
   app.get('/api/logged_in', function(req, res){
     if(req.user) {
@@ -43,5 +43,9 @@ module.exports = function(app){
     }else{
       res.send({loggedIn: false});
     }
+  });
+
+  app.post('/api/logout', function(req, res){
+    req.logout();
   });
 }
