@@ -2,7 +2,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var app = express();
 var path = require('path');
-var auth = require('./config/auth');
+var routes = require('./routes');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
@@ -25,7 +25,7 @@ app.set('view engine', 'jade');
 
 app.use(express.static(__dirname + '/public'));
 
-auth(app);
+routes(app);
 app.use(function(req, res, next) {
   res.render('index');
 });
