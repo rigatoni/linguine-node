@@ -1,9 +1,33 @@
 doctype html
 head
-
-body
-
-  form(action='/api/login' method='POST')
-    input(name="username" type='text')
-    input(name="password" type='password')
-    button(type='submit') Submit
+  title Linguine
+  base(href='/')
+  link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
+  link(rel='stylesheet' href='/css/app.css')
+  link(rel='stylesheet' href='/bower_components/font-awesome/css/font-awesome.css')
+  script(src='/bower_components/angular/angular.min.js')
+  script(src='/bower_components/ui-router/release/angular-ui-router.min.js')
+  script(src='/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js')
+  script(src='/js/app.min.js')
+body(ng-app='linguine')
+  nav.navbar.navbar-default(role='navigation' ng-controller='NavigationController')
+    .container
+      .navbar-header
+        a.navbar-brand(href='/') Linguine
+      form.navbar-form.navbar-right(ng-submit='login()' ng-if='!loggedIn')
+        form-group
+          input.form-control(type='text' ng-model='user.username' placeholder='Username')
+        form-group
+          input.form-control(type='password' ng-model='user.password' placeholder='Password')
+        button.btn.btn-default(type='submit') Login
+      ul.nav.navbar-nav.navbar-right(ng-if='loggedIn')
+        li.dropdown
+          a.dropdown-toggle(href='#')
+            i.fa.fa-user
+            span
+              |  {{ formattedName() }}
+            span.caret
+          ul.dropdown-menu(role='menu')
+            li
+              a(href='#' ng-click='logout()') Logout
+  .container(ui-view)

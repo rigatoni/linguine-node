@@ -4,8 +4,6 @@ var User = require('../models/user');
 
 
 module.exports = function(app){
-  app.use(passport.initialize());
-
   passport.serializeUser(function(user, done) {
     done(null, user.id);
   });
@@ -26,7 +24,7 @@ module.exports = function(app){
   function(user, done){
     User.find({ dce: user.uid }).limit(1).exec(function(err, users){
       if(users.length === 0) {
-        User.create({dce: user.uid}, function(err, user){
+        User.create({ dce: user.uid, name: user.cn }, function(err, user){
           done(null, user);
         });
       }else {
@@ -35,7 +33,20 @@ module.exports = function(app){
     });
   }));
 
-  app.post('/api/login', passport.authenticate('ldapauth', {session: false}), function(req, res) {
-    res.send({status: 'ok'});
+  app.post('/api/login', passport.authenticate('ldapauth'), function(req, res) {
+    res.send({user: req.user});
+  });
+
+  app.get('/api/logged_in', function(req, res){
+    if(req.user) {
+      res.send({loggedIn: true, user: req.user });
+    }else{
+      res.send({loggedIn: false});
+    }
+  });
+
+  app.post('/api/logout', function(req, res){
+    req.logout();
+    res.send({});
   });
 }
