@@ -25,11 +25,9 @@ body(ng-app='linguine')
           a.dropdown-toggle(href='#')
             i.fa.fa-user
             span
-              |  {{username}}
+              |  {{ formattedName() }}
             span.caret
           ul.dropdown-menu(role='menu')
             li
               a(href='#' ng-click='logout()') Logout
-
   .container(ui-view)
-    h1 Here

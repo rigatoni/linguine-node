@@ -9,32 +9,35 @@
       .success(function(data){
         if(data.loggedIn){
           $scope.loggedIn = true;
-          $scope.username = data.dce;
+          $scope.currentUser = data.user;
         }else{
           $scope.loggedIn = false;
         }
       });
 
-
     $scope.login = function(){
       $http.post('/api/login', $scope.user)
         .success(function(data){
-          $scope.username = data.dce;
+          $scope.currentUser = data.user;
           $scope.loggedIn = true;
+          $scope.user = {};
         });
-      $scope.user = {};
     }
 
     $scope.logout = function() {
-      $http.post('/api/logout', {})
+      $http.post('/api/logout')
         .success(function(data){
-          console.log('here')
-          $scope.username = '';
+          $scope.currentUser = {};
           $scope.loggedIn = false;
         })
-        .error(function(data){
-          console.log(data);
-        });
+    }
+
+    $scope.formattedName = function() {
+      if($scope.currentUser.name){
+        return $scope.currentUser.name.split(' ')[0];
+      }else{
+        return $scope.currentUser.dce;
+      }
     }
   }
 })();
