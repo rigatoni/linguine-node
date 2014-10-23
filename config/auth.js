@@ -4,8 +4,6 @@ var User = require('../models/user');
 
 
 module.exports = function(app){
-  app.use(passport.initialize());
-
   passport.serializeUser(function(user, done) {
     done(null, user.id);
   });
@@ -35,7 +33,15 @@ module.exports = function(app){
     });
   }));
 
-  app.post('/api/login', passport.authenticate('ldapauth', {session: false}), function(req, res) {
-    res.send({status: 'ok'});
+  app.post('/api/login', passport.authenticate('ldapauth'), function(req, res) {
+    res.send({dce: req.user.dce});
+  }):
+
+  app.get('/api/logged_in', function(req, res){
+    if(req.user) {
+      res.send({loggedIn: true, dce: req.user.dce });
+    }else{
+      res.send({loggedIn: false});
+    }
   });
 }
