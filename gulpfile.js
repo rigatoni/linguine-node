@@ -3,18 +3,19 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var ngAnnotate = require('gulp-ng-annotate');
 var del = require('del');
-var watch = require('gulp-watch')
+var watch = require('gulp-watch');
+var less = require('gulp-less');
 
 var paths = {
-  scripts: 'assets/js/**/*.js',
-  stylesheets: 'assets/stylesheets/**/*.*'
+  scripts: ['assets/js/linguine.module.js', 'assets/js/**/*.js'],
+  stylesheets: 'assets/stylesheets/**/*.less'
 }
 
 gulp.task('clean', function(cb){
   del(['public/js', 'public/css'], cb);
 });
 
-gulp.task('scripts', ['clean'], function(){
+gulp.task('scripts', function(){
   gulp.src(paths.scripts)
     .pipe(ngAnnotate())
     .pipe(uglify())
@@ -22,9 +23,9 @@ gulp.task('scripts', ['clean'], function(){
     .pipe(gulp.dest('public/js'));
 });
 
-gulp.task('stylesheets', ['clean'], function(){
-  gulp.src(paths.scripts)
-    //TODO: Decide on CSS Preprocesser
+gulp.task('stylesheets', function(){
+  gulp.src(paths.stylesheets)
+    .pipe(less())
     .pipe(gulp.dest('public/css'));
 })
 
