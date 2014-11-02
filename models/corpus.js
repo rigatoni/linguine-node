@@ -4,9 +4,9 @@ var Schema = mongoose.Schema;
 var corpusSchema = new Schema({
   userId:     String,
   created_at: {type: Date, default: Date.now},
-  file_name:  String,
-  file_size:  Number,
-  file_type:  String,
+  fileName:   String,
+  fileSize:   Number,
+  fileType:   String,
   title:      String,
   contents:   String,
   tags:       [String]
