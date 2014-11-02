@@ -19,7 +19,12 @@
       .state('linguine.corpora.new', {
         url: '/new',
         templateUrl: '/templates/corpora/new',
-        controller: 'CorporaNewController'
+        controller: 'CorporaNewController',
+        resolve: {
+          loggedIn: function(loggedIn) {
+            loggedIn.loggedIn();
+          }
+       }
       });
   }
 })();

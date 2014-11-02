@@ -36,4 +36,6 @@ body(ng-app='linguine')
           ul.dropdown-menu(role='menu')
             li
               a(href='#' ng-click='logout()') Logout
-  .container(ui-view)
+  .container
+    flash-messages
+    div(ui-view)

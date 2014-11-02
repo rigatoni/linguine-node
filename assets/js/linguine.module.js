@@ -1,6 +1,7 @@
 (function(){
   angular
     .module('linguine', [
+      'flash',
       'ui.router',
       'ui.bootstrap',
       'linguine.corpora',
