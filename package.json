@@ -4,7 +4,8 @@
   "description": "Express/Angular application for linguine.",
   "main": "index.js",
   "scripts": {
-    "test": ""
+    "test": "",
+    "start": "./bin/www"
   },
   "repository": {
     "type": "git",
