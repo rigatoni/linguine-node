@@ -16,6 +16,10 @@
         url: '',
         abstract: true,
         template: '<div ui-view />'
+      })
+      .state('linguine.index', {
+        url: '/',
+        templateUrl: 'templates/home/index'
       });
   }
 })();
