@@ -3,7 +3,7 @@
     .module('linguine')
     .controller('NavigationController', NavigationController);
 
-  function NavigationController($scope, $http) {
+  function NavigationController($scope, $http, $state) {
     $scope.user = {}
     $http.get('/api/logged_in')
       .success(function(data){
@@ -38,6 +38,10 @@
       }else{
         return $scope.currentUser.dce;
       }
+    }
+
+    $scope.isActive = function(loc) {
+      return $state.includes(loc);
     }
   }
 })();

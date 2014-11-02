@@ -7,7 +7,7 @@ var watch = require('gulp-watch');
 var less = require('gulp-less');
 
 var paths = {
-  scripts: ['assets/js/linguine.module.js', 'assets/js/**/*.js'],
+  scripts: ['assets/js/linguine.module.js', 'assets/js/corpora/corpora.module.js', 'assets/js/**/*.js'],
   stylesheets: 'assets/stylesheets/**/*.less'
 }
 

@@ -8,12 +8,16 @@ head
   script(src='/bower_components/angular/angular.min.js')
   script(src='/bower_components/ui-router/release/angular-ui-router.min.js')
   script(src='/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js')
+  script(src='/bower_components/lodash/dist/lodash.min.js')
   script(src='/js/app.min.js')
 body(ng-app='linguine')
   nav.navbar.navbar-default(role='navigation' ng-controller='NavigationController')
     .container
       .navbar-header
         a.navbar-brand(href='/') Linguine
+      ul.nav.navbar-nav
+        li(ng-class='{active: isActive("linguine.corpora")}')
+          a(href='/corpora') Corpora
       form.navbar-form.navbar-right(ng-submit='login()' ng-if='!loggedIn')
         form-group
           input.form-control(type='text' ng-model='user.username' placeholder='Username')
