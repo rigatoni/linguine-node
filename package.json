@@ -4,7 +4,7 @@
   "description": "Express/Angular application for linguine.",
   "main": "index.js",
   "scripts": {
-    "test": "",
+    "test": "NODE_ENV=test mocha 'tests/**/*_test.js'",
     "start": "./bin/www"
   },
   "repository": {
