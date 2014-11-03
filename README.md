@@ -13,6 +13,7 @@
 4. `npm start`
 
 To run tests:
+
 1. `npm install`
 2. `bower install`
 3. `npm test`
