@@ -3,7 +3,7 @@
     .module('linguine')
     .controller('NavigationController', NavigationController);
 
-  function NavigationController($scope, $http, $state) {
+  function NavigationController($scope, $http, $state, $rootScope, flash) {
     $scope.user = {}
     $http.get('/api/logged_in')
       .success(function(data){
@@ -21,6 +21,10 @@
           $scope.currentUser = data.user;
           $scope.loggedIn = true;
           $scope.user = {};
+        })
+        .error(function (data){
+          flash.danger.setMessage('Invalid username/password');
+          $rootScope.$emit("event:angularFlash");
         });
     }
 
