@@ -16,6 +16,11 @@
         templateUrl: '/templates/corpora/index',
         controller: 'CorporaIndexController'
       })
+      .state('linguine.corpora.show', {
+        url: '/:id',
+        templateUrl: '/templates/corpora/show',
+        controller: 'CorporaShowController'
+      })
       .state('linguine.corpora.new', {
         url: '/new',
         templateUrl: '/templates/corpora/new',

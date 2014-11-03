@@ -17,6 +17,26 @@ router.get('', function(req, res) {
   }
 });
 
+router.get('/:id', function (req, res) {
+  if (!req.user) {
+    res.status(401).json({
+      message: "Unauthorized",
+      error: 401
+    });
+  } else {
+    Corpus.findById(req.params.id, function (err, corpus) {
+      if (corpus.userId == req.user._id) {
+        res.json(corpus);
+      } else {
+        res.status(401).json({
+          message: "Unauthorized",
+          error: 401
+        });
+      }
+    });
+  }
+});
+
 router.post('', function(req, res) {
   if (!req.user) {
     res.status(401).json({
