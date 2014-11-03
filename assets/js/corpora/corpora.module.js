@@ -14,7 +14,12 @@
       .state('linguine.corpora.index', {
         url: '',
         templateUrl: '/templates/corpora/index',
-        controller: 'CorporaIndexController'
+        controller: 'CorporaIndexController',
+        resolve: {
+          loggedIn: function(loggedIn) {
+            loggedIn.loggedIn();
+          }
+       }
       })
       .state('linguine.corpora.new', {
         url: '/new',
@@ -29,7 +34,12 @@
       .state('linguine.corpora.show', {
         url: '/:id',
         templateUrl: '/templates/corpora/show',
-        controller: 'CorporaShowController'
+        controller: 'CorporaShowController',
+        resolve: {
+          loggedIn: function(loggedIn) {
+            loggedIn.loggedIn();
+          }
+       }
       });
   }
 })();
