@@ -16,26 +16,29 @@ body(ng-app='linguine')
   nav.navbar.navbar-default(role='navigation' ng-controller='NavigationController')
     .container
       .navbar-header
+        button.navbar-toggle(type="button" ng-click="collapsed = !collapsed")
+          i.fa.fa-bars
         a.navbar-brand(href='/') Linguine
-      ul.nav.navbar-nav
-        li(ng-class='{active: isActive("linguine.corpora")}')
-          a(href='/corpora') Corpora
-      form.navbar-form.navbar-right(ng-submit='login()' ng-if='!loggedIn')
-        form-group
-          input.form-control(type='text' ng-model='user.username' placeholder='Username')
-        form-group
-          input.form-control(type='password' ng-model='user.password' placeholder='Password')
-        button.btn.btn-default(type='submit') Login
-      ul.nav.navbar-nav.navbar-right(ng-if='loggedIn')
-        li.dropdown
-          a.dropdown-toggle(href='#')
-            i.fa.fa-user
-            span
-              |  {{ formattedName() }}
-            span.caret
-          ul.dropdown-menu(role='menu')
-            li
-              a(href='#' ng-click='logout()') Logout
+      .collapse.navbar-collapse(collapse="collapsed")
+        ul.nav.navbar-nav
+          li(ng-class='{active: isActive("linguine.corpora")}')
+            a(href='/corpora') Corpora
+        form.navbar-form.navbar-right(ng-submit='login()' ng-if='!loggedIn')
+          form-group
+            input.form-control(type='text' ng-model='user.username' placeholder='Username')
+          form-group
+            input.form-control(type='password' ng-model='user.password' placeholder='Password')
+          button.btn.btn-default(type='submit') Login
+        ul.nav.navbar-nav.navbar-right(ng-if='loggedIn')
+          li.dropdown
+            a.dropdown-toggle(href='#')
+              i.fa.fa-user
+              span
+                |  {{ formattedName() }}
+              span.caret
+            ul.dropdown-menu(role='menu')
+              li
+                a(href='#' ng-click='logout()') Logout
   .container.flex-content
     flash-messages
     div(ui-view)

@@ -5,6 +5,7 @@
 
   function NavigationController($scope, $http, $state, $rootScope, flash) {
     $scope.user = {}
+    $scope.collapsed = true;
     $http.get('/api/logged_in')
       .success(function(data){
         if(data.loggedIn){
