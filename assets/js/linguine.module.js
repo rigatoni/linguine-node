@@ -1,8 +1,10 @@
 (function(){
   angular
     .module('linguine', [
+      'flash',
       'ui.router',
-      'ui.bootstrap'
+      'ui.bootstrap',
+      'linguine.corpora',
       ])
     .config(config);
 
@@ -11,10 +13,14 @@
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
-    .state('linguine', {
-      url: '/',
-      abstract: true,
-      template: '<div ui-view />'
-    });
+      .state('linguine', {
+        url: '',
+        abstract: true,
+        template: '<div ui-view />'
+      })
+      .state('linguine.index', {
+        url: '/',
+        templateUrl: 'templates/home/index'
+      });
   }
 })();
