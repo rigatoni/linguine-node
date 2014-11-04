@@ -3,8 +3,9 @@
     .module('linguine')
     .controller('NavigationController', NavigationController);
 
-  function NavigationController($scope, $http) {
+  function NavigationController($scope, $http, $state, $rootScope, flash) {
     $scope.user = {}
+    $scope.collapsed = true;
     $http.get('/api/logged_in')
       .success(function(data){
         if(data.loggedIn){
@@ -21,6 +22,10 @@
           $scope.currentUser = data.user;
           $scope.loggedIn = true;
           $scope.user = {};
+        })
+        .error(function (data){
+          flash.danger.setMessage('Invalid username/password');
+          $rootScope.$emit("event:angularFlash");
         });
     }
 
@@ -38,6 +43,10 @@
       }else{
         return $scope.currentUser.dce;
       }
+    }
+
+    $scope.isActive = function(loc) {
+      return $state.includes(loc);
     }
   }
 })();
