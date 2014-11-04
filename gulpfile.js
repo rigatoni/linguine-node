@@ -23,6 +23,13 @@ gulp.task('scripts', function(){
     .pipe(gulp.dest('public/js'));
 });
 
+gulp.task('scripts-dev', function(){
+  gulp.src(paths.scripts)
+    .pipe(ngAnnotate())
+    .pipe(concat('app.min.js'))
+    .pipe(gulp.dest('public/js'));
+});
+
 gulp.task('stylesheets', function(){
   gulp.src(paths.stylesheets)
     .pipe(less())
@@ -32,7 +39,7 @@ gulp.task('stylesheets', function(){
 
 gulp.task('watch', function(){
   watch(paths.scripts, function(files, cb){
-    gulp.start('scripts', cb);
+    gulp.start('scripts-dev', cb);
   });
   watch(paths.stylesheets, function(files, cb){
     gulp.start('stylesheets', cb);
@@ -41,4 +48,4 @@ gulp.task('watch', function(){
 
 gulp.task('build', ['scripts', 'stylesheets'])
 
-gulp.task('default',['watch', 'build']);
+gulp.task('default',['watch', 'scripts-dev', 'stylesheets']);
