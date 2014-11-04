@@ -1,6 +1,8 @@
 h1 {{ corpus.title }}
   small  {{ corpus.fileName }}
-  .pull-right
+  .btn-group.pull-right
     btn.btn.btn-lg.btn-default(ng-click="back()") Back
+    btn.btn.btn-lg.btn-default(ng-click="delete()")
+      .glyphicon.glyphicon-trash
 .well
   | {{ corpus.contents }}
