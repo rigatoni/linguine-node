@@ -9,7 +9,7 @@
 
 1. `npm install`
 2. `bower install`
-3. `gulp build` (Or `gulp` if you want watch enabled)
+3. `gulp build` (Or `gulp` if you want watch enabled and unminified assets)
 4. `npm start`
 
 To run tests:

@@ -1,6 +1,6 @@
 var chai = require('chai');
-var app = require('../../app')
 var expect = chai.expect;
+var app = require('../../app')
 var User = require('../../models/user');
 
 describe('User', function(){
