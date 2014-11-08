@@ -1,6 +1,6 @@
 .input-group.input-group-lg.corpora-search
   .input-group-btn
-    a(ng-href="/corpora/new").new-corpus.btn.btn-default
+    a(ng-href="/corpora/new").new-corpus.btn.btn-primary
       | Create Corpus
   input.form-control(placeholder="Search by title, filename, and tags..." ng-model="searchText")
 div(ng-repeat="corpus in corpora | filter:searchText")
