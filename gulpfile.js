@@ -53,7 +53,7 @@ gulp.task('test', function (cb) {
   gulp.src(['models/*.js', 'routes/*.js', 'app.js'])
     .pipe(istanbul())
     .on('finish', function () {
-      return gulp.src(['tests/**/*_test.js'])
+      return gulp.src(['test/**/*.js'])
         .pipe(mocha())
         .pipe(istanbul.writeReports())
     });

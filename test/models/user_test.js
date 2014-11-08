@@ -19,7 +19,25 @@ describe('User', function(){
         done();
       });
     });
-  })
+  });
+
+  describe('validations', function(){
+    it('should not save with no name', function(done){
+      var user = new User({dce: 'jcd1234'});
+      user.save(function(err, user){
+        expect(err.errors.name).to.not.be.null;
+        done();
+      });
+    });
+
+    it('should not save with no dce', function(done){
+      var user = new User({name: 'John Doe'});
+      user.save(function(err, user){
+        expect(err.errors.dce).to.not.be.null;
+        done();
+      });
+    });
+  });
 
   afterEach(function(done){
     User.remove({}, done);
