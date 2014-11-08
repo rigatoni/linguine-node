@@ -2,13 +2,10 @@ var request = require('supertest')
 var chai = require('chai');
 var expect = chai.expect;
 var app = require('../../app');
-var util = require('util');
 var passportMock = require('../passport/passport-mock');
-var mongoose = require('mongoose');
 
 describe('Authentication', function(){
   before(function(){
-    mongoose.connect('mongodb://localhost/linguine-test');
     passportMock()
   });
 
@@ -79,9 +76,5 @@ describe('Authentication', function(){
             });
         });
     });
-  });
-
-  after(function(){
-    mongoose.connection.close();
   });
 });
