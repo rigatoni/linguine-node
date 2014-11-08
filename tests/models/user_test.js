@@ -1,10 +1,13 @@
 var chai = require('chai');
 var expect = chai.expect;
-var app = require('../../app')
+var app = require('../../app');
+var mongoose = require('mongoose');
 var User = require('../../models/user');
 
 describe('User', function(){
-
+  before(function(){
+    mongoose.connect('mongodb://localhost/linguine-test');
+  });
   it('should save without error', function(done) {
     var user = new User({name: 'John Doe', dce: 'jcd1234'});
     user.save(done);
@@ -23,5 +26,9 @@ describe('User', function(){
 
   afterEach(function(done){
     User.remove({}, done);
+  });
+
+  after(function(){
+    mongoose.connection.close()
   });
 });

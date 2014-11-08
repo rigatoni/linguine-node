@@ -5,6 +5,9 @@ var ngAnnotate = require('gulp-ng-annotate');
 var del = require('del');
 var watch = require('gulp-watch');
 var less = require('gulp-less');
+var istanbul = require('gulp-istanbul');
+var mocha = require('gulp-mocha');
+
 
 var paths = {
   scripts: ['assets/js/linguine.module.js', 'assets/js/corpora/corpora.module.js', 'assets/js/**/*.js'],
@@ -44,6 +47,16 @@ gulp.task('watch', function(){
   watch(paths.stylesheets, function(files, cb){
     gulp.start('stylesheets', cb);
   });
+});
+
+gulp.task('test', function (cb) {
+  gulp.src(['models/*.js', 'routes/*.js', 'app.js'])
+    .pipe(istanbul())
+    .on('finish', function () {
+      return gulp.src(['tests/**/*_test.js'])
+        .pipe(mocha())
+        .pipe(istanbul.writeReports())
+    });
 });
 
 gulp.task('build', ['scripts', 'stylesheets'])
