@@ -2,12 +2,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var corpusSchema = new Schema({
-  userId:     String,
-  created_at: {type: Date, default: Date.now},
-  fileName:   String,
-  fileSize:   Number,
-  fileType:   String,
-  title:      String,
+  _owner:     {type: Schema.Types.ObjectId, ref: 'User', required: true},
+  createdAt:  {type: Date, default: Date.now},
+  fileName:   {type: String, required: true},
+  fileSize:   {type: Number, required: true},
+  fileType:   {type: String, required: true},
+  title:      {type: String, required: true},
   contents:   String,
   tags:       [String]
 });
