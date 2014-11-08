@@ -32,7 +32,7 @@ body(ng-app='linguine')
         ul.nav.navbar-nav.navbar-right(ng-if='loggedIn')
           li.dropdown
             a.dropdown-toggle(href='#')
-              i.fa.fa-user
+              img.avatar.hidden-xs(src="img/avatar.svg")
               span
                 |  {{ formattedName() }}
               span.caret

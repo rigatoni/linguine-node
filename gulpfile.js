@@ -8,7 +8,8 @@ var less = require('gulp-less');
 
 var paths = {
   scripts: ['assets/js/linguine.module.js', 'assets/js/corpora/corpora.module.js', 'assets/js/**/*.js'],
-  stylesheets: 'assets/stylesheets/**/*.less'
+  stylesheets: 'assets/stylesheets/**/*.less',
+  images: 'assets/img/*'
 }
 
 gulp.task('clean', function(cb){
@@ -27,7 +28,12 @@ gulp.task('stylesheets', function(){
   gulp.src(paths.stylesheets)
     .pipe(less())
     .pipe(gulp.dest('public/css'));
-})
+});
+
+gulp.task('images', function() {
+  gulp.src(paths.images)
+    .pipe(gulp.dest('public/img'));
+});
 
 
 gulp.task('watch', function(){
@@ -39,6 +45,6 @@ gulp.task('watch', function(){
   });
 });
 
-gulp.task('build', ['scripts', 'stylesheets'])
+gulp.task('build', ['scripts', 'stylesheets', 'images'])
 
 gulp.task('default',['watch', 'build']);
