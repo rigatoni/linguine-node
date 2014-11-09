@@ -24,6 +24,9 @@ body(ng-app='linguine')
         ul.nav.navbar-nav
           li(ng-class='{active: isActive("linguine.corpora")}')
             a(href='/corpora') Corpora
+        ul.nav.navbar-nav
+          li(ng-class='{active: isActive("linguine.analysis")}')
+            a(href='/analysis') Analysis
         form.navbar-form.navbar-right(ng-submit='login()' ng-if='!loggedIn')
           form-group
             input.form-control(type='text' ng-model='user.username' placeholder='Username')

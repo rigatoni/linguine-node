@@ -5,6 +5,7 @@
       'ui.router',
       'ui.bootstrap',
       'linguine.corpora',
+      'linguine.analysis'
       ])
     .config(config);
 
