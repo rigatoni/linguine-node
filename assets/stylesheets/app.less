@@ -15,11 +15,35 @@ input {
   margin-right: 10px;
 }
 
+.alert {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+.app-container {
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
 .avatar {
   height: 40px;
   left: -30px;
   top: 5px;
   position: absolute;
+}
+
+.banner {
+  @brand-primary: #428bca;
+  background-color: @brand-primary;
+  background-image: linear-gradient(to bottom, darken(@brand-primary, 5%) 0, @brand-primary 100%);
+  color: #fff;
+  padding: 20px 0;
+}
+
+svg.bubble {
+  height: 100%;
+  width: 100%;
+  max-height: 400px;
 }
 
 .card {
@@ -33,9 +57,20 @@ input {
   margin-right: 30px;
 }
 
+.index {
+  padding: 20px initial;
+  @media(max-width: 768px) { // @screen-sm-min
+    text-align: center;
+  }
+}
+
 .corpora-search {
   padding: 0 15px;
   padding-bottom: 15px;
+}
+
+.navbar {
+  margin-bottom: 0;
 }
 
 .no-margin {
@@ -44,7 +79,6 @@ input {
 
 .footer {
   background-color: #666;
-  margin-top: 10px;
   padding: 50px 0;
   color: #fff;
   font-size: 18px;
@@ -70,4 +104,10 @@ body {
 .flex-content {
   flex: 1;
   -webkit-flex: 1;
+}
+
+.vertical-center {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
 }
