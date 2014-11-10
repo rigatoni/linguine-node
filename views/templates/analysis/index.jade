@@ -5,6 +5,9 @@
         | Create Analysis
     input.form-control(placeholder="Search by corpus name, analysis type..." ng-model="searchText")
   br
+  div(ng-show="!analyses.length")
+    alert(type='warning')
+      | You haven't created any analyses.
   .list-group
     a.list-group-item(ng-repeat="analysis in analyses",ng-href="/analysis/{{analysis._id}}")
       h4.list-group-item-heading

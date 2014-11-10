@@ -47,6 +47,19 @@ router.post('', function(req, res) {
   }
 });
 
+router.delete('/:id', function (req, res) {
+  if (!req.user) {
+    res.status(401).json({
+      message: "Unauthorized",
+      error: 401
+    });
+  } else {
+    Analysis.remove({_id: req.params.id}, function (err) {
+      res.json(err);
+    });
+  }
+});
+
 module.exports = function (app) {
   app.use('/api/analysis', router);
 }

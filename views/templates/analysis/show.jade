@@ -6,6 +6,8 @@
           strong {{ analysis.analysis }} Analysis
       .pull-right
         btn.btn.btn-lg.btn-default(ng-click="back()") Back
+        btn.btn.btn-lg.btn-default(ng-click="delete()")
+          .glyphicon.glyphicon-trash
   br
   h4.no-margin(ng-repeat="corpora_id in analysis.corpora_ids") {{ findCorpus(corpora_id).title }} ({{findCorpus(corpora_id).fileName}})
   #graph

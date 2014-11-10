@@ -4,7 +4,7 @@
     .module('linguine.analysis')
     .controller('AnalysisShowController', AnalysisShowController);
 
-  function AnalysisShowController ($http, $scope, $stateParams, $window) {
+  function AnalysisShowController ($http, $scope, $state, $stateParams, $window) {
 
     $scope.back = function () {
       $window.history.back();
@@ -20,6 +20,16 @@
       .success(function (data) {
         $scope.corpora = data;
       });
+
+    $scope.delete = function () {
+      $http.delete('/api/analysis/' + $stateParams.id)
+        .success(function (data) {
+          $state.go('linguine.analysis.index')
+        })
+        .error(function (data) {
+          flash.danger.setMessage("An error occured.");
+        })
+    };
 
     $scope.findCorpus = function (id) {
       return _.find($scope.corpora, {'_id': id});
