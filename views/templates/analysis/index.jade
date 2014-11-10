@@ -1,0 +1,13 @@
+.container.app-container
+  .input-group.input-group-lg
+    .input-group-btn
+      a(ng-href="/analysis/new").new-corpus.btn.btn-primary
+        | Create Analysis
+    input.form-control(placeholder="Search by corpus name, analysis type..." ng-model="searchText")
+  br
+  .list-group(ng-repeat="analysis in analyses")
+    a.list-group-item(ng-href="/analysis/{{analysis._id}}")
+      h4.list-group-item-heading
+        strong {{ analysis.analysis }} Analysis
+      p.list-group-item-text
+        div(ng-repeat="corpora_id in analysis.corpora_ids") {{ findCorpus(corpora_id).title }} ({{findCorpus(corpora_id).fileName}})
