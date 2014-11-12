@@ -10,6 +10,7 @@ var User = require('../../models/user');
 describe('Corpora Routes', function(){
   var agent = request.agent(app)
   var user = null;
+  var corpus = null;
 
   function login(done){
     agent
@@ -36,7 +37,10 @@ describe('Corpora Routes', function(){
                     title: 'Something',
                     contents: 'some content',
                     tags: ['here', 'are', 'some', 'tags']
-                  }, done);
+                  }, function(err, c){
+                    corpus = c;
+                    done();
+                  });
     });
   }
   before(function(){
@@ -114,7 +118,17 @@ describe('Corpora Routes', function(){
     });
 
     describe('not logged in', function(){
-
+      it('should not allow you to create a corpora', function(done){
+        agent
+          .post('/api/corpora')
+          .send({ fileName: 'something.txt',
+                  fileSize: 100,
+                  fileType: 'text',
+                  title: 'Something',
+                  contents: 'some content'})
+          .expect(401)
+          .end(done);
+      });
     });
   });
 
@@ -125,12 +139,29 @@ describe('Corpora Routes', function(){
         login(done);
       });
 
+      before(function(done){
+        createCorpus(done);
+      })
+
+      it('should allow you to get a corpora', function(done){
+        agent
+          .get('/api/corpora/' + corpus._id)
+          .expect(200)
+          .end(done);
+      });
+
       afterEach(function(done){
         logout(done);
       });
     });
 
     describe('not logged in', function(){
+      it('should allow you to get a corpora', function(done){
+        agent
+          .get('/api/corpora/' + corpus._id)
+          .expect(401)
+          .end(done);
+      });
 
     });
   });
