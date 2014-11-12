@@ -26,7 +26,7 @@ router.delete('/:id', function (req, res) {
     Corpus.findById(req.params.id, function (err, corpus) {
       if (corpus.user_id.equals(req.user._id)) {
         Corpus.remove({_id: req.params.id}, function (err) {
-          res.json(err);
+          res.status(204).json({});
         });
       } else {
         res.status(401).json({

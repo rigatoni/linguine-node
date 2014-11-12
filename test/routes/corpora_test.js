@@ -70,6 +70,10 @@ describe('Corpora Routes', function(){
           });
       });
 
+      after(function(done){
+        Corpus.remove({}, done);
+      });
+
       afterEach(function(done){
         logout(done);
       });
@@ -150,6 +154,10 @@ describe('Corpora Routes', function(){
           .end(done);
       });
 
+      after(function(done){
+        Corpus.remove({}, done);
+      });
+
       afterEach(function(done){
         logout(done);
       });
@@ -173,13 +181,38 @@ describe('Corpora Routes', function(){
         login(done);
       });
 
+      before(function(done){
+        createCorpus(done);
+      });
+
+      it('should allow you to delete a corpus', function(done){
+        agent
+          .delete('/api/corpora/' + corpus._id)
+          .expect(204)
+          .end(function(err, res){
+            Corpus.find({}, function(err, corpora){
+              expect(corpora).to.have.length(0);
+              done();
+            });
+          });
+      });
+
+      after(function(done){
+        Corpus.remove({}, done);
+      });
+
       afterEach(function(done){
         logout(done);
       });
     });
 
     describe('not logged in', function(){
-
+      it('should not allow you to delete a corpus', function(done){
+        agent
+          .delete('/api/corpora/' + corpus._id)
+          .expect(401)
+          .end(done);
+      });
     });
   });
 });
