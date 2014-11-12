@@ -12,7 +12,7 @@ describe('Corpus', function(){
   });
 
   beforeEach(function(done){
-    corpus = new Corpus({ _owner: user._id,
+    corpus = new Corpus({ user_id: user._id,
                               fileName: 'something.txt',
                               fileSize: 100,
                               fileType: 'text',
@@ -33,7 +33,7 @@ describe('Corpus', function(){
       Corpus.find({}, function(err, corpora){
         expect(err).to.be.null;
         expect(corpora).to.have.length(1);
-        expect(corpora[0]._owner).to.eql(user._id);
+        expect(corpora[0].user_id).to.eql(user._id);
         expect(corpora[0]).to.have.property('fileName', 'something.txt');
         expect(corpora[0]).to.have.property('fileSize', 100);
         expect(corpora[0]).to.have.property('fileType', 'text');
@@ -50,9 +50,9 @@ describe('Corpus', function(){
 
   describe('validations', function(){
     it('should not save when there is no owner', function(done){
-      corpus._owner = null;
+      corpus.user_id = null;
       corpus.save(function(err){
-        expect(err.errors._owner).to.not.be.null;
+        expect(err.errors.user_id).to.not.be.null;
         done();
       });
     });

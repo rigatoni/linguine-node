@@ -1,0 +1,154 @@
+var request = require('supertest')
+var chai = require('chai');
+var expect = chai.expect;
+var app = require('../../app');
+var passportMock = require('../passport/passport-mock');
+var Corpus = require('../../models/corpus');
+var User = require('../../models/user');
+
+
+describe('Corpora Routes', function(){
+  var agent = request.agent(app)
+  var user = null;
+
+  function login(done){
+    agent
+      .post('/api/login')
+      .send({username: 'abc123', password: 'abc123'})
+      .end(function(err, res){
+        user = res.body;
+        done();
+      });
+  }
+
+  function logout(done){
+    agent
+      .post('/api/logout')
+      .end(done);
+  }
+
+  function createCorpus(done) {
+    User.findOne({dce: 'abc123'}, function(err, user){
+      Corpus.create({ user_id: user._id,
+                    fileName: 'something.txt',
+                    fileSize: 100,
+                    fileType: 'text',
+                    title: 'Something',
+                    contents: 'some content',
+                    tags: ['here', 'are', 'some', 'tags']
+                  }, done);
+    });
+  }
+  before(function(){
+    passportMock();
+  });
+
+  describe('GET /api/corpora', function(){
+
+    describe('logged in', function(data){
+
+      beforeEach(function(done){
+        login(done);
+      });
+
+      before(function(done){
+        createCorpus(done);
+      });
+
+      it('should allow you get the corpora for the user', function(done){
+        agent
+          .get('/api/corpora')
+          .expect(200)
+          .end(function(err, res){
+            expect(err).to.be.null;
+            expect(res.body).to.have.length(1);
+            done()
+          });
+      });
+
+      afterEach(function(done){
+        logout(done);
+      });
+    });
+
+    describe('not logged in', function(data){
+      it('should not allow you to get the corpora', function(done){
+        agent
+          .get('/api/corpora')
+          .expect(401)
+          .end(done);
+      });
+    });
+  });
+
+  describe('POST /api/corpora', function(){
+
+    describe('logged in', function(data){
+      beforeEach(function(done){
+        login(done);
+      });
+
+      it('should allow you to create a corpora', function(done){
+        agent
+          .post('/api/corpora')
+          .send({ fileName: 'something.txt',
+                  fileSize: 100,
+                  fileType: 'text',
+                  title: 'Something',
+                  contents: 'some content'})
+          .expect(201)
+          .end(function(err, res){
+            expect(res.body).to.have.property('fileName', 'something.txt');
+            expect(res.body).to.have.property('fileSize', 100);
+            expect(res.body).to.have.property('fileType', 'text');
+            expect(res.body).to.have.property('title', 'Something');
+            expect(res.body).to.have.property('contents', 'some content');
+            expect(res.body).to.have.property('user_id', user._id);
+            done();
+          });
+      });
+
+      afterEach(function(done){
+        logout(done);
+      });
+    });
+
+    describe('not logged in', function(data){
+
+    });
+  });
+
+  describe('GET /api/corpora/:id', function(){
+
+    describe('logged in', function(data){
+      beforeEach(function(done){
+        login(done);
+      });
+
+      afterEach(function(done){
+        logout(done);
+      });
+    });
+
+    describe('not logged in', function(data){
+
+    });
+  });
+
+  describe('DELETE /api/corpora/:id', function(){
+
+    describe('logged in', function(data){
+      beforeEach(function(done){
+        login(done);
+      });
+
+      afterEach(function(done){
+        logout(done);
+      });
+    });
+
+    describe('not logged in', function(data){
+
+    });
+  });
+});

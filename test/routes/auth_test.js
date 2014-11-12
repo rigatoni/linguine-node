@@ -9,7 +9,7 @@ describe('Authentication', function(){
     passportMock()
   });
 
-  describe('login', function(){
+  describe('POST /api/login', function(){
     it('should work when valid', function(done){
       request(app)
         .post('/api/login')
@@ -31,7 +31,7 @@ describe('Authentication', function(){
     });
   });
 
-  describe('logout', function(){
+  describe('POST /api/logout', function(){
     it('should work', function(done){
       var agent = request.agent(app);
       agent
@@ -48,7 +48,7 @@ describe('Authentication', function(){
         });
     });
   });
-  describe('logged_in', function(){
+  describe('GET /api/logged_in', function(){
     it('should not work when not logged in', function(done){
      request(app)
         .get('/api/logged_in')
