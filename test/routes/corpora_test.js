@@ -45,7 +45,7 @@ describe('Corpora Routes', function(){
 
   describe('GET /api/corpora', function(){
 
-    describe('logged in', function(data){
+    describe('logged in', function(){
 
       beforeEach(function(done){
         login(done);
@@ -71,7 +71,7 @@ describe('Corpora Routes', function(){
       });
     });
 
-    describe('not logged in', function(data){
+    describe('not logged in', function(){
       it('should not allow you to get the corpora', function(done){
         agent
           .get('/api/corpora')
@@ -83,7 +83,7 @@ describe('Corpora Routes', function(){
 
   describe('POST /api/corpora', function(){
 
-    describe('logged in', function(data){
+    describe('logged in', function(){
       beforeEach(function(done){
         login(done);
       });
@@ -113,14 +113,14 @@ describe('Corpora Routes', function(){
       });
     });
 
-    describe('not logged in', function(data){
+    describe('not logged in', function(){
 
     });
   });
 
   describe('GET /api/corpora/:id', function(){
 
-    describe('logged in', function(data){
+    describe('logged in', function(){
       beforeEach(function(done){
         login(done);
       });
@@ -130,14 +130,14 @@ describe('Corpora Routes', function(){
       });
     });
 
-    describe('not logged in', function(data){
+    describe('not logged in', function(){
 
     });
   });
 
   describe('DELETE /api/corpora/:id', function(){
 
-    describe('logged in', function(data){
+    describe('logged in', function(){
       beforeEach(function(done){
         login(done);
       });
@@ -147,7 +147,7 @@ describe('Corpora Routes', function(){
       });
     });
 
-    describe('not logged in', function(data){
+    describe('not logged in', function(){
 
     });
   });
