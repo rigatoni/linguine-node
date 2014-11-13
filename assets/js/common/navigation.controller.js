@@ -34,6 +34,7 @@
         .success(function(data){
           $scope.currentUser = {};
           $scope.loggedIn = false;
+          $state.go('linguine.index');
         })
     }
 
