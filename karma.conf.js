@@ -17,14 +17,17 @@ module.exports = function(config) {
     files: [
       'public/bower_components/ng-file-upload/angular-file-upload-html5-shim.min.js',
       'public/bower_components/angular/angular.min.js',
-      'public/bower_components/angular-mocks/angular-mocks.min.js',
+      'public/bower_components/angular-mocks/angular-mocks.js',
       'public/bower_components/d3/d3.min.js',
       'public/bower_components/lodash/dist/lodash.min.js',
       'public/bower_components/ng-file-upload/angular-file-upload.min.js',
       'public/bower_components/ui-router/release/angular-ui-router.min.js',
       'public/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+      'assets/js/linguine.module.js',
+      'assets/js/corpora/corpora.module.js',
+      'assets/js/analysis/analysis.module.js',
       'assets/js/**/*.js',
-      'test/views/**/*_test.js'
+      'test/angular/**/*.test.js'
     ],
 
 
@@ -36,13 +39,14 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'assets/js/**/*.js': ['coverage']
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['mocha', 'coverage'],
 
 
     // web server port
@@ -59,16 +63,23 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false
+    singleRun: false,
+
+    coverageReporter: {
+      reporters:[
+        {type: 'text'},
+        {type: 'text-summary'}
+      ]
+    }
   });
 };
