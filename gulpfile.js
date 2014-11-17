@@ -69,7 +69,7 @@ gulp.task('mocha', function () {
 /**
  * Run test once and exit
  */
-gulp.task('karma', ['mocha'], function (done) {
+gulp.task('karma', function (done) {
   karma.start({
     configFile: __dirname + '/karma.conf.js',
     singleRun: true
