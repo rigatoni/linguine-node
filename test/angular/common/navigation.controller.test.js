@@ -1,27 +1,24 @@
 describe('NavigationController', function(){
   var $controller, $scope, $httpBackend, $state, $rootScope, flash;
 
-  beforeEach(function(done){
-    module('linguine');
-    inject(function($injector) {
-      $rootScope = $injector.get('$rootScope');
-      flash = $injector.get('flash');
-      $state = $injector.get('$state');
-      $httpBackend = $injector.get('$httpBackend');
-      $scope = $rootScope.$new();
-      $controller = $injector.get('$controller');
-      createController = function(){
-        return $controller('NavigationController', {
-          $scope: $scope,
-          $rootScope: $rootScope,
-          $state: $state,
-          flash: flash
-        });
-      }
-      $httpBackend.whenGET('templates/home/index').respond(200, '');
-    });
-    done();
-  });
+  beforeEach(module('linguine'))
+  beforeEach(inject(function($injector) {
+    $rootScope = $injector.get('$rootScope');
+    flash = $injector.get('flash');
+    $state = $injector.get('$state');
+    $httpBackend = $injector.get('$httpBackend');
+    $scope = $rootScope.$new();
+    $controller = $injector.get('$controller');
+    createController = function(){
+      return $controller('NavigationController', {
+        $scope: $scope,
+        $rootScope: $rootScope,
+        $state: $state,
+        flash: flash
+      });
+    }
+    $httpBackend.whenGET('templates/home/index').respond(200, '');
+  }));
 
   afterEach(function() {
     $httpBackend.verifyNoOutstandingExpectation();
