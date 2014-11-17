@@ -8,7 +8,6 @@
 
     $http.get('/api/corpora')
       .success(function (data) {
-        console.log(data);
         $scope.corpora = data;
       });
 

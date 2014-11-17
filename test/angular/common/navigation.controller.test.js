@@ -1,7 +1,7 @@
 describe('NavigationController', function(){
-  var $controller, $scope, $httpBackend, $state, $rootScope, flash;
+  var createController, $controller, $scope, $httpBackend, $state, $rootScope, flash;
 
-  beforeEach(module('linguine'))
+  beforeEach(module('linguine'));
   beforeEach(inject(function($injector) {
     $rootScope = $injector.get('$rootScope');
     flash = $injector.get('flash');
@@ -17,7 +17,7 @@ describe('NavigationController', function(){
         flash: flash
       });
     }
-    $httpBackend.whenGET('templates/home/index').respond(200, '');
+    $httpBackend.whenGET('/templates/home/index').respond(200, '');
   }));
 
   afterEach(function() {
