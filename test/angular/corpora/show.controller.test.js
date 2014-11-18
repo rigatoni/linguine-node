@@ -34,6 +34,11 @@ describe('CorporaShowController', function(){
     }
   }));
 
+  afterEach(function() {
+    $httpBackend.verifyNoOutstandingExpectation();
+    $httpBackend.verifyNoOutstandingRequest();
+  });
+
   describe('delete', function(){
     it('should work when logged in', function(done){
       $httpBackend.whenGET('/api/corpora/1').respond(200, '')
