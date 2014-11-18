@@ -4,7 +4,7 @@
     .module('linguine.corpora')
     .controller('CorporaShowController', CorporaShowController);
 
-  function CorporaShowController ($scope, $http, $stateParams, $window, flash, $state) {
+  function CorporaShowController ($scope, $http, $stateParams, $window, flash, $state, $rootScope) {
 
     $scope.back = function () {
       $window.history.back();
@@ -17,6 +17,7 @@
         })
         .error(function (data) {
           flash.danger.setMessage("An error occured.");
+          $rootScope.$emit("event:angularFlash");
         })
     };
 

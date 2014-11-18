@@ -101,6 +101,7 @@ describe('NavigationController', function(){
       $httpBackend.flush();
       expect($scope.loggedIn).to.be.false;
       expect($scope.currentUser).to.be.undefined;
+      expect(flash.danger.getMessage()).to.equal('Invalid username/password');
       done();
     });
   });
