@@ -67,6 +67,7 @@ describe('CorporaShowController', function(){
 
     it('should work when logged in', function(done){
       $httpBackend.expectGET('/api/corpora/1').respond(200, {
+        _id: 1,
         user_id: 1,
         createdAt: Date(),
         fileName: 'file_name.txt',
