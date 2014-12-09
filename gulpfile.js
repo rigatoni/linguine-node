@@ -7,10 +7,11 @@ var watch = require('gulp-watch');
 var less = require('gulp-less');
 var istanbul = require('gulp-istanbul');
 var mocha = require('gulp-mocha');
+var karma = require('karma').server;
 
 
 var paths = {
-  scripts: ['assets/js/linguine.module.js', 'assets/js/corpora/corpora.module.js', 'assets/js/**/*.js'],
+  scripts: ['assets/js/linguine.module.js', 'assets/js/corpora/corpora.module.js', 'assets/js/analysis/analysis.module.js', 'assets/js/**/*.js'],
   stylesheets: 'assets/stylesheets/**/*.less',
   images: 'assets/img/*'
 }
@@ -55,15 +56,27 @@ gulp.task('watch', function(){
   });
 });
 
-gulp.task('test', function (cb) {
+gulp.task('mocha', function () {
   gulp.src(['models/*.js', 'routes/*.js', 'app.js'])
     .pipe(istanbul())
     .on('finish', function () {
-      return gulp.src(['test/**/*.js'])
+      gulp.src(['test/**/*.js', '!test/angular/**/*.js'])
         .pipe(mocha())
         .pipe(istanbul.writeReports())
     });
 });
+
+/**
+ * Run test once and exit
+ */
+gulp.task('karma', function (done) {
+  karma.start({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done);
+});
+
+gulp.task('test', ['mocha', 'karma']);
 
 gulp.task('build', ['scripts', 'stylesheets', 'images'])
 
