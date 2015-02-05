@@ -1,0 +1,52 @@
+doctype html
+head
+  title Linguine
+  base(href='/')
+  link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
+  link(rel='stylesheet' href='/css/app.css')
+  link(rel='stylesheet' href='/bower_components/font-awesome/css/font-awesome.css')
+  script(src='/bower_components/ng-file-upload/angular-file-upload-html5-shim.min.js')
+  script(src='/bower_components/angular/angular.min.js')
+  script(src='/bower_components/d3/d3.min.js')
+  script(src='/bower_components/lodash/dist/lodash.min.js')
+  script(src='/bower_components/ng-file-upload/angular-file-upload.min.js')
+  script(src='/bower_components/ui-router/release/angular-ui-router.min.js')
+  script(src='/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js')
+  script(src='/js/app.min.js')
+body(ng-app='linguine')
+  nav.navbar.navbar-default(role='navigation' ng-controller='NavigationController')
+    .container
+      .navbar-header
+        button.navbar-toggle(type="button" ng-click="collapsed = !collapsed")
+          i.fa.fa-bars
+        a.navbar-brand(href='/') Linguine
+      .collapse.navbar-collapse(collapse="collapsed")
+        ul.nav.navbar-nav
+          li(ng-class='{active: isActive("linguine.corpora")}')
+            a(href='/corpora') Corpora
+        ul.nav.navbar-nav
+          li(ng-class='{active: isActive("linguine.analysis")}')
+            a(href='/analysis') Analysis
+        form.navbar-form.navbar-right(ng-submit='login()' ng-if='!loggedIn')
+          form-group
+            input.form-control(type='text' ng-model='user.username' placeholder='Username')
+          form-group
+            input.form-control(type='password' ng-model='user.password' placeholder='Password')
+          button.btn.btn-default(type='submit') Login
+        ul.nav.navbar-nav.navbar-right(ng-if='loggedIn')
+          li.dropdown
+            a.dropdown-toggle(href='#')
+              img.avatar.hidden-xs(src="img/avatar.svg")
+              span
+                |  {{ formattedName() }}
+              span.caret
+            ul.dropdown-menu(role='menu')
+              li
+                a(href='#' ng-click='logout()') Logout
+  .flex-content
+    flash-messages
+    div(ui-view)
+  .footer
+    .container
+      .col-md-4
+        p Linguine is an open-source application for natural language visualization and analysis. Created at the Rochester Institute of Technology.
