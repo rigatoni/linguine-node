@@ -8,6 +8,13 @@
               strong {{ corpus.title }}
             p.list-group-item-text
               | {{ corpus.fileName }}
+      tab(heading='Select Cleanup')
+        .list-group
+          a.list-group-item(ng-repeat="cleanup in cleanupTypes",ng-class="{active:cleanup.active}",ng-click="onCleanupClick(this)")
+            h4.list-group-item-heading
+              strong {{ cleanup.name}}
+            p.list-group-item-text
+              | {{ cleanup.description}}
       tab(heading='Analysis Type')
         .list-group
           a.list-group-item(ng-repeat="analysis in analysisTypes",ng-class="{active:selectedAnalysis==analysis}",ng-click="onAnalysisClick(this)")
@@ -16,5 +23,3 @@
             p.list-group-item-text
               | {{ analysis.description }}
         button.btn.btn-lg.btn-primary.full-width(type="submit") Create Analysis
-
-  
