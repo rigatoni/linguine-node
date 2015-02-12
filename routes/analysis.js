@@ -11,7 +11,7 @@ router.get('', function(req, res) {
       error: 401
     });
   } else {
-    Analysis.where().select('analysis corpora_ids').exec(function (err, analyses) {
+    Analysis.where('user_id').equals(req.user._id).exec(function (err, analyses) {
       res.json(analyses);
     });
   }
@@ -37,7 +37,7 @@ router.post('', function(req, res) {
       error: 401
     });
   } else {
-    var payload = _.extend(req.body, {userId: req.user._id});
+    var payload = _.extend(req.body, {user_id: req.user._id});
     request.post({
       url:     'http://localhost:5555',
       body:    JSON.stringify(payload)
@@ -54,8 +54,17 @@ router.delete('/:id', function (req, res) {
       error: 401
     });
   } else {
-    Analysis.remove({_id: req.params.id}, function (err) {
-      res.json(err);
+    Analysis.findById(req.params.id, function (err, analysis) {
+      if (analysis.user_id.equals(req.user._id)) {
+        Analysis.remove({_id: req.params.id}, function (err) {
+          res.status(204).json({});
+        });
+      } else {
+        res.status(401).json({
+          message: "Unauthorized",
+          error: 401
+        });
+      }
     });
   }
 });
