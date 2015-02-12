@@ -75,7 +75,7 @@
         function classes() {
           var classes = [];    
           $scope.analysis.result.forEach(function (node) {
-            classes.push({packageName: "", className: node.term, value: node.importance + shift});
+            classes.push({packageName: "", className: node.term, value: Math.log(node.importance) * -1});
           });
           return {children: classes};
         }
