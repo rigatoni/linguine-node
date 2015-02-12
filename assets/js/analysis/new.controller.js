@@ -10,6 +10,10 @@
       {
         name: "tfidf",
         description: "Term Frequency - Inverse Document Frequency"
+      },
+      {
+        name: "wordcloudop",
+        description: "Word Cloud Generator. Note: This operation is identical to tfidf when applied to a single corpus."
       }
     ];
 
