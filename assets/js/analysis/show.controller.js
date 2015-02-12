@@ -1,4 +1,4 @@
-(function(){
+     (function(){
 
   angular
     .module('linguine.analysis')
@@ -42,7 +42,7 @@
             format = d3.format(".3"),
             color = d3.scale.category20c()
             shift = 0.1;
-            
+
         var bubble = d3.layout.pack().sort(null).size([diameter, diameter]).padding(1.5),
             svg = d3.select("#graph").append("svg").attr("class", "bubble").attr("viewBox", "0 0 100 100");
 
@@ -73,9 +73,9 @@
 
         // Returns a flattened hierarchy containing all leaf nodes under the root.
         function classes() {
-          var classes = [];    
+          var classes = [];
           $scope.analysis.result.forEach(function (node) {
-            classes.push({packageName: "", className: node.term, value: node.importance + shift});
+            classes.push({packageName: "", className: node.term, value: Math.log(node.importance) * -1});
           });
           return {children: classes};
         }
