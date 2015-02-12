@@ -36,7 +36,7 @@
     }
 
     $scope.visualize = function () {
-      if ($scope.analysis.analysis === "tfidf") {
+      if ($scope.analysis.analysis === "tfidf" || $scope.analysis.analysis == "wordcloudop") {
 
         var diameter = 100,
             format = d3.format(".3"),
@@ -75,7 +75,14 @@
         function classes() {
           var classes = [];
           $scope.analysis.result.forEach(function (node) {
-            classes.push({packageName: "", className: node.term, value: node.importance + shift});
+            var scalar;
+            if ($scope.analysis.analysis == "tfidf") {
+              scalar = node.importance;
+            }
+            else if ($scope.analysis.analysis == "wordcloudop") {
+              scalar = node.frequency;
+            }
+            classes.push({packageName: "", className: node.term, value: scalar + shift});
           });
           return {children: classes};
         }
