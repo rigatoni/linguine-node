@@ -39,6 +39,24 @@ router.delete('/:id', function (req, res) {
   }
 });
 
+router.get('/quota', function(req, res) {
+  if (!req.user) {
+    res.status(401).json({
+      message: "Unauthorized",
+      error: 401
+    });
+  } else {
+    Corpus.where({user_id: req.user._id }).exec(function(err, corpora) {
+      var count = corpora.length;
+      var size = corpora.reduce(function(sum, corpus){
+        return sum + corpus.fileSize;
+      }, 0)
+
+      res.json({ documents: count, total_size: size });
+    });
+  }
+})
+
 router.get('/:id', function (req, res) {
   if (!req.user) {
     res.status(401).json({

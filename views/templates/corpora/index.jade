@@ -10,3 +10,6 @@
         h3.no-margin
           a(ng-href="/corpora/{{corpus._id}}") {{ corpus.title }}
         h4 {{ corpus.fileName }}
+  div.col-md-12
+  .pull-right
+    p Usage: {{ quota.documents }}/25, {{quota.total_size }} bytes

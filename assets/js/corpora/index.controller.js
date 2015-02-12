@@ -11,5 +11,10 @@
         $scope.corpora = data;
       });
 
+    $http.get('/api/corpora/quota')
+      .success(function (data) {
+        $scope.quota = data;
+      });
+
   }
 })();
