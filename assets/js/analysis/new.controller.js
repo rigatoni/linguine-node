@@ -26,7 +26,7 @@
       {
         name: "Remove Capitalization (NNP)",
         unfriendly_name: "removecapsnnp",
-        description: "Conver uppercase letters to lowercase letters while leaving proper nouns capitalized, using TextBlob's Part-of-Speech tagger to identify proper nouns."
+        description: "Convert uppercase letters to lowercase letters while leaving proper nouns capitalized, using TextBlob's Part-of-Speech tagger to identify proper nouns."
       },
       {
         name: "Remove Punctuation",
