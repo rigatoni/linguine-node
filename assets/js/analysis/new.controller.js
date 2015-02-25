@@ -9,11 +9,11 @@
     $scope.analysisTypes = [
       {
         name: "tfidf",
-        description: "Term Frequency - Inverse Document Frequency"
+        description: "Term Frequency - Inverse Document Frequency. Uses the NLTK Punkt tokenizer to separate terms. Best applied to a large set of corpora. Useful for finding the most important words in the collection of words."
       },
       {
         name: "wordcloudop",
-        description: "Word Cloud Generator. Note: This operation is identical to tfidf when applied to a single corpus."
+        description: "Word Cloud Generator. Note: This operation is identical to tfidf when applied to a single corpus. Uses the NLTK Punkt tokenizer to separate terms. Used for finding the most frequent words a single corpus."
       }
     ];
 
@@ -21,17 +21,17 @@
       {
         name: "Remove Capitalization (greedy)",
         unfriendly_name: "removecapsgreedy",
-        description: "Convert all uppercase letters to lowercase letters"
+        description: "Convert all uppercase letters to lowercase letters."
       },
       {
         name: "Remove Capitalization (NNP)",
         unfriendly_name: "removecapsnnp",
-        description: "Conver uppercase letters to lowercase letters while leaving proper nouns capitalized"
+        description: "Convert uppercase letters to lowercase letters while leaving proper nouns capitalized, using TextBlob's Part-of-Speech tagger to identify proper nouns."
       },
       {
         name: "Remove Punctuation",
         unfriendly_name: "removepunct",
-        description: "Remove all punctuation"
+        description: "Remove all punctuation, using NLTK's Regexp tokenizer to scan the text for patterns of punctuation marks."
       }
     ];
 
