@@ -10,7 +10,7 @@ router.get('', function(req, res) {
       error: 401
     });
   } else {
-    Corpus.where('user_id').equals(req.user._id).select('title fileName tags').exec(function (err, corpora) {
+    Corpus.where('user_id').equals(req.user._id).select('title fileName tags tag_ids').exec(function (err, corpora) {
       res.json(corpora);
     });
   }
