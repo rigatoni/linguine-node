@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var Corpus = require('../models/corpus');
+var fs = require('fs');
 
 router.get('', function(req, res) {
   if (!req.user) {
@@ -84,9 +85,20 @@ router.post('', function(req, res) {
       error: 401
     });
   } else {
-    req.body.user_id = req.user._id;
-    Corpus.create(req.body, function(err, corpus) {
-      res.status(201).json(corpus);
+    var file = req.files.file;
+    fs.readFile(file.path, function(err, data){
+      var corpus = {
+        user_id: req.user._id,
+        contents: data,
+        title: req.body.title,
+        fileSize: file.size,
+        fileName: file.name,
+        fileType: file.type
+      };
+
+      Corpus.create(corpus, function(err, c) {
+        res.status(201).json(c);
+      });
     });
   }
 });
