@@ -9,8 +9,7 @@ var corpusSchema = new Schema({
   fileType:   {type: String, required: true},
   title:      {type: String, required: true},
   contents:   String,
-  tags:       [String],
-  tag_ids:    [{type: Schema.Types.ObjectId, ref: 'Tag', default: []}]
+  tags:       [String]
 });
 
 module.exports = mongoose.model('Corpus', corpusSchema);
