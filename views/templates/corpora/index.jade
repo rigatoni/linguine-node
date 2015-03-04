@@ -10,6 +10,10 @@
         h3.no-margin
           a(ng-href="/corpora/{{corpus._id}}") {{ corpus.title }}
         h4 {{ corpus.fileName }}
+        p
+          span(ng-repeat="tag in corpus.tags track by $index")
+            span.label.label-primary(style="margin-right: 5px;", ng-click="removeTag(corpus._id, corpus.tags[$index])") {{ corpus.tags[$index] }}
+          span.label.label-primary(ng-click="openPopup(corpus._id)") +
   div.col-md-12
   .pull-right
     p Usage: {{ quota.documents }}/25, {{quota.total_size }} bytes
