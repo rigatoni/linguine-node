@@ -8,32 +8,34 @@
 
     $scope.analysisTypes = [
       {
-        name: "pos_tag",
-        description: "Part of Speech tagging. Uses the TextBlob tagger to generate Part-of-Speech tags for text."
+        name: "Part of Speech Tagging"
+        unfriendly_name: "pos_tag",
+        description: "Uses the TextBlob tagger to generate Part-of-Speech tags for text."
       },
       {
-        name: "sentence_tokenize",
-        description: "Sentence Tokenizer. Uses the NLTK sentence tokenizer tobreak a corpus up into sentences."
+        name: "Sentence Tokenizer"
+        unfriendly_name: "sentence_tokenize",
+        description: "Uses the NLTK sentence tokenizer tobreak a corpus up into sentences."
       },
       {
-        name: "sentiment_analysis",
-        description: "Sentiment Analysis. Uses the Stanford CoreNLP library to analyze a corpus and visualize the positivity or negativity of the text."
+        name: "Sentiment Analysis"
+        unfriendly_name: "sentiment_analysis",
+        description: "Uses the Stanford CoreNLP library to analyze a corpus and visualize the positivity or negativity of the text."
       },
       {
-        name: "tfidf",
-        description: "Term Frequency - Inverse Document Frequency. Uses the NLTK Punkt tokenizer to separate terms. Best applied to a large set of corpora. Useful for finding the most important words in the collection of words."
+        name: "Term Frequency - Inverse Document Frequency"
+        unfriendly_name: "tfidf",
+        description: "Uses the NLTK Punkt tokenizer to separate terms. Best applied to a large set of corpora. Useful for finding the most important words in the collection of words."
       },
       {
-        name: "topic_model",
-        description: "Topic Modeling. Uses the gensim library to detect and group the similar topics in a set of corpora."
+        name: "Topic Modeling"
+        unfriendly_name: "topic_model",
+        description: "Uses the gensim library to detect and group the similar topics in a set of corpora."
       },
       {
-        name: "tfidf",
-        description: "Term Frequency - Inverse Document Frequency. Uses the NLTK Punkt tokenizer to separate terms. Best applied to a large set of corpora. Useful for finding the most important words in the collection of words."
-      },
-      {
-        name: "wordcloudop",
-        description: "Word Cloud Generator. Note: This operation is identical to tfidf when applied to a single corpus. Uses the NLTK Punkt tokenizer to separate terms. Used for finding the most frequent words a single corpus."
+        name: "Word Cloud Generator"
+        unfriendly_name: "wordcloudop",
+        description: "Note: This operation is identical to TF-IDF when applied to a single corpus. Uses the NLTK Punkt tokenizer to separate terms. Used for finding the most frequent words a single corpus."
       }
     ];
 
@@ -124,8 +126,8 @@
       var payload = {
         corpora_ids: _.pluck(_.where($scope.corpora, 'active'), '_id'),
         cleanup: _.map(_.where($scope.cleanupTypes, 'active'), function(cleanupType) {return cleanupType.unfriendly_name}),
-        operation: $scope.selectedAnalysis.name,
-        tokenizer: $scope.selectedTokenizer.name,
+        operation: $scope.selectedAnalysis.unfriendly_name,
+        tokenizer: $scope.selectedTokenizer.unfriendly_name,
         library: "",
         transaction_id: "",
         user_id: ""
