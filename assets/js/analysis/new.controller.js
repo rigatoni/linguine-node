@@ -8,32 +8,32 @@
 
     $scope.analysisTypes = [
       {
-        name: "Part of Speech Tagging"
+        name: "Part of Speech Tagging",
         unfriendly_name: "pos_tag",
         description: "Uses the TextBlob tagger to generate Part-of-Speech tags for text."
       },
       {
-        name: "Sentence Tokenizer"
+        name: "Sentence Tokenizer",
         unfriendly_name: "sentence_tokenize",
         description: "Uses the NLTK sentence tokenizer tobreak a corpus up into sentences."
       },
       {
-        name: "Sentiment Analysis"
+        name: "Sentiment Analysis",
         unfriendly_name: "sentiment_analysis",
         description: "Uses the Stanford CoreNLP library to analyze a corpus and visualize the positivity or negativity of the text."
       },
       {
-        name: "Term Frequency - Inverse Document Frequency"
+        name: "Term Frequency - Inverse Document Frequency",
         unfriendly_name: "tfidf",
         description: "Uses the NLTK Punkt tokenizer to separate terms. Best applied to a large set of corpora. Useful for finding the most important words in the collection of words."
       },
       {
-        name: "Topic Modeling"
+        name: "Topic Modeling",
         unfriendly_name: "topic_model",
         description: "Uses the gensim library to detect and group the similar topics in a set of corpora."
       },
       {
-        name: "Word Cloud Generator"
+        name: "Word Cloud Generator",
         unfriendly_name: "wordcloudop",
         description: "Note: This operation is identical to TF-IDF when applied to a single corpus. Uses the NLTK Punkt tokenizer to separate terms. Used for finding the most frequent words a single corpus."
       }
