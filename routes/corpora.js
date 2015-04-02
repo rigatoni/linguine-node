@@ -99,6 +99,8 @@ router.post('', function(req, res) {
       Corpus.create(corpus, function(err, c) {
         res.status(201).json(c);
       });
+
+      fs.unlink(file.path);
     });
   }
 });
