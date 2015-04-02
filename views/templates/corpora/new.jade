@@ -1,11 +1,11 @@
 .container.app-container
-  form.col-md-6.col-md-offset-3.col-lg-4.col-lg-offset-4.form-horizontal(ng-submit="onCreateCorpus()")
+  form.col-md-6.col-md-offset-3.col-lg-4.col-lg-offset-4.form-horizontal(ng-submit="upload()")
     h3.text-center Create Corpus
     .form-group
       label.control-label Title
       input.form-control(name="title" type="text" placeholder="Title" ng-model="corpus.title")
     .form-group
       label.control-label File Upload
-      input.form-control(name="attachment" type="file" ng-file-select="onFileSelect($files)")
+      input.form-control(name="attachment" type="file" ng-file-select ng-model="files")
     .form-group
       button.btn.btn-lg.btn-primary.full-width(type="submit") Create Corpus

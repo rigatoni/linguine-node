@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var Corpus = require('../models/corpus');
+var fs = require('fs');
 
 // Middleware runs on all corpora API calls
 router.use(function(req, res, next) {
@@ -55,10 +56,30 @@ router.get('/:id', function (req, res) {
 });
 
 router.post('', function(req, res) {
-  req.body.user_id = req.user._id;
-  Corpus.create(req.body, function(err, corpus) {
-    res.status(201).json(corpus);
-  });
+ if (!req.user) {
+    res.status(401).json({
+      message: "Unauthorized",
+      error: 401
+    });
+  } else {
+    var file = req.files.file;
+    fs.readFile(file.path, function(err, data){
+      var corpus = {
+        user_id: req.user._id,
+        contents: data,
+        title: req.body.title,
+        fileSize: file.size,
+        fileName: file.name,
+        fileType: file.type
+      };
+
+      Corpus.create(corpus, function(err, c) {
+        res.status(201).json(c);
+      });
+
+      fs.unlink(file.path);
+    });
+  }
 });
 
 router.put('/:id/addTag', function (req, res) {
