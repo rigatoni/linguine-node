@@ -22,4 +22,11 @@
               strong {{ analysis.name }}
             p.list-group-item-text
               | {{ analysis.description }}
+      tab(heading='Tokenization Type')
+        .list-group
+          a.list-group-item(ng-repeat="tokenizer in tokenizerTypes",ng-class="{active:selectedTokenizer==tokenizer}",ng-click="onTokenizerClick(this)")
+            h4.list-group-item-heading
+              strong {{ tokenizer.name }}
+            p.list-group-item-text
+              | {{ tokenizer.description }}
         button.btn.btn-lg.btn-primary.full-width(type="submit") Create Analysis

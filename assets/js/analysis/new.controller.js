@@ -8,6 +8,26 @@
 
     $scope.analysisTypes = [
       {
+        name: "pos_tag",
+        description: "Part of Speech tagging. Uses the TextBlob tagger to generate Part-of-Speech tags for text."
+      },
+      {
+        name: "sentence_tokenize",
+        description: "Sentence Tokenizer. Uses the NLTK sentence tokenizer tobreak a corpus up into sentences."
+      },
+      {
+        name: "sentiment_analysis",
+        description: "Sentiment Analysis. Uses the Stanford CoreNLP library to analyze a corpus and visualize the positivity or negativity of the text."
+      },
+      {
+        name: "tfidf",
+        description: "Term Frequency - Inverse Document Frequency. Uses the NLTK Punkt tokenizer to separate terms. Best applied to a large set of corpora. Useful for finding the most important words in the collection of words."
+      },
+      {
+        name: "topic_model",
+        description: "Topic Modeling. Uses the gensim library to detect and group the similar topics in a set of corpora."
+      },
+      {
         name: "tfidf",
         description: "Term Frequency - Inverse Document Frequency. Uses the NLTK Punkt tokenizer to separate terms. Best applied to a large set of corpora. Useful for finding the most important words in the collection of words."
       },
@@ -19,6 +39,11 @@
 
     $scope.cleanupTypes = [
       {
+        name: "Lemmatize",
+        unfriendly_name: "lemmatize_wordnet",
+        description: "Convert words to their lemmas using the NLTK WordNet Lemmatizer. E.g: Walk, walking, and walked will be converted to walk, and better and good would both be converted to good."
+      },
+      {
         name: "Remove Capitalization (greedy)",
         unfriendly_name: "removecapsgreedy",
         description: "Convert all uppercase letters to lowercase letters."
@@ -29,13 +54,53 @@
         description: "Convert uppercase letters to lowercase letters while leaving proper nouns capitalized, using TextBlob's Part-of-Speech tagger to identify proper nouns."
       },
       {
+        name: "Stem (Porter)",
+        unfriendly_name: "stem_porter",
+        description: "Stem words using the NLTK Porter Stemmer. Converts inflected words in the corpus to their base form. This is a good general purpose stemmer to use."
+      },
+      {
+        name: "Stem (Lancaster)",
+        unfriendly_name: "stem_lancaster",
+        description: "Stem words using the NLTK Lancaster Stemmer. Converts inflected words in the corpus to their base form."
+      },
+      {
+        name: "Stem (Snowball)",
+        unfriendly_name: "stem_snowball",
+        description: "Stem words using the NLTK Snowball Stemmer. Converts inflected words in the corpus to their base form."
+      },
+      {
         name: "Remove Punctuation",
         unfriendly_name: "removepunct",
         description: "Remove all punctuation, using NLTK's Regexp tokenizer to scan the text for patterns of punctuation marks."
       }
     ];
-
-
+    $scope.tokenizerTypes = [
+      {
+        name: "Word Tokenize (Penn Treebank)",
+        unfriendly_name: "word_tokenize_treebank",
+        description: "Separates the text in each corpus into individual word tokens, using NLTK's Penn Treebank tokenizer. This is a good general purpose tokenizer to use."
+      },
+      {
+        name: "Word Tokenize (Whitespace and Punctuation)",
+        unfriendly_name: "word_tokenize_whitespace_punct",
+        description: "Separates the text in each corpus into individual word tokens, splitting on whitespace and punctuation marks."
+      },
+      {
+        name: "Word Tokenize (Stanford)",
+        unfriendly_name: "word_tokenize_stanford",
+        description: "Separates the text in each corpus into individual word tokens, using NLTK's Stanford tokenizer."
+      },
+      {
+        name: "Word Tokenize (Spaces)",
+        unfriendly_name: "word_tokenize_treebank",
+        description: "Separates the text in each corpus into individual word tokens, splitting on spaces."
+      },
+      {
+        name: "Word Tokenize (Tabs)",
+        unfriendly_name: "word_tokenize_tabs",
+        description: "Separates the text in each corpus into individual word tokens, splitting on tabs."
+      },
+    ]
     $http.get('/api/corpora')
       .success(function (data) {
         $scope.corpora = data;
@@ -52,12 +117,15 @@
     $scope.onCleanupClick = function(e) {
       e.cleanup.active = !e.cleanup.active
     };
-
+    $scope.onTokenizerClick = function(e) {
+      $scope.selectedTokenizer = e.tokenizer;
+    }
     $scope.onCreateAnalysis = function () {
       var payload = {
         corpora_ids: _.pluck(_.where($scope.corpora, 'active'), '_id'),
         cleanup: _.map(_.where($scope.cleanupTypes, 'active'), function(cleanupType) {return cleanupType.unfriendly_name}),
         operation: $scope.selectedAnalysis.name,
+        tokenizer: $scope.selectedTokenizer.name,
         library: "",
         transaction_id: "",
         user_id: ""
