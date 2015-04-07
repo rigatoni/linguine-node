@@ -13,7 +13,7 @@
     $http.get('/api/analysis/' + $stateParams.id)
       .success(function (data) {
         $scope.analysis = data;
-        $scope.visualize();
+        $scope.defaultView();
       })
 
     $http.get('/api/corpora')
@@ -35,6 +35,9 @@
       return _.find($scope.corpora, {'_id': id});
     }
 
+    $scope.defaultView = function() {
+      $scope.results = $scope.analysis.result;
+    }
     $scope.visualize = function () {
       if ($scope.analysis.analysis === "tfidf" || $scope.analysis.analysis == "wordcloudop") {
 
