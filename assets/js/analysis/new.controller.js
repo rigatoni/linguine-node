@@ -94,7 +94,7 @@
       },
       {
         name: "Word Tokenize (Spaces)",
-        unfriendly_name: "word_tokenize_treebank",
+        unfriendly_name: "word_tokenize_spaces",
         description: "Separates the text in each corpus into individual word tokens, splitting on spaces."
       },
       {
