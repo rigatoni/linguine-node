@@ -10,4 +10,9 @@
           .glyphicon.glyphicon-trash
   br
   h4.no-margin(ng-repeat="corpora_id in analysis.corpora_ids") {{ findCorpus(corpora_id).title }} ({{findCorpus(corpora_id).fileName}})
-  #graph
+  tabset(justified='true')
+      tab(heading='Default View')
+        .white.well
+          .wrap{{ results }}
+      tab(heading='Visualization')
+        {{ visualization }}
