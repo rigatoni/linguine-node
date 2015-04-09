@@ -17,11 +17,11 @@
         unfriendly_name: "sentence_tokenize",
         description: "Uses the NLTK sentence tokenizer tobreak a corpus up into sentences."
       },
-      {
-        name: "Sentiment Analysis",
-        unfriendly_name: "sentiment_analysis",
-        description: "Uses the Stanford CoreNLP library to analyze a corpus and visualize the positivity or negativity of the text."
-      },
+      // {
+      //   name: "Sentiment Analysis",
+      //   unfriendly_name: "sentiment_analysis",
+      //   description: "Uses the Stanford CoreNLP library to analyze a corpus and visualize the positivity or negativity of the text."
+      // },
       {
         name: "Term Frequency - Inverse Document Frequency",
         unfriendly_name: "tfidf",
@@ -87,11 +87,11 @@
         unfriendly_name: "word_tokenize_whitespace_punct",
         description: "Separates the text in each corpus into individual word tokens, splitting on whitespace and punctuation marks."
       },
-      {
-        name: "Word Tokenize (Stanford)",
-        unfriendly_name: "word_tokenize_stanford",
-        description: "Separates the text in each corpus into individual word tokens, using NLTK's Stanford tokenizer."
-      },
+      // {
+      //   name: "Word Tokenize (Stanford)",
+      //   unfriendly_name: "word_tokenize_stanford",
+      //   description: "Separates the text in each corpus into individual word tokens, using NLTK's Stanford tokenizer."
+      // },
       {
         name: "Word Tokenize (Spaces)",
         unfriendly_name: "word_tokenize_spaces",
