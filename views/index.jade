@@ -25,7 +25,10 @@ body(ng-app='linguine')
             a(href='/corpora') Corpora
         ul.nav.navbar-nav
           li(ng-class='{active: isActive("linguine.analysis")}')
-            a(href='/analysis') Analysis
+            a(href='/analysis') Analyses
+        ul.nav.navbar-nav
+          li(ng-class='{active: isActive("linguine.documentation")}')
+            a(href='/documentation') Documentation
         form.navbar-form.navbar-right(ng-submit='login()' ng-if='!loggedIn')
           form-group
             input.form-control(type='text' ng-model='user.username' placeholder='Username')
@@ -35,7 +38,7 @@ body(ng-app='linguine')
         ul.nav.navbar-nav.navbar-right(ng-if='loggedIn')
           li.dropdown
             a.dropdown-toggle(href='#')
-              img.avatar.hidden-xs(src="img/avatar.svg")
+              //- img.avatar.hidden-xs(src="img/avatar.svg")
               span
                 |  {{ formattedName() }}
               span.caret
