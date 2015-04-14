@@ -15,7 +15,7 @@
       {
         name: "Sentence Tokenizer",
         unfriendly_name: "sentence_tokenize",
-        description: "Uses the NLTK sentence tokenizer tobreak a corpus up into sentences."
+        description: "Uses the NLTK sentence tokenizer to break a corpus up into sentences."
       },
       // {
       //   name: "Sentiment Analysis",
@@ -30,12 +30,12 @@
       {
         name: "Topic Modeling",
         unfriendly_name: "topic_model",
-        description: "Uses the gensim library to detect and group the similar topics in a set of corpora."
+        description: "Uses Gensim to detect and group the similar topics in a set of corpora."
       },
       {
         name: "Word Cloud Generator",
         unfriendly_name: "wordcloudop",
-        description: "Note: This operation is identical to TF-IDF when applied to a single corpus. Uses the NLTK Punkt tokenizer to separate terms. Used for finding the most frequent words a single corpus."
+        description: "This operation is identical to TF-IDF when applied to a single corpus. Uses the NLTK Punkt tokenizer to separate terms. Used for finding the most frequent words a single corpus."
       }
     ];
 
