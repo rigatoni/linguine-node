@@ -32,12 +32,17 @@
         })
     };
 
+    $scope.download = function() {
+
+    }
+
     $scope.findCorpus = function (id) {
       return _.find($scope.corpora, {'_id': id});
     }
 
     $scope.defaultView = function() {
-      $scope.results = $scope.analysis.result;
+      $scope.raw_results = $scope.analysis.result;
+      $scope.default_view = $scope.analysis.results;
     }
 
     $scope.visualizeTfidf = function() {
@@ -140,11 +145,17 @@
       d3.select(self.frameElement).style("height", diameter + "px");
     }
 
+    $scope.visualizePosTag = function() {
+      $scope.raw_results.hide();
+    }
+
     $scope.visualize = function () {
       if ($scope.analysis.analysis === "tfidf" ) {
         $scope.visualizeTfidf();
       } else if  ($scope.analysis.analysis == "wordcloudop") {
         $scope.visualizeWordcloud();
+      } else if ($scope.analysis.analysis == "pos_tag") {
+        $scope.visualizePosTag();
       }
     }
 
