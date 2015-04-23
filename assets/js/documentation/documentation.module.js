@@ -15,19 +15,16 @@
         url: '',
         templateUrl: '/templates/documentation/index',
         controller: 'DocumentationIndexController',
-       }
       })
       .state('linguine.documentation.tutorial', {
-        url: '/new',
+        url: '/tutorial',
         templateUrl: '/templates/documentation/tutorial',
         controller: 'DocumentationTutorialController',
-       }
       })
       .state('linguine.documentation.about', {
-        url: '/:id',
+        url: '/about',
         templateUrl: '/templates/documentation.about',
         controller: 'DocumentationAboutController',
-       }
       });
   }
 })();
