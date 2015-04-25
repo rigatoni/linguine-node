@@ -47,7 +47,7 @@ module.exports = function(app){
             });
             });
           });
-          //var test = {user_id: user._id, contents: 'test', title: 'test', fileSize: 0, fileName: 'test', fileType: 'test'};
+          done(null, user);
 
         });
 
