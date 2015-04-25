@@ -1,6 +1,9 @@
 var passport = require('passport');
 var LdapStrategy = require('passport-ldapauth').Strategy;
 var User = require('../models/user');
+var Corpus = require('../models/corpus');
+var fs = require('fs');
+var path = require('path');
 
 
 module.exports = function(app){
@@ -25,8 +28,29 @@ module.exports = function(app){
     User.find({ dce: user.uid }).limit(1).exec(function(err, users){
       if(users.length === 0) {
         User.create({ dce: user.uid, name: user.cn }, function(err, user){
-          done(null, user);
+          files.forEach(function(file) {
+            console.log(file);
+            var corpusPath = path.join('assets','corpora', file);
+            fs.readFile(corpusPath, function(err,data) {
+              if(err) {
+                console.log(err);
+              }
+              var corpus = {
+                user_id: user._id,
+                contents: data,
+                title: file,
+                fileSize: 0, 
+                fileName: file,
+                fileType: 'plaintext'
+              };
+            Corpus.create(corpus, function(err, c) {
+            });
+            });
+          });
+          //var test = {user_id: user._id, contents: 'test', title: 'test', fileSize: 0, fileName: 'test', fileType: 'test'};
+
         });
+
       }else {
         done(null, users[0]);
       }
