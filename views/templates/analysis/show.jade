@@ -16,3 +16,7 @@
           .wrap{{ results }}
       tab(heading='Visualization')
         #graph
+        div(ng-if="analysis.analysis == 'pos_tag'")
+          div(ng-repeat="result in analysis.result",style="margin-top: 20px;")
+            span(ng-repeat="tag in result.tags")
+              span(style="padding: 10px; font-size: 22px;" tooltip="{{ tag[1] }}"){{ tag[0] }}
