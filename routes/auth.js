@@ -33,13 +33,7 @@ module.exports = function(app){
             'Romeo and Juliet excerpt', 'The Raven', 'Tom Sawyer excerpt'];
           files.forEach(function(file) {
             console.log(file);
-            var corpusPath;
-            if(os.platform() == 'win32') {
-              corpusPath = path.join('.', 'assets','corpora', file);
-            }
-            else {
-              corpusPath = path.join('.', 'assets','corpora', file);
-            }
+            var corpusPath = path.join('.', 'assets','corpora', file);
             fs.readFile(corpusPath, function(err,data) {
               if(err) {
                 console.log(err);
