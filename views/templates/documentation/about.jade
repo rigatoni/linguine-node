@@ -1,0 +1,42 @@
+.container.app-container
+  .container.index
+          h1
+            strong Linguine
+          p
+            | Linguine is an open-source application for natural language visualization and analysis.
+            br
+            | It was developed at the Rochester Institute of Technology during the 2014-2015 academic year as a Software Engineering senior project.
+            br
+            | Linguine is built to allow people with an interest in computational linguistics to test and observe the operations that can be performed with natural language processing, even if they have no programming ability.
+            br
+            | 
+        .banner.index
+          .container
+            .row
+              .col-xs-12.col-sm-6.vertical-center
+                img.avatar.hidden-xs(src="img/avatar.svg")
+              .col-xs-12.col-sm-6.vertical-center
+                h1.no-margin Built for extensibility.
+                h4 The system architecture is designed to separate user interactions (rendered for the client using Node.js) from text analysis, through the use of a common data layer.
+                h4 Adding a new operation is as simple as writing a Python file, adding it to the operation list in Python and Node, and writing a visualization function in Node.
+                h4 The system can even be extended with other programming language libraries, since the only communication between the servers is through JSON messages!
+        .container.index
+          h1
+            strong Linguine on Github
+          p
+            | Linguine is hosted on 
+            a(href="https://github.com/rigatoni") Github in the rigatoni organization 
+            | and open source through the 
+            a(href="http://opensource.org/licenses/MIT") MIT License.
+            br
+            | The 
+            a(href="https://github.com/rigatoni/linguine-node") linguine-node repository 
+            | defines the client views and interactions, defined in Node.js.
+            br
+            | The 
+            a(href="https://github.com/rigatoni/linguine-python") linguine-python repository 
+            | contains a web server to communicate with linguine-node, and defines all text analysis operations that are implemented in the system.
+            br
+            | The linguine repository is used for issue tracking and bug reporting.
+            br
+            | The config repository contains configuration files for setting up and running Linguine in a production environment.

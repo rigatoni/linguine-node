@@ -5,7 +5,6 @@ head
   link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
   link(rel='stylesheet' href='/css/app.css')
   link(rel='stylesheet' href='/bower_components/font-awesome/css/font-awesome.css')
-  script(src='/bower_components/ng-file-upload/angular-file-upload-html5-shim.min.js')
   script(src='/bower_components/angular/angular.min.js')
   script(src='/bower_components/d3/d3.min.js')
   script(src='/bower_components/lodash/dist/lodash.min.js')
@@ -26,7 +25,10 @@ body(ng-app='linguine')
             a(href='/corpora') Corpora
         ul.nav.navbar-nav
           li(ng-class='{active: isActive("linguine.analysis")}')
-            a(href='/analysis') Analysis
+            a(href='/analysis') Analyses
+        ul.nav.navbar-nav
+          li(ng-class='{active: isActive("linguine.documentation")}')
+            a(href='/documentation') Documentation
         form.navbar-form.navbar-right(ng-submit='login()' ng-if='!loggedIn')
           form-group
             input.form-control(type='text' ng-model='user.username' placeholder='Username')
@@ -36,7 +38,7 @@ body(ng-app='linguine')
         ul.nav.navbar-nav.navbar-right(ng-if='loggedIn')
           li.dropdown
             a.dropdown-toggle(href='#')
-              img.avatar.hidden-xs(src="img/avatar.svg")
+              //- img.avatar.hidden-xs(src="img/avatar.svg")
               span
                 |  {{ formattedName() }}
               span.caret

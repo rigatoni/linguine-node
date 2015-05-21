@@ -1,9 +1,9 @@
 .container
   h1 {{ corpus.title }}
-    small  {{ corpus.fileName }}
+    small.corpora-subtitle {{ corpus.fileName }}
     .btn-group.pull-right
       btn.btn.btn-lg.btn-default(ng-click="back()") Back
       btn.btn.btn-lg.btn-default(ng-click="delete()")
         .glyphicon.glyphicon-trash
   .white.well
-    | {{ corpus.contents }}
+    .newlines {{ corpus.contents }}
