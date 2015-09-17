@@ -20,13 +20,13 @@ body(ng-app='linguine')
           i.fa.fa-bars
         a.navbar-brand(href='/') Linguine
       .collapse.navbar-collapse(collapse="collapsed")
-        ul.nav.navbar-nav
+        ul.nav.navbar-nav(ng-if='loggedIn')
           li(ng-class='{active: isActive("linguine.corpora")}')
             a(href='/corpora') Corpora
-        ul.nav.navbar-nav
+        ul.nav.navbar-nav(ng-if='loggedIn')
           li(ng-class='{active: isActive("linguine.analysis")}')
             a(href='/analysis') Analyses
-        ul.nav.navbar-nav
+        ul.nav.navbar-nav(ng-if='loggedIn')
           li(ng-class='{active: isActive("linguine.documentation")}')
             a(href='/documentation') Documentation
         form.navbar-form.navbar-right(ng-submit='login()' ng-if='!loggedIn')
