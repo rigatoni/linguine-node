@@ -95,29 +95,14 @@ All of these commands were run from the main directory of this project.  Some of
 
 Details for instructions taken from [here](https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-14-04).
 
+#### Set environment variable to development
+1. `export NODE_ENV=developent`
+
 #### Install bower
 1. `sudo npm install -g bower`
 
 #### Install gulp
 1. `sudo npm install -g gulp`
-2. `npm install 'simple-fmt'`
-3. `npm install 'simple-is'`
-4. `npm install 'alter'`
-5. `sudo npm install 'ordered-ast-traverse'`
-6. `npm install 'source-map'`
-7. `npm install 'stable'`
-8. `npm install 'stringmap'`
-9. `npm istall 'stringset'`
-10. `sudo npm install 'less'`
-11. `sudo npm install 'through2'`
-12. `npm install 'gulp-util'`
-13. `sudo npm install 'lodash.defaults'`
-14. `sudo npm install 'convert-source-map'`
-15. `npm install 'vinyl-sourcemaps-apply'`
-16. `sudo npm install 'socket.io-client'`
-17. `sudo npm install 'sprima'`
-
-I really hope there's a better way to do this, because this is disgusting.
 
 #### Building and starting the service
 1. `sudo npm install`
