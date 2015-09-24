@@ -22,6 +22,7 @@
           $scope.currentUser = data.user;
           $scope.loggedIn = true;
           $scope.user = {};
+          $rootScope.$emit("event:angularFlash");
         })
         .error(function (data){
           flash.danger.setMessage('Invalid username/password');
