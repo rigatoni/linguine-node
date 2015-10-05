@@ -4,7 +4,7 @@
     .module('linguine.analysis')
     .controller('AnalysisNewController', AnalysisNewController);
 
-  function AnalysisNewController($http, $scope, $state) {
+  function AnalysisNewController($http, $scope, $state, $rootScope, flash) {
 
     $scope.analysisTypes = [
       {
@@ -123,22 +123,32 @@
       $scope.selectedTokenizer = e.tokenizer;
     }
     $scope.onCreateAnalysis = function () {
-      var payload = {
-        corpora_ids: _.pluck(_.where($scope.corpora, 'active'), '_id'),
-        cleanup: _.map(_.where($scope.cleanupTypes, 'active'), function(cleanupType) {return cleanupType.unfriendly_name}),
-        operation: $scope.selectedAnalysis.unfriendly_name,
-        tokenizer: $scope.selectedTokenizer.unfriendly_name,
-        library: "",
-        transaction_id: "",
-        user_id: ""
-      };
-      $http.post('/api/analysis', payload)
-        .success(function(data) {
-          $state.go('linguine.analysis.index');
-        })
-        .error(function (data) {
-          // to-do: handle error case
-        });
+      try {
+        var payload = {
+          corpora_ids: _.pluck(_.where($scope.corpora, 'active'), '_id'),
+          cleanup: _.map(_.where($scope.cleanupTypes, 'active'), function (cleanupType) {
+            return cleanupType.unfriendly_name
+          }),
+          operation: $scope.selectedAnalysis.unfriendly_name,
+          tokenizer: $scope.selectedTokenizer.unfriendly_name,
+          library: "",
+          transaction_id: "",
+          user_id: ""
+        };
+        $http.post('/api/analysis', payload)
+            .success(function (data) {
+              $state.go('linguine.analysis.index');
+            })
+            .error(function (data) {
+              flash.danger.setMessage('An error occurred while trying to create your analysis.');
+              $rootScope.$emit("event:angularFlash");
+              console.log(data);
+            });
+      } catch (error) {
+        flash.danger.setMessage('There was a problem with your request.  Please review the options you have selected and try again.');
+        $rootScope.$emit("event:angularFlash");
+        console.log(error);
+      }
     };
 
   }
