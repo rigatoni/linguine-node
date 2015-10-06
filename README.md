@@ -63,10 +63,10 @@ linguine-node assembles an HTTP request to send to the Python server. The reques
 ## Development
 
 1. `npm install`
-2. `bash fix_ldap.sh //Make sure ldap works with upgraded versions of NodeJS`
-2. `bower install`
-3. `gulp build` (Or `gulp` if you want watch enabled and unminified assets)
-4. `npm start`
+2. `npm run ldap`
+3. `bower install`
+4. `gulp build` (Or `gulp` if you want watch enabled and unminified assets)
+5. `npm start`
 
 To run tests:
 

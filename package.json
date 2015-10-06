@@ -1,11 +1,12 @@
 {
   "name": "linguine-node",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Express/Angular application for linguine.",
   "main": "index.js",
   "scripts": {
     "test": "gulp test",
-    "start": "./bin/www"
+    "start": "./bin/www",
+    "ldap": "./fix_ldap.sh"
   },
   "repository": {
     "type": "git",
