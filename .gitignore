@@ -28,4 +28,6 @@ node_modules
 .lock-wscript
 public
 
+#All IDE-generated files
 .idea
+*.swp
