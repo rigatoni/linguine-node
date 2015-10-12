@@ -13,8 +13,8 @@
         p
           span(ng-repeat="tag in corpus.tags track by $index")
             span.label.label-primary(style="margin-right: 5px;", ng-click="") {{ corpus.tags[$index] }}
-            span.label.label-primary(style="margin-left:-10px; margin-right:5px;", ng-click="removeTag(corpus._id, corpus.tags[$index])") x
-          span.label.label-primary(ng-click="openPopup(corpus._id)") +
+            span.label.label-primary(style="margin-left:-10px; margin-right:5px;cursor:pointer", ng-click="removeTag(corpus._id, corpus.tags[$index])") X
+          span.label.label-primary(style="cursor:pointer" ng-click="openPopup(corpus._id)") +
   div.col-md-12
   .pull-right
     p Usage: {{ quota.documents }}/25, {{quota.total_size }} bytes
