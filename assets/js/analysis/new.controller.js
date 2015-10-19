@@ -1,8 +1,8 @@
 (function(){
 
   angular
-    .module('linguine.analysis')
-    .controller('AnalysisNewController', AnalysisNewController);
+  .module('linguine.analysis')
+  .controller('AnalysisNewController', AnalysisNewController);
 
   function AnalysisNewController($http, $scope, $state, $rootScope, flash) {
 
@@ -38,8 +38,7 @@
         description: "This operation is identical to TF-IDF when applied to a single corpus. Uses the NLTK Punkt tokenizer to separate terms. Used for finding the most frequent words a single corpus."
       }
     ];
-
-    $scope.cleanupTypes = [
+    $scope.preprocessingTypes = [
       {
         name: "Lemmatize",
         unfriendly_name: "lemmatize_wordnet",
@@ -74,9 +73,7 @@
         name: "Remove Punctuation",
         unfriendly_name: "removepunct",
         description: "Remove all punctuation, using NLTK's Regexp tokenizer to scan the text for patterns of punctuation marks."
-      }
-    ];
-    $scope.tokenizerTypes = [
+      },
       {
         name: "Word Tokenize (Penn Treebank)",
         unfriendly_name: "word_tokenize_treebank",
@@ -104,9 +101,9 @@
       },
     ]
     $http.get('/api/corpora')
-      .success(function (data) {
-        $scope.corpora = data;
-      });
+    .success(function (data) {
+      $scope.corpora = data;
+    });
 
     $scope.onCorpusClick = function (e) {
       e.corpus.active = !e.corpus.active;
@@ -136,14 +133,14 @@
           user_id: ""
         };
         $http.post('/api/analysis', payload)
-            .success(function (data) {
-              $state.go('linguine.analysis.index');
-            })
-            .error(function (data) {
-              flash.danger.setMessage('An error occurred while trying to create your analysis.');
-              $rootScope.$emit("event:angularFlash");
-              console.log(data);
-            });
+        .success(function (data) {
+          $state.go('linguine.analysis.index');
+        })
+        .error(function (data) {
+          flash.danger.setMessage('An error occurred while trying to create your analysis.');
+          $rootScope.$emit("event:angularFlash");
+          console.log(data);
+        });
       } catch (error) {
         flash.danger.setMessage('There was a problem with your request.  Please review the options you have selected and try again.');
         $rootScope.$emit("event:angularFlash");
