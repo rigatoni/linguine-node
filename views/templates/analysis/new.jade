@@ -11,11 +11,12 @@
 
       tab(heading='2. Preprocessing')
         .list-group
-          a.list-group-item(ng-repeat="cleanup in preprocessingTypes",ng-class="{active:cleanup.active}",ng-click="onCleanupClick(this)")
+          a.list-group-item(ng-repeat="cleanup in cleanupTypes",ng-class="{active:cleanup.active}",ng-click="onCleanupClick(this)")
             h4.list-group-item-heading
               strong {{ cleanup.name}}
             p.list-group-item-text
               | {{ cleanup.description}}
+
           a.list-group-item(ng-repeat="tokenizer in tokenizerTypes",ng-class="{active:selectedTokenizer==tokenizer}",ng-click="onTokenizerClick(this)")
             h4.list-group-item-heading
               strong {{ tokenizer.name }}

@@ -38,7 +38,7 @@
         description: "This operation is identical to TF-IDF when applied to a single corpus. Uses the NLTK Punkt tokenizer to separate terms. Used for finding the most frequent words a single corpus."
       }
     ];
-    $scope.preprocessingTypes = [
+    $scope.cleanupTypes = [
       {
         name: "Lemmatize",
         unfriendly_name: "lemmatize_wordnet",
@@ -73,7 +73,9 @@
         name: "Remove Punctuation",
         unfriendly_name: "removepunct",
         description: "Remove all punctuation, using NLTK's Regexp tokenizer to scan the text for patterns of punctuation marks."
-      },
+      }
+    ]
+    $scope.tokenizerTypes = [
       {
         name: "Word Tokenize (Penn Treebank)",
         unfriendly_name: "word_tokenize_treebank",
@@ -98,7 +100,7 @@
         name: "Word Tokenize (Tabs)",
         unfriendly_name: "word_tokenize_tabs",
         description: "Separates the text in each corpus into individual word tokens, splitting on tabs."
-      },
+      }
     ]
     $http.get('/api/corpora')
     .success(function (data) {
@@ -132,6 +134,7 @@
           transaction_id: "",
           user_id: ""
         };
+        
         $http.post('/api/analysis', payload)
         .success(function (data) {
           $state.go('linguine.analysis.index');
@@ -147,6 +150,5 @@
         console.log(error);
       }
     };
-
   }
 })();
