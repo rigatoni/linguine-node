@@ -8,20 +8,33 @@
               strong {{ corpus.title }}
             p.list-group-item-text
               | {{ corpus.fileName }}
-      tab(heading='2. Select Cleanup')
+      //tab(heading='2. Select Cleanup')
+      //  .list-group
+      //    a.list-group-item(ng-repeat="cleanup in cleanupTypes",ng-class="{active:cleanup.active}",ng-click="onCleanupClick(this)")
+      //      h4.list-group-item-heading
+      //        strong {{ cleanup.name}}
+      //      p.list-group-item-text
+      //        | {{ cleanup.description}}
+      //tab(heading='3. Tokenization Type')
+      //  .list-group
+      //    a.list-group-item(ng-repeat="tokenizer in tokenizerTypes",ng-class="{active:selectedTokenizer==tokenizer}",ng-click="onTokenizerClick(this)")
+      //      h4.list-group-item-heading
+      //        strong {{ tokenizer.name }}
+      //      p.list-group-item-text
+      //        | {{ tokenizer.description }}
+      tab(heading='2. Preprocessing')
         .list-group
           a.list-group-item(ng-repeat="cleanup in cleanupTypes",ng-class="{active:cleanup.active}",ng-click="onCleanupClick(this)")
             h4.list-group-item-heading
               strong {{ cleanup.name}}
             p.list-group-item-text
               | {{ cleanup.description}}
-      tab(heading='3. Tokenization Type')
-        .list-group
           a.list-group-item(ng-repeat="tokenizer in tokenizerTypes",ng-class="{active:selectedTokenizer==tokenizer}",ng-click="onTokenizerClick(this)")
             h4.list-group-item-heading
               strong {{ tokenizer.name }}
             p.list-group-item-text
               | {{ tokenizer.description }}
+
       tab(heading='4. Analysis Type')
         .list-group
           a.list-group-item(ng-repeat="analysis in analysisTypes",ng-class="{active:selectedAnalysis==analysis}",ng-click="onAnalysisClick(this)")
