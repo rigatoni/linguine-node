@@ -1,11 +1,11 @@
 (function(){
 
   angular
-    .module('linguine.analysis')
-    .controller('AnalysisNewController', AnalysisNewController);
+  .module('linguine.analysis')
+  .controller('AnalysisNewController', AnalysisNewController);
 
   function AnalysisNewController($http, $scope, $state, $rootScope, flash) {
-
+    $scope.preprocessingActive = true;
     $scope.analysisTypes = [
       {
         name: "Part of Speech Tagging",
@@ -38,7 +38,6 @@
         description: "This operation is identical to TF-IDF when applied to a single corpus. Uses the NLTK Punkt tokenizer to separate terms. Used for finding the most frequent words a single corpus."
       }
     ];
-
     $scope.cleanupTypes = [
       {
         name: "Lemmatize",
@@ -75,7 +74,7 @@
         unfriendly_name: "removepunct",
         description: "Remove all punctuation, using NLTK's Regexp tokenizer to scan the text for patterns of punctuation marks."
       }
-    ];
+    ]
     $scope.tokenizerTypes = [
       {
         name: "Word Tokenize (Penn Treebank)",
@@ -101,12 +100,12 @@
         name: "Word Tokenize (Tabs)",
         unfriendly_name: "word_tokenize_tabs",
         description: "Separates the text in each corpus into individual word tokens, splitting on tabs."
-      },
+      }
     ]
     $http.get('/api/corpora')
-      .success(function (data) {
-        $scope.corpora = data;
-      });
+    .success(function (data) {
+      $scope.corpora = data;
+    });
 
     $scope.onCorpusClick = function (e) {
       e.corpus.active = !e.corpus.active;
@@ -114,6 +113,9 @@
 
     $scope.onAnalysisClick = function (e) {
       $scope.selectedAnalysis = e.analysis;
+
+      //re-enable the preprocessing tab once an analysis is clicked
+      $scope.preprocessingActive = false;
     };
 
     $scope.onCleanupClick = function(e) {
@@ -121,6 +123,15 @@
     };
     $scope.onTokenizerClick = function(e) {
       $scope.selectedTokenizer = e.tokenizer;
+    }
+    $scope.onPreprocessingClick = function(e) {
+      console.log("preprocessing clicked");
+      console.log(e);
+
+      if(!$scope.selectedAnalysis) {
+        flash.danger.setMessage('Please select an analysis before selecting preprocessing options.');
+        $rootScope.$emit("event:angularFlash");
+      }
     }
     $scope.onCreateAnalysis = function () {
       try {
@@ -135,21 +146,21 @@
           transaction_id: "",
           user_id: ""
         };
+        
         $http.post('/api/analysis', payload)
-            .success(function (data) {
-              $state.go('linguine.analysis.index');
-            })
-            .error(function (data) {
-              flash.danger.setMessage('An error occurred while trying to create your analysis.');
-              $rootScope.$emit("event:angularFlash");
-              console.log(data);
-            });
+        .success(function (data) {
+          $state.go('linguine.analysis.index');
+        })
+        .error(function (data) {
+          flash.danger.setMessage('An error occurred while trying to create your analysis.');
+          $rootScope.$emit("event:angularFlash");
+          console.log(data);
+        });
       } catch (error) {
         flash.danger.setMessage('There was a problem with your request.  Please review the options you have selected and try again.');
         $rootScope.$emit("event:angularFlash");
         console.log(error);
       }
     };
-
   }
 })();
