@@ -9,7 +9,16 @@
             p.list-group-item-text
               | {{ corpus.fileName }}
 
-      tab(heading='2. Preprocessing')
+      tab(heading='2. Analysis Type')
+        .list-group
+          a.list-group-item(ng-repeat="analysis in analysisTypes",ng-class="{active:selectedAnalysis==analysis}",ng-click="onAnalysisClick(this)")
+            h4.list-group-item-heading
+              strong {{ analysis.name }}
+            p.list-group-item-text
+              | {{ analysis.description }}
+        button.btn.btn-lg.btn-primary.full-width(type="submit") Create Analysis
+      
+      tab(id='preprocessing-tab' disabled="preprocessingActive" heading='3. Preprocessing' ng-click="onPreprocessingClick(this)")
         .list-group
           a.list-group-item(ng-repeat="cleanup in cleanupTypes",ng-class="{active:cleanup.active}",ng-click="onCleanupClick(this)")
             h4.list-group-item-heading
@@ -22,12 +31,3 @@
               strong {{ tokenizer.name }}
             p.list-group-item-text
               | {{ tokenizer.description }}
-
-      tab(heading='3. Analysis Type')
-        .list-group
-          a.list-group-item(ng-repeat="analysis in analysisTypes",ng-class="{active:selectedAnalysis==analysis}",ng-click="onAnalysisClick(this)")
-            h4.list-group-item-heading
-              strong {{ analysis.name }}
-            p.list-group-item-text
-              | {{ analysis.description }}
-        button.btn.btn-lg.btn-primary.full-width(type="submit") Create Analysis

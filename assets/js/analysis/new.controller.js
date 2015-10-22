@@ -5,7 +5,7 @@
   .controller('AnalysisNewController', AnalysisNewController);
 
   function AnalysisNewController($http, $scope, $state, $rootScope, flash) {
-
+    $scope.preprocessingActive = true;
     $scope.analysisTypes = [
       {
         name: "Part of Speech Tagging",
@@ -113,6 +113,9 @@
 
     $scope.onAnalysisClick = function (e) {
       $scope.selectedAnalysis = e.analysis;
+
+      //re-enable the preprocessing tab once an analysis is clicked
+      $scope.preprocessingActive = false;
     };
 
     $scope.onCleanupClick = function(e) {
@@ -120,6 +123,15 @@
     };
     $scope.onTokenizerClick = function(e) {
       $scope.selectedTokenizer = e.tokenizer;
+    }
+    $scope.onPreprocessingClick = function(e) {
+      console.log("preprocessing clicked");
+      console.log(e);
+
+      if(!$scope.selectedAnalysis) {
+        flash.danger.setMessage('Please select an analysis before selecting preprocessing options.');
+        $rootScope.$emit("event:angularFlash");
+      }
     }
     $scope.onCreateAnalysis = function () {
       try {
