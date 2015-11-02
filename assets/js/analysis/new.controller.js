@@ -133,9 +133,36 @@
     .success(function (data) {
       $scope.corpora = data;
     });
-
+    
+    /*
+     * Determine if the selected analysis can either accept
+     * a single corpora or multiple, and handle
+     * the selection appropriately. 
+     */ 
     $scope.onCorpusClick = function (e) {
-      e.corpus.active = !e.corpus.active;
+      var activeCount = 0;
+      var activeCorpora = [];
+      
+      //Keep track of the corpora that are currently active
+      $scope.corpora.forEach(function(corpora) {
+        if(corpora.active){
+          activeCount++; 
+          activeCorpora.push(corpora);
+        }
+      });
+      
+      //User selects a corpora when one is already selected
+      //and analysis can only accept 1 corpora
+      if(!e.corpus.active && activeCount == 1 
+      && !$scope.selectedAnalysis.multipleCorporaAllowed) {
+        e.corpus.active = true;
+        //Disable previous corpora
+        activeCorpora[0].active = false; 
+      }
+      //Any other case, user can de-select or select multiple
+      else {
+        e.corpus.active = !e.corpus.active;
+      }
     };
 
     $scope.onAnalysisClick = function (e) {
