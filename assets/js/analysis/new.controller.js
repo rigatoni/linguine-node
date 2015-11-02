@@ -18,11 +18,6 @@
         unfriendly_name: "sentence_tokenize",
         description: "Uses the NLTK sentence tokenizer to break a corpus up into sentences."
       },
-      // {
-      //   name: "Sentiment Analysis",
-      //   unfriendly_name: "sentiment_analysis",
-      //   description: "Uses the Stanford CoreNLP library to analyze a corpus and visualize the positivity or negativity of the text."
-      // },
       {
         name: "Term Frequency - Inverse Document Frequency",
         unfriendly_name: "tfidf",
@@ -39,43 +34,51 @@
         description: "This operation is identical to TF-IDF when applied to a single corpus. Uses the NLTK Punkt tokenizer to separate terms. Used for finding the most frequent words a single corpus."
       }
     ];
-    $scope.cleanupTypes = [
-      {
+
+    var cleanups = {
+      "stem_porter": {
         name: "Stem (Porter)",
         unfriendly_name: "stem_porter",
         description: "Stem words using the NLTK Porter Stemmer. Converts inflected words in the corpus to their base form. This is a good general purpose stemmer to use."
       },
-      {
+      "stem_lancaster": {
         name: "Stem (Lancaster)",
         unfriendly_name: "stem_lancaster",
         description: "Stem words using the NLTK Lancaster Stemmer. Converts inflected words in the corpus to their base form."
       },
-      {
+      "stem_snowball": {
         name: "Stem (Snowball)",
         unfriendly_name: "stem_snowball",
         description: "Stem words using the NLTK Snowball Stemmer. Converts inflected words in the corpus to their base form."
       },
-      {
+      "lemmatize_wordnet": {
         name: "Lemmatize",
         unfriendly_name: "lemmatize_wordnet",
         description: "Convert words to their lemmas using the NLTK WordNet Lemmatizer. E.g: Walk, walking, and walked will be converted to walk, and better and good would both be converted to good."
       },
-      {
+      "removecapsgreedy": {
         name: "Remove Capitalization (greedy)",
         unfriendly_name: "removecapsgreedy",
         description: "Convert all uppercase letters to lowercase letters."
       },
-      {
+      "removecapsnnp": {
         name: "Remove Capitalization (NNP)",
         unfriendly_name: "removecapsnnp",
         description: "Convert uppercase letters to lowercase letters while leaving proper nouns capitalized, using TextBlob's Part-of-Speech tagger to identify proper nouns."
       },
-      {
+      "removepunct": {
         name: "Remove Punctuation",
         unfriendly_name: "removepunct",
         description: "Remove all punctuation, using NLTK's Regexp tokenizer to scan the text for patterns of punctuation marks."
       }
-    ]
+    }
+
+    $scope.cleanupTypes = {
+      "pos_tag": [cleanups["stem_lancaster"], cleanups["stem_porter"], cleanups["stem_snowball"],
+        cleanups["lemmatize_wordnet"], cleanups["removecapsgreedy"], cleanups["removecapsnnp"],
+        cleanups["removepunct"] ]
+    }
+
     $scope.tokenizerTypes = [
       {
         name: "Word Tokenize (Penn Treebank)",
@@ -87,11 +90,6 @@
         unfriendly_name: "word_tokenize_whitespace_punct",
         description: "Separates the text in each corpus into individual word tokens, splitting on whitespace and punctuation marks."
       },
-      // {
-      //   name: "Word Tokenize (Stanford)",
-      //   unfriendly_name: "word_tokenize_stanford",
-      //   description: "Separates the text in each corpus into individual word tokens, using NLTK's Stanford tokenizer."
-      // },
       {
         name: "Word Tokenize (Spaces)",
         unfriendly_name: "word_tokenize_spaces",
@@ -103,6 +101,7 @@
         description: "Separates the text in each corpus into individual word tokens, splitting on tabs."
       }
     ]
+
     $http.get('/api/corpora')
     .success(function (data) {
       $scope.corpora = data;
@@ -132,7 +131,7 @@
         $rootScope.$emit("event:angularFlash");
       }
     }
-    
+
     $scope.onCorporaTabClick = function(e) {
       if(!$scope.selectedAnalysis) {
         flash.danger.setMessage('Please select an analysis before selecting corpora.');
@@ -153,7 +152,7 @@
           transaction_id: "",
           user_id: ""
         };
-        
+
         $http.post('/api/analysis', payload)
         .success(function (data) {
           $state.go('linguine.analysis.index');
