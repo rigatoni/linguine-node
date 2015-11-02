@@ -10,7 +10,7 @@
             p.list-group-item-text
               | {{ analysis.description }}
       
-      tab(heading='1. Select Corpora')
+      tab(heading='2. Select Corpora' disabled="analysisNotSelected" ng-click="onCorporaTabClick(this)")
         .list-group
           a.list-group-item(ng-repeat="corpus in corpora",ng-class="{active:corpus.active}",ng-click="onCorpusClick(this)")
             h4.list-group-item-heading
@@ -18,7 +18,7 @@
             p.list-group-item-text
               | {{ corpus.fileName }}
       
-      tab(id='preprocessing-tab' disabled="preprocessingActive" heading='3. Select Preprocessing Options' ng-click="onPreprocessingClick(this)")
+      tab(disabled="analysisNotSelected" heading='3. Select Preprocessing Options' ng-click="onPreprocessingTabClick(this)")
         .list-group
           a.list-group-item(ng-repeat="cleanup in cleanupTypes",ng-class="{active:cleanup.active}",ng-click="onCleanupClick(this)")
             h4.list-group-item-heading
