@@ -7,34 +7,54 @@
   function AnalysisNewController($http, $scope, $state, $rootScope, flash) {
     $scope.analysisNotSelected = true;
 
+    /*
+     * Analyses are the crux of the NLP workflow, so they should be 
+     * chosen before anything else. Analysis can be run on either
+     * a single corpus or an entire corpora. Rach analysis can also have
+     * tokenization tasks and specific cleanup tasks bound to them, represented
+     * by the tokenizerTypes and cleanupTypes objects.
+     */
     $scope.analysisTypes = [
       {
         name: "Part of Speech Tagging",
         unfriendly_name: "pos_tag",
-        description: "Uses the TextBlob tagger to generate Part-of-Speech tags for text."
+        description: "Uses the TextBlob tagger to generate Part-of-Speech tags for text.",
+        multipleCorporaAllowed: true
       },
       {
         name: "Sentence Tokenizer",
         unfriendly_name: "sentence_tokenize",
-        description: "Uses the NLTK sentence tokenizer to break a corpus up into sentences."
+        description: "Uses the NLTK sentence tokenizer to break a corpus up into sentences.",
+        multipleCorporaAllowed: false 
       },
       {
         name: "Term Frequency - Inverse Document Frequency",
         unfriendly_name: "tfidf",
-        description: "Uses the NLTK Punkt tokenizer to separate terms. Best applied to a large set of corpora. Useful for finding the most important words in the collection of words."
+        description: "Uses the NLTK Punkt tokenizer to separate terms. Best applied to a large set of corpora. Useful for finding the most important words in the collection of words.",
+        multipleCorporaAllowed: true
       },
       {
         name: "Topic Modeling",
         unfriendly_name: "topic_model",
-        description: "Uses Gensim to detect and group the similar topics in a set of corpora."
+        description: "Uses Gensim to detect and group the similar topics in a set of corpora.",
+        multipleCorporaAllowed: true
       },
+      //TODO: Refactor wordcloudop to be a term freuency analysis. 
+      //(word cloud generator is not an analysis!!)
       {
         name: "Word Cloud Generator",
         unfriendly_name: "wordcloudop",
-        description: "This operation is identical to TF-IDF when applied to a single corpus. Uses the NLTK Punkt tokenizer to separate terms. Used for finding the most frequent words a single corpus."
+        description: "This operation is identical to TF-IDF when applied to a single corpus. Uses the NLTK Punkt tokenizer to separate terms. Used for finding the most frequent words a single corpus.",
+        multipleCorporaAllowed: false
       }
     ];
-
+    
+    /*
+     * Object to keep track of all cleanup tasks that
+     * are available to pass back to the Python server. The keys
+     * are the unfriendly names of each cleanup task so that they
+     * can be bound to each analysis in the cleanupTypes object
+     */
     var cleanups = {
       "stem_porter": {
         name: "Stem (Porter)",
@@ -72,13 +92,20 @@
         description: "Remove all punctuation, using NLTK's Regexp tokenizer to scan the text for patterns of punctuation marks."
       }
     }
-
+    
+    /*
+     * for each unfriendly_name of an analysis, there is a set of cleanup tasks
+     * that are deemed applicable. 
+     * This object is used to list all cleanup tasks relevant to each analysis on the view.
+     *
+     * Key[analysisUnfriendlyName] => value [cleanupUnfriendlyName1, unfriendlyName2, ... n]
+     */
     $scope.cleanupTypes = {
       "pos_tag": [cleanups["stem_lancaster"], cleanups["stem_porter"], cleanups["stem_snowball"],
         cleanups["lemmatize_wordnet"], cleanups["removecapsgreedy"], cleanups["removecapsnnp"],
         cleanups["removepunct"] ]
     }
-
+    
     $scope.tokenizerTypes = [
       {
         name: "Word Tokenize (Penn Treebank)",
