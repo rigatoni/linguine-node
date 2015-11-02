@@ -41,21 +41,6 @@
     ];
     $scope.cleanupTypes = [
       {
-        name: "Lemmatize",
-        unfriendly_name: "lemmatize_wordnet",
-        description: "Convert words to their lemmas using the NLTK WordNet Lemmatizer. E.g: Walk, walking, and walked will be converted to walk, and better and good would both be converted to good."
-      },
-      {
-        name: "Remove Capitalization (greedy)",
-        unfriendly_name: "removecapsgreedy",
-        description: "Convert all uppercase letters to lowercase letters."
-      },
-      {
-        name: "Remove Capitalization (NNP)",
-        unfriendly_name: "removecapsnnp",
-        description: "Convert uppercase letters to lowercase letters while leaving proper nouns capitalized, using TextBlob's Part-of-Speech tagger to identify proper nouns."
-      },
-      {
         name: "Stem (Porter)",
         unfriendly_name: "stem_porter",
         description: "Stem words using the NLTK Porter Stemmer. Converts inflected words in the corpus to their base form. This is a good general purpose stemmer to use."
@@ -69,6 +54,21 @@
         name: "Stem (Snowball)",
         unfriendly_name: "stem_snowball",
         description: "Stem words using the NLTK Snowball Stemmer. Converts inflected words in the corpus to their base form."
+      },
+      {
+        name: "Lemmatize",
+        unfriendly_name: "lemmatize_wordnet",
+        description: "Convert words to their lemmas using the NLTK WordNet Lemmatizer. E.g: Walk, walking, and walked will be converted to walk, and better and good would both be converted to good."
+      },
+      {
+        name: "Remove Capitalization (greedy)",
+        unfriendly_name: "removecapsgreedy",
+        description: "Convert all uppercase letters to lowercase letters."
+      },
+      {
+        name: "Remove Capitalization (NNP)",
+        unfriendly_name: "removecapsnnp",
+        description: "Convert uppercase letters to lowercase letters while leaving proper nouns capitalized, using TextBlob's Part-of-Speech tagger to identify proper nouns."
       },
       {
         name: "Remove Punctuation",
