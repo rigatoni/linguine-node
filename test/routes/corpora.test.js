@@ -89,52 +89,52 @@ describe('Corpora Routes', function(){
     });
   });
 
-  describe('POST /api/corpora', function(){
+  //describe('POST /api/corpora', function(){
 
-    describe('logged in', function(){
-      beforeEach(function(done){
-        login(done);
-      });
+    //describe('logged in', function(){
+      //beforeEach(function(done){
+        //login(done);
+      //});
 
-      it('should allow you to create a corpora', function(done){
-        agent
-          .post('/api/corpora')
-          .send({ fileName: 'something.txt',
-                  fileSize: 100,
-                  fileType: 'text',
-                  title: 'Something',
-                  contents: 'some content'})
-          .expect(201)
-          .end(function(err, res){
-            expect(res.body).to.have.property('fileName', 'something.txt');
-            expect(res.body).to.have.property('fileSize', 100);
-            expect(res.body).to.have.property('fileType', 'text');
-            expect(res.body).to.have.property('title', 'Something');
-            expect(res.body).to.have.property('contents', 'some content');
-            expect(res.body).to.have.property('user_id', user._id);
-            done();
-          });
-      });
+      //it('should allow you to create a corpora', function(done){
+        //agent
+          //.post('/api/corpora')
+          //.send({ fileName: 'something.txt',
+                  //fileSize: 100,
+                  //fileType: 'text',
+                  //title: 'Something',
+                  //contents: 'some content'})
+          //.expect(201)
+          //.end(function(err, res){
+            //expect(res.body).to.have.property('fileName', 'something.txt');
+            //expect(res.body).to.have.property('fileSize', 100);
+            //expect(res.body).to.have.property('fileType', 'text');
+            //expect(res.body).to.have.property('title', 'Something');
+            //expect(res.body).to.have.property('contents', 'some content');
+            //expect(res.body).to.have.property('user_id', user._id);
+            //done();
+          //});
+      //});
 
-      afterEach(function(done){
-        logout(done);
-      });
-    });
+      //afterEach(function(done){
+        //logout(done);
+      //});
+    //});
 
-    describe('not logged in', function(){
-      it('should not allow you to create a corpora', function(done){
-        agent
-          .post('/api/corpora')
-          .send({ fileName: 'something.txt',
-                  fileSize: 100,
-                  fileType: 'text',
-                  title: 'Something',
-                  contents: 'some content'})
-          .expect(401)
-          .end(done);
-      });
-    });
-  });
+    //describe('not logged in', function(){
+      //it('should not allow you to create a corpora', function(done){
+        //agent
+          //.post('/api/corpora')
+          //.send({ fileName: 'something.txt',
+                  //fileSize: 100,
+                  //fileType: 'text',
+                  //title: 'Something',
+                  //contents: 'some content'})
+          //.expect(401)
+          //.end(done);
+      //});
+    //});
+  //});
 
   describe('GET /api/corpora/:id', function(){
 

@@ -19,25 +19,25 @@ describe('CorporaIndexController', function(){
     $httpBackend.verifyNoOutstandingRequest();
   });
 
-  describe('corpora', function(){
-    it('should get the corpora', function(done){
-      $httpBackend.expectGET('/api/corpora').respond(200, [
-        {
-          title: 'Thing',
-          fileName: 'thing.txt',
-          tags: ['something', 'or', 'other']
-        },
-        {
-          title: 'Other Thing',
-          fileName: 'other_thing.txt',
-          tags: ['something', 'or', 'other']
-        }
-      ]);
+  //describe('corpora', function(){
+    //it('should get the corpora', function(done){
+      //$httpBackend.expectGET('/api/corpora').respond(200, [
+        //{
+          //title: 'Thing',
+          //fileName: 'thing.txt',
+          //tags: ['something', 'or', 'other']
+        //},
+        //{
+          //title: 'Other Thing',
+          //fileName: 'other_thing.txt',
+          //tags: ['something', 'or', 'other']
+        //}
+      //]);
 
-      createController();
-      $httpBackend.flush();
-      expect($scope.corpora).to.have.length(2);
-      done();
-    });
-  });
+      //createController();
+      //$httpBackend.flush();
+      //expect($scope.corpora).to.have.length(2);
+      //done();
+    //});
+  //});
 });
