@@ -187,6 +187,30 @@
     }
 
     $scope.onCorporaTabClick = function(e) {
+      //Reset the corpora selected if we've chosen an analysis
+      //that can only accept one corpora
+      var activeCount = 0;
+      $scope.corpora.forEach(function(corpus) {
+        if(corpus.active == true) {
+          activeCount++; 
+        }
+      });
+
+      if(activeCount > 1) {
+        //flush the list of selected corpora 
+        $scope.corpora.forEach(function(corpus) {
+          if(corpus.active) {
+            corpus.active = false; 
+          }
+        });
+        //Display a message to the user that corpora has been cleared
+        flash.info.setMessage($scope.selectedAnalysis.name + "Cannot be used with multiple" + 
+        " corpora. Please choose a new corpora.");
+
+        $rootScope.$emit("event:angularFlash");
+        
+      }
+      
       if(!$scope.selectedAnalysis) {
         flash.danger.setMessage('Please select an analysis before selecting corpora.');
         $rootScope.$emit("event:angularFlash");
