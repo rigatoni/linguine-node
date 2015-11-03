@@ -1,3 +1,5 @@
+![Build-Indicator](https://travis-ci.org/Pastafarians/linguine-node.svg?branch=master)
+
 # linguine-node
 
 ## Overview
