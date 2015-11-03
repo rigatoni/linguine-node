@@ -1,5 +1,5 @@
 (function(){
-
+ 
   angular
   .module('linguine.analysis')
   .controller('AnalysisNewController', AnalysisNewController);
@@ -91,7 +91,7 @@
         unfriendly_name: "removepunct",
         description: "Remove all punctuation, using NLTK's Regexp tokenizer to scan the text for patterns of punctuation marks."
       }
-    }
+    };
     
     /*
      * for each unfriendly_name of an analysis, there is a set of cleanup tasks
@@ -101,10 +101,10 @@
      * Key[analysisUnfriendlyName] => value [cleanupUnfriendlyName1, unfriendlyName2, ... n]
      */
     $scope.cleanupTypes = {
-      "pos_tag": [cleanups["stem_lancaster"], cleanups["stem_porter"], cleanups["stem_snowball"],
-        cleanups["lemmatize_wordnet"], cleanups["removecapsgreedy"], cleanups["removecapsnnp"],
-        cleanups["removepunct"] ]
-    }
+      "pos_tag": [cleanups.stem_lancaster, cleanups.stem_porter, cleanups.stem_snowball,
+        cleanups.lemmatize_wordnet, cleanups.removecapsgreedy, cleanups.removecapsnnp,
+        cleanups.removepunct ]
+    };
     
     $scope.tokenizerTypes = [
       {
@@ -127,7 +127,7 @@
         unfriendly_name: "word_tokenize_tabs",
         description: "Separates the text in each corpus into individual word tokens, splitting on tabs."
       }
-    ]
+    ];
 
     $http.get('/api/corpora')
     .success(function (data) {
@@ -153,8 +153,7 @@
       
       //User selects a corpora when one is already selected
       //and analysis can only accept 1 corpora
-      if(!e.corpus.active && activeCount == 1 
-      && !$scope.selectedAnalysis.multipleCorporaAllowed) {
+      if(!e.corpus.active && activeCount == 1  && !$scope.selectedAnalysis.multipleCorporaAllowed) {
         e.corpus.active = true;
         //Disable previous corpora
         activeCorpora[0].active = false; 
@@ -173,25 +172,26 @@
     };
 
     $scope.onCleanupClick = function(e) {
-      e.cleanup.active = !e.cleanup.active
+      e.cleanup.active = !e.cleanup.active;
     };
+
     $scope.onTokenizerClick = function(e) {
       $scope.selectedTokenizer = e.tokenizer;
-    }
+    };
 
     $scope.onPreprocessingTabClick = function(e) {
       if(!$scope.selectedAnalysis) {
         flash.danger.setMessage('Please select an analysis before selecting preprocessing options.');
         $rootScope.$emit("event:angularFlash");
       }
-    }
+    };
 
     $scope.onCorporaTabClick = function(e) {
       //Reset the corpora selected if we've chosen an analysis
       //that can only accept one corpora
       var activeCount = 0;
       $scope.corpora.forEach(function(corpus) {
-        if(corpus.active == true) {
+        if(corpus.active === true) {
           activeCount++; 
         }
       });
@@ -215,14 +215,14 @@
         flash.danger.setMessage('Please select an analysis before selecting corpora.');
         $rootScope.$emit("event:angularFlash");
       }
-    }
+    };
 
     $scope.onCreateAnalysis = function () {
       try {
         var payload = {
           corpora_ids: _.pluck(_.where($scope.corpora, 'active'), '_id'),
           cleanup: _.map(_.where($scope.cleanupTypes, 'active'), function (cleanupType) {
-            return cleanupType.unfriendly_name
+            return cleanupType.unfriendly_name;
           }),
           operation: $scope.selectedAnalysis.unfriendly_name,
           tokenizer: $scope.selectedTokenizer.unfriendly_name,
