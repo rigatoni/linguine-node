@@ -46,6 +46,12 @@
         unfriendly_name: "wordcloudop",
         description: "This operation is identical to TF-IDF when applied to a single corpus. Uses the NLTK Punkt tokenizer to separate terms. Used for finding the most frequent words a single corpus.",
         multipleCorporaAllowed: false
+      },
+      {
+        name: "Part of Speech Tagging (Stanford CoreNLP)",
+        unfriendly_name: "core-nlp",
+        description: "This operation performs a part of speech analysis on each word provided in the corpus. Each word will receive an identifier which represents the appropriate part of speech for the given word. ",
+        multipleCorporaAllowed: false 
       }
     ];
     
