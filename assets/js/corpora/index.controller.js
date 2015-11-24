@@ -15,7 +15,7 @@
 
     $scope.removeTag = function (corporaId, tagName) {
       $http
-        .put('/api/corpora/' + corporaId + '/removeTag', {tagName: tagName})
+        .put('api/corpora/' + corporaId + '/removeTag', {tagName: tagName})
         .success(function () {
           refreshCorpora();
         });
@@ -51,14 +51,14 @@
     };
 
     function refreshCorpora () {
-      $http.get('/api/corpora')
+      $http.get('api/corpora')
       .success(function (data) {
         $scope.corpora = data;
       });
     }
 
     function refreshQuota () {
-      $http.get('/api/corpora/quota')
+      $http.get('api/corpora/quota')
       .success(function (data) {
         $scope.quota = data;
       });

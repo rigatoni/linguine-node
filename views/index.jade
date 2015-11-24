@@ -1,36 +1,39 @@
 doctype html
 head
   title Linguine
-  base(href='/')
-  link(rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css')
-  link(rel='stylesheet' href='/css/app.css')
-  link(rel='stylesheet' href='/bower_components/font-awesome/css/font-awesome.css')
-  script(src='/bower_components/angular/angular.min.js')
-  link(href="/bower_components/jsoneditor/dist/jsoneditor.min.css" rel="stylesheet" type="text/css")
-  script(src="/bower_components/jsoneditor/dist/jsoneditor.min.js")
-  script(src='/bower_components/d3/d3.min.js')
-  script(src='/bower_components/lodash/dist/lodash.min.js')
-  script(src='/bower_components/ng-file-upload/angular-file-upload.min.js')
-  script(src='/bower_components/ui-router/release/angular-ui-router.min.js')
-  script(src='/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js')
-  script(src='/js/app.min.js')
+  base(href='http://nlp.rit.edu/linguine/')
+
+  link(rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.min.css')
+  link(rel='stylesheet' href='css/app.css')
+  link(rel='stylesheet' href='bower_components/font-awesome/css/font-awesome.css')
+  link(href='bower_components/jsoneditor/dist/jsoneditor.min.css' rel='stylesheet' type='text/css')
+
+  script(src='bower_components/angular/angular.min.js')
+  script(src="bower_components/jsoneditor/dist/jsoneditor.min.js")
+  script(src='bower_components/d3/d3.min.js')
+  script(src='bower_components/lodash/dist/lodash.min.js')
+  script(src='bower_components/ng-file-upload/angular-file-upload.min.js')
+  script(src='bower_components/ui-router/release/angular-ui-router.min.js')
+  script(src='bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js')
+  script(src='js/app.min.js')
+
 body(ng-app='linguine')
   nav.navbar.navbar-default(role='navigation' ng-controller='NavigationController')
     .container
       .navbar-header
         button.navbar-toggle(type="button" ng-click="collapsed = !collapsed")
           i.fa.fa-bars
-        a.navbar-brand(href='/') Linguine
+        a.navbar-brand(href='') Linguine
       .collapse.navbar-collapse(collapse="collapsed")
         ul.nav.navbar-nav(ng-if='loggedIn')
           li(ng-class='{active: isActive("linguine.corpora")}')
-            a(href='/corpora') Corpora
+            a(href='corpora') Corpora
         ul.nav.navbar-nav(ng-if='loggedIn')
           li(ng-class='{active: isActive("linguine.analysis")}')
-            a(href='/analysis') Analyses
+            a(href='analysis') Analyses
         ul.nav.navbar-nav(ng-if='loggedIn')
           li(ng-class='{active: isActive("linguine.documentation")}')
-            a(href='/documentation' disabled='true') Documentation [Coming Soon!]
+            a(href='documentation' disabled='true') Documentation [Coming Soon!]
         form.navbar-form.navbar-right(ng-submit='login()' ng-if='!loggedIn')
           form-group
             input.form-control(type='text' ng-model='user.username' placeholder='Username')

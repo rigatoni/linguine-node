@@ -10,20 +10,20 @@
       $window.history.back();
     };
 
-    $http.get('/api/analysis/' + $stateParams.id)
+    $http.get('api/analysis/' + $stateParams.id)
     .success(function (data) {
       $scope.analysis = data;
       $scope.defaultView();
       $scope.visualize();
     })
 
-    $http.get('/api/corpora')
+    $http.get('api/corpora')
     .success(function (data) {
       $scope.corpora = data;
     });
 
     $scope.delete = function () {
-      $http.delete('/api/analysis/' + $stateParams.id)
+      $http.delete('api/analysis/' + $stateParams.id)
       .success(function (data) {
         $state.go('linguine.analysis.index')
       })

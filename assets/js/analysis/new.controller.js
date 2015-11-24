@@ -133,7 +133,7 @@
       }
     ];
 
-    $http.get('/api/corpora')
+    $http.get('api/corpora')
     .success(function (data) {
       $scope.corpora = data;
     });
@@ -235,7 +235,7 @@
           user_id: ""
         };
 
-        $http.post('/api/analysis', payload)
+        $http.post('api/analysis', payload)
         .success(function (data) {
           $state.go('linguine.analysis.index');
         })

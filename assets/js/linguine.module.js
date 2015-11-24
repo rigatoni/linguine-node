@@ -21,7 +21,7 @@
       })
       .state('linguine.index', {
         url: '/',
-        templateUrl: '/templates/home/index',
+        templateUrl: 'templates/home/index',
         controller: 'IndexController'
       });
   }

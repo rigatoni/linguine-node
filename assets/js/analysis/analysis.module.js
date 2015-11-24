@@ -13,7 +13,7 @@
       })
       .state('linguine.analysis.index', {
         url: '',
-        templateUrl: '/templates/analysis/index',
+        templateUrl: 'templates/analysis/index',
         controller: 'AnalysisIndexController',
         resolve: {
           loggedIn: function(loggedIn) {
@@ -23,7 +23,7 @@
       })
       .state('linguine.analysis.new', {
         url: '/new',
-        templateUrl: '/templates/analysis/new',
+        templateUrl: 'templates/analysis/new',
         controller: 'AnalysisNewController',
         resolve: {
           loggedIn: function(loggedIn) {
@@ -33,7 +33,7 @@
       })
       .state('linguine.analysis.show', {
         url: '/:id',
-        templateUrl: '/templates/analysis/show',
+        templateUrl: 'templates/analysis/show',
         controller: 'AnalysisShowController',
         resolve: {
           loggedIn: function(loggedIn) {
