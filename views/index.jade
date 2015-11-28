@@ -1,10 +1,14 @@
 doctype html
 head
-  title Linguine
-  
   script.
-    var base = "<base href=\"" + window.location.href + "\">"
-    document.write(base);
+    var prodBase = "<base href=\"http://nlp.rit.edu/linguine/\">"
+    var isProd = window.location.hostname.indexOf('nlp.rit.edu') > -1;
+
+    if(isProd) {
+      document.write(prodBase);
+    }
+  
+  title Linguine
 
   link(rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.min.css')
   link(rel='stylesheet' href='css/app.css')
@@ -19,7 +23,6 @@ head
   script(src='bower_components/ui-router/release/angular-ui-router.min.js')
   script(src='bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js')
   script(src='js/app.min.js')
- 
 
 body(ng-app='linguine')
   nav.navbar.navbar-default(role='navigation' ng-controller='NavigationController')
