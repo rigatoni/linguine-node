@@ -1,14 +1,14 @@
 .container.app-container
   .input-group.input-group-lg
     .input-group-btn
-      a(ng-href="/corpora/new").new-corpus.btn.btn-primary
+      a(ng-href="corpora/new").new-corpus.btn.btn-primary
         | Create Corpus
     input.form-control(placeholder="Search by title, filename, and tags..." ng-model="searchText")
   div(ng-repeat="corpus in corpora | filter:searchText")
     .col-xs-12.col-sm-6.col-md-4.col-lg-3
       .card
         h3.no-margin
-          a(ng-href="/corpora/{{corpus._id}}") {{ corpus.title }}
+          a(ng-href="corpora/{{corpus._id}}") {{ corpus.title }}
         h4 {{ corpus.fileName }}
         p
           span(ng-repeat="tag in corpus.tags track by $index")

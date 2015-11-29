@@ -6,11 +6,11 @@
 
   function AnalysisIndexController ($scope, $http) {
 
-    $http.get('/api/corpora')
+    $http.get('api/corpora')
       .success(function (data) {
         $scope.corpora = data;
       });
-    $http.get('/api/analysis')
+    $http.get('api/analysis')
       .success(function (data) {
         $scope.analyses = data;
       });

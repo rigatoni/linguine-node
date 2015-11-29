@@ -67,7 +67,7 @@
   }).directive('flashMessages', function(flash) {
       return {
         restrict: 'E',
-        templateUrl: '/templates/flash/flash',
+        templateUrl: 'templates/flash/flash',
         link: function(scope, elem, attrs) {
           return scope.flash = flash;
         }
