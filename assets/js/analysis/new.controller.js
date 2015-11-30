@@ -6,6 +6,7 @@
 
   function AnalysisNewController($http, $scope, $state, $rootScope, flash) {
     $scope.analysisNotSelected = true;
+    $scope.needTokenizer = true; 
 
     /*
      * Analyses are the crux of the NLP workflow, so they should be 
@@ -43,13 +44,15 @@
         name: "Term Frequency Analysis",
         unfriendly_name: "wordcloudop",
         description: "This operation uses the NLTK Punkt tokenizer to separate terms. Used for finding the most frequent words a single corpus.",
-        multipleCorporaAllowed: false
+        multipleCorporaAllowed: false,
+        tokenizerRequired: true
       },
       {
         name: "Part of Speech Tagging (Stanford CoreNLP)",
         unfriendly_name: "core-nlp",
         description: "This operation performs a part of speech analysis on each word provided in the corpus. Each word will receive an identifier which represents the appropriate part of speech for the given word. ",
-        multipleCorporaAllowed: false 
+        multipleCorporaAllowed: false,
+        tokenizerRequired: false
       }
     ];
     
@@ -181,6 +184,7 @@
 
     $scope.onTokenizerClick = function(e) {
       $scope.selectedTokenizer = e.tokenizer;
+      $scope.needTokenizer = false;
     };
 
     $scope.onPreprocessingTabClick = function(e) {
@@ -222,6 +226,13 @@
     };
 
     $scope.onCreateAnalysis = function () {
+     
+      if($scope.needTokenizer && $scope.selectedAnalysis.tokenizerRequired) {
+        flash.info.setMessage('The selected analysis requires a tokenizer to complete.');
+        $rootScope.$emit("event:angularFlash");
+        return;
+      }
+
       try {
         var payload = {
           corpora_ids: _.pluck(_.where($scope.corpora, 'active'), '_id'),
