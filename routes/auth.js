@@ -32,8 +32,7 @@ module.exports = function(app){
           var files = ['1928 News article', '2015 News article', 'Macbeth excerpt', 'My Bondage and My Freedom excerpt',
             'Romeo and Juliet excerpt', 'The Raven', 'Tom Sawyer excerpt'];
           files.forEach(function(file) {
-            console.log(file);
-            var corpusPath = path.join('/var/www/linguine-node/assets/corpora', file);
+            var corpusPath = path.join('dirname', '../assets/corpora/', file);
             fs.readFile(corpusPath, function(err,data) {
               if(err) {
                 console.log(err);
