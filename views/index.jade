@@ -2,11 +2,10 @@ doctype html
 head
   script.
     var prodBase = "<base href=\"http://nlp.rit.edu/linguine/\">"
+    var devBase = "<base href=\"/\">";
     var isProd = window.location.hostname.indexOf('nlp.rit.edu') > -1;
 
-    if(isProd) {
-      document.write(prodBase);
-    }
+    isProd? document.write(prodBase) : document.write(devBase);
   
   title Linguine
 
