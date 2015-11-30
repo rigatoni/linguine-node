@@ -232,6 +232,17 @@
         $rootScope.$emit("event:angularFlash");
         return;
       }
+      
+      var numActive = 0;
+      $scope.corpora.forEach(function(corpora) {
+        if(corpora.active){numActive++;}
+      });
+
+      if(numActive == 0) {
+        flash.info.setMessage('Please select a corpora before continuing.');
+        $rootScope.$emit("event:angularFlash");
+        return;
+      }
 
       try {
         var payload = {
