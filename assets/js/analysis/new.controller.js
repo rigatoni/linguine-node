@@ -49,8 +49,15 @@
       },
       {
         name: "Part of Speech Tagging (Stanford CoreNLP)",
-        unfriendly_name: "core-nlp",
+        unfriendly_name: "nlp-pos",
         description: "This operation performs a part of speech analysis on each word provided in the corpus. Each word will receive an identifier which represents the appropriate part of speech for the given word. ",
+        multipleCorporaAllowed: false,
+        tokenizerRequired: false
+      },
+      {
+        name: "Named Entity Recognition (Stanford CoreNLP)",
+        unfriendly_name: "nlp-ner",
+        description: "This operation will classify each word in the corpus based on its status as a place, organization, location, or expression of time. If a term does not match as a named entity, it will recieve a status of '0' ", 
         multipleCorporaAllowed: false,
         tokenizerRequired: false
       }
@@ -110,6 +117,9 @@
     $scope.cleanupTypes = {
       "pos_tag": [cleanups.stem_lancaster, cleanups.stem_porter, cleanups.stem_snowball,
         cleanups.lemmatize_wordnet, cleanups.removecapsgreedy, cleanups.removecapsnnp,
+        cleanups.removepunct ],
+      "wordcloudop": [cleanups.stem_lancaster, cleanups.stem_porter, cleanups.stem_snowball,
+        cleanups.lemmatize_wordnet, cleanups.removecapsgreedy, cleanups.removecapsnnp,
         cleanups.removepunct ]
     };
     
@@ -119,11 +129,11 @@
         unfriendly_name: "word_tokenize_treebank",
         description: "Separates the text in each corpus into individual word tokens, using NLTK's Penn Treebank tokenizer. This is a good general purpose tokenizer to use."
       },
-      {
-        name: "Word Tokenize (Whitespace and Punctuation)",
-        unfriendly_name: "word_tokenize_whitespace_punct",
-        description: "Separates the text in each corpus into individual word tokens, splitting on whitespace and punctuation marks."
-      },
+      //{
+        //name: "Word Tokenize (Whitespace and Punctuation)",
+        //unfriendly_name: "word_tokenize_whitespace_punct",
+        //description: "Separates the text in each corpus into individual word tokens, splitting on whitespace and punctuation marks."
+      //},
       {
         name: "Word Tokenize (Spaces)",
         unfriendly_name: "word_tokenize_spaces",
