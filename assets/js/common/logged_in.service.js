@@ -6,7 +6,6 @@
   function loggedIn($q, $timeout, $http, $state, flash){
     return {
       loggedIn: function(){
-        console.log("This is getting checked");
         var deferred = $q.defer();
         $http.get('api/logged_in').success(function(user){
           if (user.loggedIn){
