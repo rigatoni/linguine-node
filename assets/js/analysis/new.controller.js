@@ -4,7 +4,7 @@
   .module('linguine.analysis')
   .controller('AnalysisNewController', AnalysisNewController);
 
-  function AnalysisNewController($http, $scope, $state, $rootScope, flash) {
+  function AnalysisNewController($http, $scope, $state, $rootScope, flash, usSpinnerService) {
     $scope.analysisNotSelected = true;
     $scope.needTokenizer = true; 
 
@@ -245,6 +245,9 @@
       }
 
       try {
+
+        usSpinnerService.spin('analysisProcSpinner');
+
         var payload = {
           corpora_ids: _.pluck(_.where($scope.corpora, 'active'), '_id'),
           cleanup: _.map(_.where($scope.cleanupTypes, 'active'), function (cleanupType) {
@@ -259,14 +262,17 @@
 
         $http.post('api/analysis', payload)
         .success(function (data) {
+          usSpinnerService.stop('analysisProcSpinner');
           $state.go('linguine.analysis.index');
         })
         .error(function (data) {
+          usSpinnerService.stop('analysisProcSpinner');
           flash.danger.setMessage('An error occurred while trying to create your analysis.');
           $rootScope.$emit("event:angularFlash");
           console.log(data);
         });
       } catch (error) {
+        usSpinnerService.stop('analysisProcSpinner');
         flash.danger.setMessage('There was a problem with your request.  Please review the options you have selected and try again.');
         $rootScope.$emit("event:angularFlash");
         console.log(error);

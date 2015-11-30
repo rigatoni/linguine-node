@@ -6,6 +6,7 @@
       'ui.bootstrap',
       'linguine.corpora',
       'linguine.analysis',
+      'angularSpinner'
       ])
     .config(config);
 
