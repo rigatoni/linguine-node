@@ -129,14 +129,18 @@
 
                   // Returns a flattened hierarchy containing all leaf nodes under the root.
                   function classes() {
+                    var count = 0;
                     var classes = [];
                     $scope.analysis.result.forEach(function (node) {
-                      var scalar;
+                      if(count <= 25) {
+                        var scalar;
 
-                      if ($scope.analysis.analysis == "wordcloudop") {
-                        scalar = node.frequency;
+                        if ($scope.analysis.analysis == "wordcloudop") {
+                          scalar = node.frequency;
+                        }
+                        classes.push({packageName: "", className: node.term, value: scalar + shift});
+                        count++;
                       }
-                      classes.push({packageName: "", className: node.term, value: scalar + shift});
                     });
                     return {children: classes};
                   }

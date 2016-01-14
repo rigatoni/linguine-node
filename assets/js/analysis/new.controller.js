@@ -4,8 +4,9 @@
   .module('linguine.analysis')
   .controller('AnalysisNewController', AnalysisNewController);
 
-  function AnalysisNewController($http, $scope, $state, $rootScope, flash) {
+  function AnalysisNewController($http, $scope, $state, $rootScope, flash, usSpinnerService) {
     $scope.analysisNotSelected = true;
+    $scope.needTokenizer = true; 
 
     /*
      * Analyses are the crux of the NLP workflow, so they should be 
@@ -43,13 +44,22 @@
         name: "Term Frequency Analysis",
         unfriendly_name: "wordcloudop",
         description: "This operation uses the NLTK Punkt tokenizer to separate terms. Used for finding the most frequent words a single corpus.",
-        multipleCorporaAllowed: false
+        multipleCorporaAllowed: false,
+        tokenizerRequired: true
       },
       {
         name: "Part of Speech Tagging (Stanford CoreNLP)",
-        unfriendly_name: "core-nlp",
+        unfriendly_name: "nlp-pos",
         description: "This operation performs a part of speech analysis on each word provided in the corpus. Each word will receive an identifier which represents the appropriate part of speech for the given word. ",
-        multipleCorporaAllowed: false 
+        multipleCorporaAllowed: false,
+        tokenizerRequired: false
+      },
+      {
+        name: "Named Entity Recognition (Stanford CoreNLP)",
+        unfriendly_name: "nlp-ner",
+        description: "This operation will classify each word in the corpus based on its status as a place, organization, location, or expression of time. If a term does not match as a named entity, it will recieve a status of '0' ", 
+        multipleCorporaAllowed: false,
+        tokenizerRequired: false
       }
     ];
     
@@ -107,6 +117,9 @@
     $scope.cleanupTypes = {
       "pos_tag": [cleanups.stem_lancaster, cleanups.stem_porter, cleanups.stem_snowball,
         cleanups.lemmatize_wordnet, cleanups.removecapsgreedy, cleanups.removecapsnnp,
+        cleanups.removepunct ],
+      "wordcloudop": [cleanups.stem_lancaster, cleanups.stem_porter, cleanups.stem_snowball,
+        cleanups.lemmatize_wordnet, cleanups.removecapsgreedy, cleanups.removecapsnnp,
         cleanups.removepunct ]
     };
     
@@ -116,11 +129,11 @@
         unfriendly_name: "word_tokenize_treebank",
         description: "Separates the text in each corpus into individual word tokens, using NLTK's Penn Treebank tokenizer. This is a good general purpose tokenizer to use."
       },
-      {
-        name: "Word Tokenize (Whitespace and Punctuation)",
-        unfriendly_name: "word_tokenize_whitespace_punct",
-        description: "Separates the text in each corpus into individual word tokens, splitting on whitespace and punctuation marks."
-      },
+      //{
+        //name: "Word Tokenize (Whitespace and Punctuation)",
+        //unfriendly_name: "word_tokenize_whitespace_punct",
+        //description: "Separates the text in each corpus into individual word tokens, splitting on whitespace and punctuation marks."
+      //},
       {
         name: "Word Tokenize (Spaces)",
         unfriendly_name: "word_tokenize_spaces",
@@ -181,6 +194,7 @@
 
     $scope.onTokenizerClick = function(e) {
       $scope.selectedTokenizer = e.tokenizer;
+      $scope.needTokenizer = false;
     };
 
     $scope.onPreprocessingTabClick = function(e) {
@@ -222,7 +236,28 @@
     };
 
     $scope.onCreateAnalysis = function () {
+     
+      if($scope.needTokenizer && $scope.selectedAnalysis.tokenizerRequired) {
+        flash.info.setMessage('The selected analysis requires a tokenizer to complete.');
+        $rootScope.$emit("event:angularFlash");
+        return;
+      }
+      
+      var numActive = 0;
+      $scope.corpora.forEach(function(corpora) {
+        if(corpora.active){numActive++;}
+      });
+
+      if(numActive == 0) {
+        flash.info.setMessage('Please select a corpora before continuing.');
+        $rootScope.$emit("event:angularFlash");
+        return;
+      }
+
       try {
+
+        usSpinnerService.spin('analysisProcSpinner');
+
         var payload = {
           corpora_ids: _.pluck(_.where($scope.corpora, 'active'), '_id'),
           cleanup: _.map(_.where($scope.cleanupTypes, 'active'), function (cleanupType) {
@@ -237,14 +272,17 @@
 
         $http.post('api/analysis', payload)
         .success(function (data) {
+          usSpinnerService.stop('analysisProcSpinner');
           $state.go('linguine.analysis.index');
         })
         .error(function (data) {
+          usSpinnerService.stop('analysisProcSpinner');
           flash.danger.setMessage('An error occurred while trying to create your analysis.');
           $rootScope.$emit("event:angularFlash");
           console.log(data);
         });
       } catch (error) {
+        usSpinnerService.stop('analysisProcSpinner');
         flash.danger.setMessage('There was a problem with your request.  Please review the options you have selected and try again.');
         $rootScope.$emit("event:angularFlash");
         console.log(error);

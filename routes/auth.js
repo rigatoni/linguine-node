@@ -29,11 +29,10 @@ module.exports = function(app){
     User.find({ dce: user.uid }).limit(1).exec(function(err, users){
       if(users.length === 0) {
         User.create({ dce: user.uid, name: user.cn }, function(err, user){
-          var files = ['1928 News article', '2015 News article', 'Macbeth excerpt', 'My Bondage and My Freedom excerpt',
+          var files = ['1928 News article', '2015 News article', 'My Bondage and My Freedom excerpt',
             'Romeo and Juliet excerpt', 'The Raven', 'Tom Sawyer excerpt'];
           files.forEach(function(file) {
-            console.log(file);
-            var corpusPath = path.join('/var/www/linguine-node/assets/corpora', file);
+            var corpusPath = path.join('dirname', '../assets/corpora/', file);
             fs.readFile(corpusPath, function(err,data) {
               if(err) {
                 console.log(err);

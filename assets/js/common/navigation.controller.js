@@ -4,7 +4,6 @@
   .controller('NavigationController', NavigationController);
 
   function NavigationController($scope, $http, $state, $rootScope, flash) {
-    console.log("Instantiating controller");
     $scope.user = {}
     $scope.collapsed = true;
     $http.get('api/logged_in')
