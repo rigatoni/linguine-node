@@ -5,7 +5,8 @@
       'ui.router',
       'ui.bootstrap',
       'linguine.corpora',
-      'linguine.analysis'
+      'linguine.analysis',
+      'angularSpinner'
       ])
     .config(config);
 
@@ -21,7 +22,7 @@
       })
       .state('linguine.index', {
         url: '/',
-        templateUrl: '/templates/home/index',
+        templateUrl: 'templates/home/index',
         controller: 'IndexController'
       });
   }

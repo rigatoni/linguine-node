@@ -11,7 +11,7 @@
     };
 
     $scope.delete = function () {
-      $http.delete('/api/corpora/' + $stateParams.id)
+      $http.delete('api/corpora/' + $stateParams.id)
         .success(function (data) {
           $state.go('linguine.corpora.index')
         })
@@ -21,7 +21,7 @@
         })
     };
 
-    $http.get('/api/corpora/' + $stateParams.id)
+    $http.get('api/corpora/' + $stateParams.id)
       .success(function (data) {
         $scope.corpus = data;
       })

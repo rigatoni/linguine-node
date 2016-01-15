@@ -27,3 +27,7 @@ node_modules
 # Users Environment Variables
 .lock-wscript
 public
+
+#All IDE-generated files
+.idea
+*.swp

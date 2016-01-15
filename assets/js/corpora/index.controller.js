@@ -15,7 +15,7 @@
 
     $scope.removeTag = function (corporaId, tagName) {
       $http
-        .put('/api/corpora/' + corporaId + '/removeTag', {tagName: tagName})
+        .put('api/corpora/' + corporaId + '/removeTag', {tagName: tagName})
         .success(function () {
           refreshCorpora();
         });
@@ -26,7 +26,7 @@
       var modalInstance = $modal.open({
         template:
           '<div class="modal-header">' + 
-            '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' + 
+            '<button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>' +
             '<h4 class="modal-title">Add Tag</h4>' + 
           '</div>' + 
           '<div class="modal-body">' + 
@@ -51,14 +51,14 @@
     };
 
     function refreshCorpora () {
-      $http.get('/api/corpora')
+      $http.get('api/corpora')
       .success(function (data) {
         $scope.corpora = data;
       });
     }
 
     function refreshQuota () {
-      $http.get('/api/corpora/quota')
+      $http.get('api/corpora/quota')
       .success(function (data) {
         $scope.quota = data;
       });

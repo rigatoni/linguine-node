@@ -28,21 +28,21 @@ describe('CorporaNewController', function(){
       });
   }));
 
-  describe('onCreateCorpus', function(){
-    it('should work', function(done){
+  //describe('onCreateCorpus', function(){
+    //it('should work', function(done){
 
 
-      createController();
+      //createController();
 
-      $scope.corpus = {
-        fileName: 'Thing',
-        fileSize: 100,
-        fileType: 'text'
-      };
-      $scope.onCreateCorpus();
-      $httpBackend.expectPOST('/api/corpora').respond(201, {});
-      $httpBackend.flush();
-      done();
-    });
-  });
+      //$scope.corpus = {
+        //fileName: 'Thing',
+        //fileSize: 100,
+        //fileType: 'text'
+      //};
+      //$scope.onCreateCorpus();
+      //$httpBackend.expectPOST('/api/corpora').respond(201, {});
+      //$httpBackend.flush();
+      //done();
+    //});
+  //});
 });

@@ -8,15 +8,21 @@
         btn.btn.btn-lg.btn-default(ng-click="back()") Back
         btn.btn.btn-lg.btn-default(ng-click="delete()")
           .glyphicon.glyphicon-trash
-  br
+            br
   h4.no-margin(ng-repeat="corpora_id in analysis.corpora_ids") {{ findCorpus(corpora_id).title }} ({{findCorpus(corpora_id).fileName}})
   tabset(justified='true')
-      tab(heading='Default View')
-        .white.well
-          .wrap{{ results }}
-      tab(heading='Visualization')
-        #graph
+    tab(heading='Visualization')
+      #graph
+
+        div(ng-if="analysis.analysis !== 'wordcloudop'")
+          h3 Hold tight. Visualizations for this analysis will be coming later this year!
+          img(src="img/soon.png") 
+
         div(ng-if="analysis.analysis == 'pos_tag'")
           div(ng-repeat="result in analysis.result",style="margin-top: 20px;")
             span(ng-repeat="tag in result.tags")
               span(style="padding: 10px; font-size: 22px;" tooltip="{{ tag[1] }}"){{ tag[0] }}
+
+    tab(heading='Default View')
+      .white.well
+        div(id="jsoneditor", class="jsoneditor")

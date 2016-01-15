@@ -7,7 +7,7 @@
     return {
       loggedIn: function(){
         var deferred = $q.defer();
-        $http.get('/api/logged_in').success(function(user){
+        $http.get('api/logged_in').success(function(user){
           if (user.loggedIn){
             $timeout(deferred.resolve, 0);
           }
