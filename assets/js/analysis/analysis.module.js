@@ -1,7 +1,9 @@
 (function(){
 
   angular
-    .module('linguine.analysis', ['ui.router'])
+  .module('linguine.analysis', [
+    'ui.router'
+  ])
     .config(config);
 
   function config($stateProvider){

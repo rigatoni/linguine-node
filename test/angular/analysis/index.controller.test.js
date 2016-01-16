@@ -2,8 +2,11 @@ describe('AnalysisIndexController', function(){
   var createController, $controller, $rootScope, $scope, $httpBackend;
 
   beforeEach(module('linguine'));
+
   beforeEach(inject(function($injector){
+
     $controller = $injector.get('$controller');
+
     $rootScope = $injector.get('$rootScope');
     $scope = $rootScope.$new();
     $httpBackend = $injector.get('$httpBackend');
@@ -16,7 +19,7 @@ describe('AnalysisIndexController', function(){
   }));
 
   it('should be able to find the right corpus', function(done){
-    $httpBackend.whenGET('/api/corpora').respond(200, [
+    $httpBackend.whenGET('api/corpora').respond(200, [
       {
         _id: 1,
         user_id: 1,
@@ -40,7 +43,7 @@ describe('AnalysisIndexController', function(){
         tags: ['here', 'are', 'tags', 'word']
       }
     ]);
-    $httpBackend.whenGET('/api/analysis').respond(200, []);
+    $httpBackend.whenGET('api/analysis').respond(200, []);
 
     createController();
     $httpBackend.flush();

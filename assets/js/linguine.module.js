@@ -5,8 +5,8 @@
       'ui.router',
       'ui.bootstrap',
       'linguine.corpora',
-      'linguine.analysis',
-      'angularSpinner'
+      'angularSpinner',
+      'linguine.analysis'
       ])
     .config(config);
 

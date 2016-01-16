@@ -23,6 +23,7 @@ module.exports = function(config) {
       'public/bower_components/ng-file-upload/angular-file-upload.min.js',
       'public/bower_components/ui-router/release/angular-ui-router.min.js',
       'public/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+      'public/bower_components/angular-spinner/angular-spinner.min.js',
       'assets/js/linguine.module.js',
       'assets/js/corpora/corpora.module.js',
       'assets/js/analysis/analysis.module.js',
