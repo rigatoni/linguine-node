@@ -11,9 +11,9 @@ describe('CorporaShowController', function(){
     $state = $injector.get('$state');
     $stateParams = $injector.get('$stateParams');
     $controller = $injector.get('$controller');
-    $httpBackend.whenGET('/templates/home/index').respond(200, '');
-    $httpBackend.whenGET('/templates/corpora/index').respond(200, '');
-    $httpBackend.whenGET('/api/logged_in').respond(200, {
+    $httpBackend.whenGET('templates/home/index').respond(200, '');
+    $httpBackend.whenGET('templates/corpora/index').respond(200, '');
+    $httpBackend.whenGET('api/logged_in').respond(200, {
         loggedIn: true,
         user: {
           dce: 'jd1234',
@@ -41,9 +41,9 @@ describe('CorporaShowController', function(){
 
   describe('delete', function(){
     it('should work when logged in', function(done){
-      $httpBackend.whenGET('/api/corpora/1').respond(200, '')
+      $httpBackend.whenGET('api/corpora/1').respond(200, '')
       $stateParams.id = 1;
-      $httpBackend.expectDELETE('/api/corpora/1').respond(204, {});
+      $httpBackend.expectDELETE('api/corpora/1').respond(204, {});
       createController();
       $scope.delete();
       $httpBackend.flush();
@@ -52,9 +52,9 @@ describe('CorporaShowController', function(){
     });
 
     it('should work when logged in', function(done){
-      $httpBackend.whenGET('/api/corpora/1').respond(200, '')
+      $httpBackend.whenGET('api/corpora/1').respond(200, '')
       $stateParams.id = 1;
-      $httpBackend.expectDELETE('/api/corpora/1').respond(401, {});
+      $httpBackend.expectDELETE('api/corpora/1').respond(401, {});
       createController();
       $scope.delete();
       $httpBackend.flush();
@@ -66,7 +66,7 @@ describe('CorporaShowController', function(){
   describe('getting corpus', function(){
 
     it('should work when logged in', function(done){
-      $httpBackend.expectGET('/api/corpora/1').respond(200, {
+      $httpBackend.expectGET('api/corpora/1').respond(200, {
         _id: 1,
         user_id: 1,
         createdAt: Date(),
@@ -84,7 +84,7 @@ describe('CorporaShowController', function(){
       done();
     });
     it('should work when logged in', function(done){
-      $httpBackend.expectGET('/api/corpora/1').respond(401, {});
+      $httpBackend.expectGET('api/corpora/1').respond(401, {});
       $stateParams.id = 1;
       createController();
       $httpBackend.flush();
