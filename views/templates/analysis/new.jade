@@ -44,5 +44,9 @@
               strong {{ cleanup.name}}
             p.list-group-item-text
               | {{ cleanup.description}}
+        
+        div(class="analysis-name-text-field") 
+          label(class="analysis-name-label") Analysis Name:
+            input(name="Analysis name:" type="text" ngModel="analysisName" class="form-control ng-pristine ng-valid ng-touched")
 
         button.btn.btn-lg.btn-primary.full-width(type="submit") Create Analysis
