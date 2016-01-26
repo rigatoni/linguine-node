@@ -8,6 +8,8 @@
     $scope.analysisNotSelected = true;
     $scope.needTokenizer = true; 
 
+    $scope.analysis = {analysisName: ""};
+
     /*
      * Analyses are the crux of the NLP workflow, so they should be 
      * chosen before anything else. Analysis can be run on either
@@ -267,6 +269,7 @@
           tokenizer: $scope.selectedTokenizer? $scope.selectedTokenizer.unfriendly_name: "",
           library: "",
           transaction_id: "",
+          analysis_name: $scope.analysis.analysisName,
           user_id: ""
         };
 
@@ -279,13 +282,11 @@
           usSpinnerService.stop('analysisProcSpinner');
           flash.danger.setMessage('An error occurred while trying to create your analysis.');
           $rootScope.$emit("event:angularFlash");
-          console.log(data);
         });
       } catch (error) {
         usSpinnerService.stop('analysisProcSpinner');
         flash.danger.setMessage('There was a problem with your request.  Please review the options you have selected and try again.');
         $rootScope.$emit("event:angularFlash");
-        console.log(error);
       }
     };
   }
