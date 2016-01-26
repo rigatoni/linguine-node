@@ -7,7 +7,6 @@
   function AnalysisNewController($http, $scope, $state, $rootScope, flash, usSpinnerService) {
     $scope.analysisNotSelected = true;
     $scope.needTokenizer = true; 
-
     $scope.analysis = {analysisName: ""};
 
     /*
@@ -185,6 +184,7 @@
 
     $scope.onAnalysisClick = function (e) {
       $scope.selectedAnalysis = e.analysis;
+      $scope.analysis.analysisName = e.analysis.name;
 
       //re-enable the preprocessing tab once an analysis is clicked
       $scope.analysisNotSelected = false;
