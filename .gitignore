@@ -31,3 +31,6 @@ public
 #All IDE-generated files
 .idea
 *.swp
+
+# Process kill script (jmp3833)
+kill-procs.sh

@@ -11,6 +11,7 @@
   .list-group
     a.list-group-item(ng-repeat="analysis in analyses",ng-href="analysis/{{analysis._id}}")
       h4.list-group-item-heading
-        strong {{ analysis.analysis }} Analysis
+        strong {{ analysis.analysis_name }}
       p.list-group-item-text
         div(ng-repeat="corpora_id in analysis.corpora_ids") {{ findCorpus(corpora_id).title }} ({{findCorpus(corpora_id).fileName}})
+        p Analysis type: {{analysis.analysis}}

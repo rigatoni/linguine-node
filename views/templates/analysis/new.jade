@@ -3,7 +3,7 @@
   //Instantiate loading spinner for those long analyses
   span(us-spinner="{radius:30, width:8, length: 16, color:'blue'}" spinner-key="analysisProcSpinner")
 
-  form(ng-submit="onCreateAnalysis()")
+  form(name="analysisForm" ng-submit="onCreateAnalysis()")
     tabset(justified='true')
 
       tab(heading='1. Select Analysis Type')
@@ -44,5 +44,9 @@
               strong {{ cleanup.name}}
             p.list-group-item-text
               | {{ cleanup.description}}
+        
+        div(class="analysis-name-text-field") 
+          label(class="analysis-name-label") Analysis Name:
+            input(name="Analysis name:" type="text" ng-model="analysis.analysisName" class="form-control ng-pristine ng-valid ng-touched")
 
         button.btn.btn-lg.btn-primary.full-width(type="submit") Create Analysis

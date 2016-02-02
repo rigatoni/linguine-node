@@ -7,6 +7,7 @@
   function AnalysisNewController($http, $scope, $state, $rootScope, flash, usSpinnerService) {
     $scope.analysisNotSelected = true;
     $scope.needTokenizer = true; 
+    $scope.analysis = {analysisName: ""};
 
     /*
      * Analyses are the crux of the NLP workflow, so they should be 
@@ -183,6 +184,7 @@
 
     $scope.onAnalysisClick = function (e) {
       $scope.selectedAnalysis = e.analysis;
+      $scope.analysis.analysisName = e.analysis.name;
 
       //re-enable the preprocessing tab once an analysis is clicked
       $scope.analysisNotSelected = false;
@@ -267,6 +269,7 @@
           tokenizer: $scope.selectedTokenizer? $scope.selectedTokenizer.unfriendly_name: "",
           library: "",
           transaction_id: "",
+          analysis_name: $scope.analysis.analysisName,
           user_id: ""
         };
 
@@ -279,13 +282,11 @@
           usSpinnerService.stop('analysisProcSpinner');
           flash.danger.setMessage('An error occurred while trying to create your analysis.');
           $rootScope.$emit("event:angularFlash");
-          console.log(data);
         });
       } catch (error) {
         usSpinnerService.stop('analysisProcSpinner');
         flash.danger.setMessage('There was a problem with your request.  Please review the options you have selected and try again.');
         $rootScope.$emit("event:angularFlash");
-        console.log(error);
       }
     };
   }
