@@ -17,30 +17,6 @@
      * by the tokenizerTypes and cleanupTypes objects.
      */
     $scope.analysisTypes = [
-      //{
-        //name: "Part of Speech Tagging",
-        //unfriendly_name: "pos_tag",
-        //description: "Uses the TextBlob tagger to generate Part-of-Speech tags for text.",
-        //multipleCorporaAllowed: true
-      //},
-      //{
-        //name: "Sentence Tokenizer",
-        //unfriendly_name: "sentence_tokenize",
-        //description: "Uses the NLTK sentence tokenizer to break a corpus up into sentences.",
-        //multipleCorporaAllowed: false 
-      //},
-      //{
-        //name: "Term Frequency - Inverse Document Frequency",
-        //unfriendly_name: "tfidf",
-        //description: "Uses the NLTK Punkt tokenizer to separate terms. Best applied to a large set of corpora. Useful for finding the most important words in the collection of words.",
-        //multipleCorporaAllowed: true
-      //},
-      //{
-        //name: "Topic Modeling",
-        //unfriendly_name: "topic_model",
-        //description: "Uses Gensim to detect and group the similar topics in a set of corpora.",
-        //multipleCorporaAllowed: true
-      //},
       {
         name: "Term Frequency Analysis",
         unfriendly_name: "wordcloudop",
