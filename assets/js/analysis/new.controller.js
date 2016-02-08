@@ -8,6 +8,8 @@
     $scope.analysisNotSelected = true;
     $scope.needTokenizer = true; 
     $scope.analysis = {analysisName: ""};
+    $scope.preprocAvailable = true;
+
 
     /*
      * Analyses are the crux of the NLP workflow, so they should be 
@@ -22,6 +24,7 @@
         unfriendly_name: "wordcloudop",
         description: "This operation uses the NLTK Punkt tokenizer to separate terms. Used for finding the most frequent words a single corpus.",
         multipleCorporaAllowed: false,
+        tokenAllowed: true,
         tokenizerRequired: true
       },
       {
@@ -29,12 +32,14 @@
         unfriendly_name: "nlp-pos",
         description: "This operation performs a part of speech analysis on each word provided in the corpus. Each word will receive an identifier which represents the appropriate part of speech for the given word. ",
         multipleCorporaAllowed: false,
+        tokenAllowed: false,
         tokenizerRequired: false
       },
       {
         name: "Named Entity Recognition (Stanford CoreNLP)",
         unfriendly_name: "nlp-ner",
         description: "This operation will classify each word in the corpus based on its status as a place, organization, location, or expression of time. If a term does not match as a named entity, it will recieve a status of '0' ", 
+        tokenAllowed: false,
         multipleCorporaAllowed: false,
         tokenizerRequired: false
       }
@@ -92,12 +97,10 @@
      * Key[analysisUnfriendlyName] => value [cleanupUnfriendlyName1, unfriendlyName2, ... n]
      */
     $scope.cleanupTypes = {
-      "pos_tag": [cleanups.stem_lancaster, cleanups.stem_porter, cleanups.stem_snowball,
-        cleanups.lemmatize_wordnet, cleanups.removecapsgreedy, cleanups.removecapsnnp,
-        cleanups.removepunct ],
-      "wordcloudop": [cleanups.stem_lancaster, cleanups.stem_porter, cleanups.stem_snowball,
-        cleanups.lemmatize_wordnet, cleanups.removecapsgreedy, cleanups.removecapsnnp,
-        cleanups.removepunct ]
+      "pos_tag": [cleanups.stem_lancaster, cleanups.stem_porter, cleanups.stem_snowball, cleanups.lemmatize_wordnet, cleanups.removecapsgreedy, cleanups.removecapsnnp, cleanups.removepunct ],
+      "wordcloudop": [cleanups.stem_lancaster, cleanups.stem_porter, cleanups.stem_snowball, cleanups.lemmatize_wordnet, cleanups.removecapsgreedy, cleanups.removecapsnnp, cleanups.removepunct ],
+      "nlp-pos": [],
+      "nlp-ner": []
     };
     
     $scope.tokenizerTypes = [
@@ -106,21 +109,6 @@
         unfriendly_name: "word_tokenize_treebank",
         description: "Separates the text in each corpus into individual word tokens, using NLTK's Penn Treebank tokenizer. This is a good general purpose tokenizer to use."
       },
-      //{
-        //name: "Word Tokenize (Whitespace and Punctuation)",
-        //unfriendly_name: "word_tokenize_whitespace_punct",
-        //description: "Separates the text in each corpus into individual word tokens, splitting on whitespace and punctuation marks."
-      //},
-      {
-        name: "Word Tokenize (Spaces)",
-        unfriendly_name: "word_tokenize_spaces",
-        description: "Separates the text in each corpus into individual word tokens, splitting on spaces."
-      },
-      {
-        name: "Word Tokenize (Tabs)",
-        unfriendly_name: "word_tokenize_tabs",
-        description: "Separates the text in each corpus into individual word tokens, splitting on tabs."
-      }
     ];
 
     $http.get('api/corpora')
@@ -174,12 +162,23 @@
       $scope.selectedTokenizer = e.tokenizer;
       $scope.needTokenizer = false;
     };
+    
+    $scope.checkIfNoPreprocessingAvailable = function() {
+      var analysisName = $scope.selectedAnalysis.unfriendly_name;
+      var noCleanupTypes = $scope.cleanupTypes[analysisName].length == 0; 
+
+      if(noCleanupTypes && !$scope.selectedAnalysis.tokenAllowed) {
+          flash.info.setMessage("No preprocessing options are available for " +            $scope.selectedAnalysis.name);
+          $rootScope.$emit("event:angularFlash");
+      }
+    }
 
     $scope.onPreprocessingTabClick = function(e) {
       if(!$scope.selectedAnalysis) {
         flash.danger.setMessage('Please select an analysis before selecting preprocessing options.');
         $rootScope.$emit("event:angularFlash");
       }
+      $scope.checkIfNoPreprocessingAvailable();
     };
 
     $scope.onCorporaTabClick = function(e) {
