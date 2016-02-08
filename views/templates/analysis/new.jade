@@ -30,8 +30,7 @@
       tab(disabled="analysisNotSelected" heading='3. Select Preprocessing Options',
         ng-click="onPreprocessingTabClick(this)")
         .list-group
-
-          a.list-group-item(ng-repeat="tokenizer in tokenizerTypes",
+          a.list-group-item(ng-show="selectedAnalysis.tokenAllowed" ng-repeat="tokenizer in tokenizerTypes",
             ng-class="{active:selectedTokenizer==tokenizer}", ng-click="onTokenizerClick(this)")
             h4.list-group-item-heading
               strong {{ tokenizer.name }}
