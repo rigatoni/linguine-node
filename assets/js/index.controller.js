@@ -35,14 +35,14 @@
 
       var fill = d3.scale.ordinal().range(["#ff7f0e","aec7e8","#ffbb78","#2ca02c","#ff9896","#9467bd","#17becf","#d62728","#d62728"]);
 
-      d3.layout.cloud().size([450, 450])
+      d3.layout.cloud().size([400, 400])
           .words(words)
           .rotate(function() {
               return ~~(Math.random() * 2) * 90;
           })
           .font("Impact")
           .fontSize(function(d) {
-              return 4*(d.frequency)
+              return 3.5*(d.frequency)
           })
           .on("end", draw)
           .start();
@@ -50,8 +50,8 @@
 
       function draw(words) {
           d3.select("#graph").append("svg")
-              .attr("width", 400)
-              .attr("height", 400)
+              .attr("width", 350)
+              .attr("height", 350)
               .append("g")
               .attr("transform", "translate(150,150)")
               .selectAll("text")
