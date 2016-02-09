@@ -6,7 +6,73 @@
 
   function IndexController ($scope) {
 
-    var diameter = 100,
+      var fill = d3.scale.category20();
+      var words = [{
+          text: "the",
+          frequency: 20
+      }, {
+          text: "quick",
+          frequency: 10
+      }, {
+          text: "brown",
+          frequency: 10
+      }, {
+          text: "fox",
+          frequency: 10
+      }, {
+          text: "jumps",
+          frequency: 10
+      }, {
+          text: "over",
+          frequency: 10
+      }, {
+          text: "lazy",
+          frequency: 10
+      }, {
+          text: "dog",
+          frequency: 10
+      }]
+
+      d3.layout.cloud().size([300, 300])
+          .words(words)
+          .rotate(function() {
+              return ~~(Math.random() * 2) * 90;
+          })
+          .font("Impact")
+          .fontSize(function(d) {
+              return 3*(d.frequency)
+          })
+          .on("end", draw)
+          .start();
+
+
+      function draw(words) {
+          d3.select("#graph").append("svg")
+              .attr("width", 300)
+              .attr("height", 300)
+              .append("g")
+              .attr("transform", "translate(150,150)")
+              .selectAll("text")
+              .data(words)
+              .enter().append("text")
+              .style("font-size", function(d) {
+                  return d.size + "px";
+              })
+              .style("font-family", "Impact")
+              .style("fill", function(d, i) {
+                  return fill(i);
+              })
+              .attr("text-anchor", "middle")
+              .attr("transform", function(d) {
+                  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+              })
+              .text(function(d) {
+                  return d.text;
+              });
+      }
+
+
+/*    var diameter = 100,
     format = d3.format(",d"),
     color = d3.scale.category20c();
 
@@ -86,7 +152,6 @@
       return {children: classes};
     }
 
-    d3.select(self.frameElement).style("height", diameter + "px");
-
+    d3.select(self.frameElement).style("height", diameter + "px");*/
   }
 })();
