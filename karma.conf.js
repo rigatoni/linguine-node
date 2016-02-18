@@ -19,6 +19,7 @@ module.exports = function(config) {
       'public/bower_components/angular/angular.min.js',
       'public/bower_components/angular-mocks/angular-mocks.js',
       'public/bower_components/d3/d3.min.js',
+      'public/bower_components/d3-cloud/build/d3.layout.cloud.js',
       'public/bower_components/lodash/dist/lodash.min.js',
       'public/bower_components/ng-file-upload/angular-file-upload.min.js',
       'public/bower_components/ui-router/release/angular-ui-router.min.js',
