@@ -94,7 +94,7 @@
     }
 
     $scope.visualizeWordcloud = function() {
-      var diameter = 100,
+      /*var diameter = 100,
         format = d3.format(".3"),
           color = d3.scale.category20c()
           shift = 0.1;
@@ -145,7 +145,7 @@
                     return {children: classes};
                   }
 
-                  d3.select(self.frameElement).style("height", diameter + "px");
+                  d3.select(self.frameElement).style("height", diameter + "px");*/
     }
 
     $scope.visualize = function () {
