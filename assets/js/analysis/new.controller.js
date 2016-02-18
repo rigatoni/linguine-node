@@ -42,6 +42,14 @@
         tokenAllowed: false,
         multipleCorporaAllowed: false,
         tokenizerRequired: false
+      },
+      {
+        name: "Sentiment (Stanford CoreNLP)",
+        unfriendly_name: "nlp-sentiment",
+        description: "This operation will measure the sentiment of the corpus, sentences, and tokens using models provided by Stanford Core NLP.",
+        tokenAllowed: false,
+        multipleCorporaAllowed: false,
+        tokenizerRequired: false
       }
     ];
     
@@ -100,7 +108,8 @@
       "pos_tag": [cleanups.stem_lancaster, cleanups.stem_porter, cleanups.stem_snowball, cleanups.lemmatize_wordnet, cleanups.removecapsgreedy, cleanups.removecapsnnp, cleanups.removepunct ],
       "wordcloudop": [cleanups.stem_lancaster, cleanups.stem_porter, cleanups.stem_snowball, cleanups.lemmatize_wordnet, cleanups.removecapsgreedy, cleanups.removecapsnnp, cleanups.removepunct ],
       "nlp-pos": [],
-      "nlp-ner": []
+      "nlp-ner": [],
+      "nlp-sentiment": []
     };
     
     $scope.tokenizerTypes = [
