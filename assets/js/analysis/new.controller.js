@@ -108,7 +108,8 @@
       "pos_tag": [cleanups.stem_lancaster, cleanups.stem_porter, cleanups.stem_snowball, cleanups.lemmatize_wordnet, cleanups.removecapsgreedy, cleanups.removecapsnnp, cleanups.removepunct ],
       "wordcloudop": [cleanups.stem_lancaster, cleanups.stem_porter, cleanups.stem_snowball, cleanups.lemmatize_wordnet, cleanups.removecapsgreedy, cleanups.removecapsnnp, cleanups.removepunct ],
       "nlp-pos": [],
-      "nlp-ner": []
+      "nlp-ner": [],
+      "nlp-sentiment": []
     };
     
     $scope.tokenizerTypes = [
