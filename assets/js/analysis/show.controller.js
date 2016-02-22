@@ -95,7 +95,6 @@
 
     $scope.visualizeWordcloud = function() {
 
-
         // parses the list of words from the analysis results
         function getWords() {
             var count = 0;
@@ -107,26 +106,27 @@
             return {children: classes};
         }
 
-        var fill = d3.scale.category20c(); // color scheme for words
+        var fill = d3.scale.category20(); // color scheme for words
         var words = getWords().children;
+
         // setup for the word cloud
-        d3.layout.cloud().size([600, 600])
+        d3.layout.cloud().size([400, 400])
             .words(words)
             .rotate(function() {
                 return ~~(Math.random() * 2) * 90;
             })
             .font("Impact")
             .fontSize(function(d) {
-                return 3.5*(d.frequency)
+                return 4.5*(d.frequency)
             })
             .on("end", draw)
             .start();
 
         // draw the word cloud out
         function draw(words) {
-            d3.select("#graph").append("svg")
-                .attr("width", 600)
-                .attr("height", 600)
+            d3.select("#graph").append("svg").attr("viewBox", "0 0 200 300")
+                .attr("width", 700)
+                .attr("height", 400)
                 .append("g")
                 .attr("transform", "translate(150,150)")
                 .selectAll("text")
@@ -146,6 +146,7 @@
                 .text(function(d) {
                     return d.text;
                 });
+            d3.select(self.frameElement).style("height", 100 + "px");
         }
 
       /*var diameter = 100,
