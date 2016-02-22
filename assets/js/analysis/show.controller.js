@@ -94,6 +94,60 @@
     }
 
     $scope.visualizeWordcloud = function() {
+
+        console.log($scope.analysis.result)
+
+      var fill = d3.scale.category20c();
+
+        function getWords() {
+            var count = 0;
+            var classes = [];
+            $scope.analysis.result.forEach(function (node) {
+                classes.push({packageName: "", term: node.term, frequency: node.frequency});
+                count++;
+            });
+            return {children: classes};
+        }
+
+
+        d3.layout.cloud().size([400, 400])
+            .words(getWords())
+            .rotate(function() {
+                return ~~(Math.random() * 2) * 90;
+            })
+            .font("Impact")
+            .fontSize(function(d) {
+                return 3.5*(d.frequency)
+            })
+            .on("end", draw)
+            .start();
+
+
+        function draw(words) {
+            d3.select("#graph").append("svg")
+                .attr("width", 350)
+                .attr("height", 350)
+                .append("g")
+                .attr("transform", "translate(150,150)")
+                .selectAll("text")
+                .data(words)
+                .enter().append("text")
+                .style("font-size", function(d) {
+                    return d.size + "px";
+                })
+                .style("font-family", "Impact")
+                .style("fill", function(d, i) {
+                    return fill(i);
+                })
+                .attr("text-anchor", "middle")
+                .attr("transform", function(d) {
+                    return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                })
+                .text(function(d) {
+                    return d.term;
+                });
+        }
+
       /*var diameter = 100,
         format = d3.format(".3"),
           color = d3.scale.category20c()
