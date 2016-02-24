@@ -64,11 +64,6 @@
         unfriendly_name: "stem_porter",
         description: "Stem words using the NLTK Porter Stemmer. Converts inflected words in the corpus to their base form. This is a good general purpose stemmer to use."
       },
-      "lemmatize_wordnet": {
-        name: "Lemmatize",
-        unfriendly_name: "lemmatize_wordnet",
-        description: "Convert words to their lemmas using the NLTK WordNet Lemmatizer. E.g: Walk, walking, and walked will be converted to walk, and better and good would both be converted to good."
-      },
       "removecapsnnp": {
         name: "Remove Capitalization (NNP)",
         unfriendly_name: "removecapsnnp",
@@ -89,8 +84,8 @@
      * Key[analysisUnfriendlyName] => value [cleanupUnfriendlyName1, unfriendlyName2, ... n]
      */
     $scope.cleanupTypes = {
-      "pos_tag": [cleanups.stem_porter, cleanups.lemmatize_wordnet, cleanups.removecapsnnp, cleanups.removepunct ],
-      "wordcloudop": [cleanups.stem_porter, cleanups.lemmatize_wordnet, cleanups.removecapsnnp, cleanups.removepunct ],
+      "pos_tag": [cleanups.stem_porter, cleanups.removecapsnnp, cleanups.removepunct ],
+      "wordcloudop": [cleanups.stem_porter, cleanups.removecapsnnp, cleanups.removepunct ],
       "nlp-pos": [],
       "nlp-ner": [],
       "nlp-sentiment": []
