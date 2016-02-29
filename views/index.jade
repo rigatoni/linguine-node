@@ -42,7 +42,7 @@ body(ng-app='linguine')
             a(href='analysis') Analyses
         ul.nav.navbar-nav(ng-if='loggedIn')
           li(ng-class='{active: isActive("linguine.documentation")}')
-            a(href='documentation' disabled='true') Documentation [Coming Soon!]
+            a(href='https://github.com/Pastafarians/linguine/wiki') Documentation
         form.navbar-form.navbar-right(ng-submit='login()' ng-if='!loggedIn')
           form-group
             input.form-control(type='text' ng-model='user.username' placeholder='Username')

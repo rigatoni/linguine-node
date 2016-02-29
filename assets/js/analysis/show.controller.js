@@ -34,7 +34,7 @@
 
     $scope.findCorpus = function (id) {
       return _.find($scope.corpora, {'_id': id});
-    }
+    };
 
     $scope.defaultView = function() {
       $scope.results = $scope.analysis.result;
@@ -42,7 +42,7 @@
       var container = document.getElementById("jsoneditor");
       var editor = new JSONEditor(container);
       editor.set($scope.results);
-    }
+    };
 
     $scope.visualizeTfidf = function() {
       var diameter = 100,
@@ -91,62 +91,77 @@
                   }
 
                   d3.select(self.frameElement).style("height", diameter + "px");
-    }
+    };
 
     $scope.visualizeWordcloud = function() {
-      var diameter = 100,
-        format = d3.format(".3"),
-          color = d3.scale.category20c()
-          shift = 0.1;
 
-          var bubble = d3.layout.pack().sort(null).size([diameter, diameter]).padding(1.5),
-            svg = d3.select("#graph").append("svg").attr("class", "bubble").attr("viewBox", "0 0 100 100");
+        // parses the list of words from the analysis results
+        function getWords() {
+            var count = 0;
+            var classes = [];
+            $scope.analysis.result.forEach(function (node) {
 
-            var node = svg.selectAll(".node")
-            .data(bubble.nodes(classes())
-                  .filter(function(d) { return !d.children; }))
-                  .enter().append("g")
-                  .attr("class", "node")
-                  .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+                classes.push({text: node.term, frequency: node.frequency});
+                count++;
+            });
+            return {children: classes};
+        }
 
-                  node.append("title")
-                  .text(function(d) { return d.className + ": " + format(d.value - shift); });
+        /* Initialize tooltip */
 
-                  node.append("circle")
-                  .attr("r", function(d) { return d.r; })
-                  // Should really do this:
-                  // .style("fill", function(d) { return color(d.packageName); });
-                  .style("fill", "#F36E21");
+        var fill = d3.scale.category20(); // color scheme for words
+        var words = getWords().children;
 
-                  node.append("text")
-                  .attr("dy", ".3em")
-                  .style("text-anchor", "middle")
-                  .attr("fill", "white")
-                  .attr("font-size", function (d) {
-                    return ((0.2 * d.className.length) + (0.5 * d.r)) + "px";
-                  })
-                  .text(function(d) { return d.className; });
+        // setup for the word cloud
+        d3.layout.cloud().size([1000, 400])// width, height
+            .words(words)
+            .rotate(function() {
+                return ~~(Math.random() * 2) * 90;
+            })
+            .font("Impact")
+            .fontSize(function(d) {
+                return 3*(d.frequency)
+            })
+            .on("end", draw)
+            .start();
 
-                  // Returns a flattened hierarchy containing all leaf nodes under the root.
-                  function classes() {
-                    var count = 0;
-                    var classes = [];
-                    $scope.analysis.result.forEach(function (node) {
-                      if(count <= 25) {
-                        var scalar;
 
-                        if ($scope.analysis.analysis == "wordcloudop") {
-                          scalar = node.frequency;
-                        }
-                        classes.push({packageName: "", className: node.term, value: scalar + shift});
-                        count++;
-                      }
-                    });
-                    return {children: classes};
-                  }
+        // draw the word cloud out
+        function draw(words) {
+            var cloud = d3.select("#graph")
+                        .append("svg")
+                        .attr("class", "cloud")
+                        .attr("viewBox", "0 0 400 400")
+                        .attr("width", 1000)
+                        .attr("height", 400)
+                        .append("g")
+                        .attr("transform", "translate(150,150)")
+                        // individual text
+                        .selectAll("text")
+                        .data(words)
+                        .enter().append("text")
+                        .attr("class", "word")
+                        .style("font-size", function(d) {
+                            return d.size + "px";
+                        })
+                        .style("font-family", "Impact")
+                        .style("fill", function(d, i) {
+                            return fill(i);
+                        })
+                        .attr("text-anchor", "middle")
+                        .attr("transform", function(d) {
+                            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                        })
+                        .text(function(d) {
+                            return d.text;
+                        })
+                        //append a tooltip
+                        .append("title")
+                        .text(function(d) { return d.text + ": " + d.frequency; })
 
-                  d3.select(self.frameElement).style("height", diameter + "px");
-    }
+          d3.select(self.frameElement).style("height", 50 + "px");
+        }
+    };
 
     $scope.visualizeParseTree = function(sentiment) {
         

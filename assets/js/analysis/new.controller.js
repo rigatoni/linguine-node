@@ -10,7 +10,6 @@
     $scope.analysis = {analysisName: ""};
     $scope.preprocAvailable = true;
 
-
     /*
      * Analyses are the crux of the NLP workflow, so they should be 
      * chosen before anything else. Analysis can be run on either
@@ -42,6 +41,14 @@
         tokenAllowed: false,
         multipleCorporaAllowed: false,
         tokenizerRequired: false
+      },
+      {
+        name: "Sentiment (Stanford CoreNLP)",
+        unfriendly_name: "nlp-sentiment",
+        description: "This operation will measure the sentiment of the corpus, sentences, and tokens using models provided by Stanford Core NLP.",
+        tokenAllowed: false,
+        multipleCorporaAllowed: false,
+        tokenizerRequired: false
       }
     ];
     
@@ -56,26 +63,6 @@
         name: "Stem (Porter)",
         unfriendly_name: "stem_porter",
         description: "Stem words using the NLTK Porter Stemmer. Converts inflected words in the corpus to their base form. This is a good general purpose stemmer to use."
-      },
-      "stem_lancaster": {
-        name: "Stem (Lancaster)",
-        unfriendly_name: "stem_lancaster",
-        description: "Stem words using the NLTK Lancaster Stemmer. Converts inflected words in the corpus to their base form."
-      },
-      "stem_snowball": {
-        name: "Stem (Snowball)",
-        unfriendly_name: "stem_snowball",
-        description: "Stem words using the NLTK Snowball Stemmer. Converts inflected words in the corpus to their base form."
-      },
-      "lemmatize_wordnet": {
-        name: "Lemmatize",
-        unfriendly_name: "lemmatize_wordnet",
-        description: "Convert words to their lemmas using the NLTK WordNet Lemmatizer. E.g: Walk, walking, and walked will be converted to walk, and better and good would both be converted to good."
-      },
-      "removecapsgreedy": {
-        name: "Remove Capitalization (greedy)",
-        unfriendly_name: "removecapsgreedy",
-        description: "Convert all uppercase letters to lowercase letters."
       },
       "removecapsnnp": {
         name: "Remove Capitalization (NNP)",
@@ -97,10 +84,11 @@
      * Key[analysisUnfriendlyName] => value [cleanupUnfriendlyName1, unfriendlyName2, ... n]
      */
     $scope.cleanupTypes = {
-      "pos_tag": [cleanups.stem_lancaster, cleanups.stem_porter, cleanups.stem_snowball, cleanups.lemmatize_wordnet, cleanups.removecapsgreedy, cleanups.removecapsnnp, cleanups.removepunct ],
-      "wordcloudop": [cleanups.stem_lancaster, cleanups.stem_porter, cleanups.stem_snowball, cleanups.lemmatize_wordnet, cleanups.removecapsgreedy, cleanups.removecapsnnp, cleanups.removepunct ],
+      "pos_tag": [cleanups.stem_porter, cleanups.removecapsnnp, cleanups.removepunct ],
+      "wordcloudop": [cleanups.stem_porter, cleanups.removecapsnnp, cleanups.removepunct ],
       "nlp-pos": [],
-      "nlp-ner": []
+      "nlp-ner": [],
+      "nlp-sentiment": []
     };
     
     $scope.tokenizerTypes = [
@@ -237,7 +225,7 @@
 
         var payload = {
           corpora_ids: _.pluck(_.where($scope.corpora, 'active'), '_id'),
-          cleanup: _.map(_.where($scope.cleanupTypes, 'active'), function (cleanupType) {
+          cleanup: _.map(_.where($scope.cleanupTypes[$scope.selectedAnalysis.unfriendly_name], 'active'), function (cleanupType) {
             return cleanupType.unfriendly_name;
           }),
           operation: $scope.selectedAnalysis.unfriendly_name,
