@@ -3,13 +3,23 @@
     .col-xs-12
       .pull-left
         h2.no-margin
-          strong {{ analysis.analysis }} Analysis
+          strong {{ analysis.analysis_name }}
       .pull-right
         btn.btn.btn-lg.btn-default(ng-click="back()") Back
         btn.btn.btn-lg.btn-default(ng-click="delete()")
           .glyphicon.glyphicon-trash
             br
-  h4.no-margin(ng-repeat="corpora_id in analysis.corpora_ids") {{ findCorpus(corpora_id).title }} ({{findCorpus(corpora_id).fileName}})
+  h6.no-margin(ng-repeat="corpora_id in analysis.corpora_ids") Corpora: {{ findCorpus(corpora_id).title }}
+    br
+    span #[b Analysis]: {{analysis.analysis}}
+    br
+    span #[b Cleanups]:
+    span(ng-repeat="cleanup in analysis.cleanup_ids")  {{cleanup}}
+    br
+    span #[b Tokenizer]:  {{analysis.tokenizer}}
+    br
+    span #[b Time Created]:  {{analysis.timestamp}}
+
   tabset(justified='true')
     tab(heading='Visualization')
       #graph
