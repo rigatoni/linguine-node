@@ -6,7 +6,6 @@
 
   function IndexController ($scope) {
 
-
       var words = [{
           text: "the",
           frequency: 20
