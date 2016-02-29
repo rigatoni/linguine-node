@@ -227,7 +227,7 @@
       try {
 
         usSpinnerService.spin('analysisProcSpinner');
-
+        theDate = new Date();
         var payload = {
           corpora_ids: _.pluck(_.where($scope.corpora, 'active'), '_id'),
           cleanup: _.map(_.where($scope.cleanupTypes[$scope.selectedAnalysis.unfriendly_name], 'active'), function (cleanupType) {
@@ -238,11 +238,13 @@
           library: "",
           transaction_id: "",
           analysis_name: $scope.analysis.analysisName,
+          timestamp: theDate.toLocaleTimeString(),
           user_id: ""
         };
 
         $http.post('api/analysis', payload)
         .success(function (data) {
+          console.log(data);
           usSpinnerService.stop('analysisProcSpinner');
           $state.go('linguine.analysis.index');
         })

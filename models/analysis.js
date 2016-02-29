@@ -6,6 +6,7 @@ var analysisSchema = new Schema({
   analysis_name: {type: String, required: true},
   analysis:    {type: String, required: true},
   corpora_ids: [{type: String, required: true}],
+  timestamp: {type: String, required: true},
   result:      Schema.Types.Mixed
 });
 

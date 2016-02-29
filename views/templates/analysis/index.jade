@@ -13,5 +13,14 @@
       h4.list-group-item-heading
         strong {{ analysis.analysis_name }}
       p.list-group-item-text
-        div(ng-repeat="corpora_id in analysis.corpora_ids") {{ findCorpus(corpora_id).title }} ({{findCorpus(corpora_id).fileName}})
-        p Analysis type: {{analysis.analysis}}
+        div(ng-repeat="corpora_id in analysis.corpora_ids")  Corpora: {{ findCorpus(corpora_id).title }}
+
+        span Analysis: {{analysis.analysis}}
+        br
+        span Cleanups:
+        span(ng-repeat="cleanup in analysis.cleanup_ids") {{cleanup}}
+        br
+        span Tokenizer: {{analysis.tokenizer}}
+        br
+        span Time Created: {{analysis.timestamp}}
+
