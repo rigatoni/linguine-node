@@ -20,7 +20,6 @@
     }
     $scope.getEtaTime = function(analysis) {
       var d = new Date(analysis.time_created); 
-      console.log(d);
       d.setSeconds(d.getSeconds() + analysis.eta);
       return d.toLocaleTimeString()
     };

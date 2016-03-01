@@ -8,6 +8,7 @@ var analysisSchema = new Schema({
   time_created: {type: Date, required: true},
   analysis:    {type: String, required: true},
   corpora_ids: [{type: String, required: true}],
+  complete: {type: Boolean, required: true},
   result:      Schema.Types.Mixed
 });
 
