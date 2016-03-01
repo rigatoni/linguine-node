@@ -13,7 +13,7 @@
       h4.list-group-item-heading
         strong {{ analysis.analysis_name }} {{ analysis.complete ? '' : '[INCOMPLETE]' }}
       p.list-group-item-text
-        div(ng-repeat="corpora_id in analysis.corpora_ids") {{ findCorpus(corpora_id).title }} ({{findCorpus(corpora_id).fileName}})
+        div(ng-repeat="corpora_id in analysis.corpora_ids") 
           span #[b Analysis]: {{analysis.analysis}}
           br
           span #[b Cleanups]:
