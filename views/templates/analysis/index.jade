@@ -14,5 +14,12 @@
         strong {{ analysis.analysis_name }} {{ analysis.complete ? '' : '[INCOMPLETE]' }}
       p.list-group-item-text
         div(ng-repeat="corpora_id in analysis.corpora_ids") {{ findCorpus(corpora_id).title }} ({{findCorpus(corpora_id).fileName}})
-        p Analysis type: {{analysis.analysis}} 
-        p ETA: {{getEtaTime(analysis)}}
+          span #[b Analysis]: {{analysis.analysis}}
+          br
+          span #[b Cleanups]:
+          span(ng-repeat="cleanup in analysis.cleanup_ids")  {{cleanup}}
+          br
+          span #[b Tokenizer]: {{analysis.tokenizer}}
+          br
+          span #[b Time Created]: {{analysis.time_created}}
+          p ETA: {{getEtaTime(analysis)}}
