@@ -233,6 +233,7 @@
           library: "",
           transaction_id: "",
           analysis_name: $scope.analysis.analysisName,
+          time_created: new Date().getTime(),
           user_id: ""
         };
 
