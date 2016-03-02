@@ -6,7 +6,7 @@
   form(name="analysisForm" ng-submit="onCreateAnalysis()")
     tabset(justified='true')
 
-      tab(heading='1. Select Analysis Type')
+      tab(ng-attr-active="tabs[0].active", heading='1. Select Analysis Type' ng-click="onAnalysisTabClick(this)")
         .list-group
           a.list-group-item(ng-repeat="analysis in analysisTypes",
             ng-class="{active:selectedAnalysis==analysis}",ng-click="onAnalysisClick(this)")
@@ -16,7 +16,7 @@
             p.list-group-item-text
               | {{ analysis.description }}
 
-      tab(heading='2. Select Corpora' disabled="analysisNotSelected" 
+      tab(ng-attr-active="tabs[1].active", heading='2. Select Corpora' disabled="analysisNotSelected"
         ng-click="onCorporaTabClick(this)")
 
         .list-group
@@ -27,7 +27,7 @@
             p.list-group-item-text
               | {{ corpus.fileName }}
 
-      tab(disabled="analysisNotSelected" heading='3. Select Preprocessing Options',
+      tab(ng-attr-active="tabs[2].active", disabled="analysisNotSelected" heading='3. Select Preprocessing Options',
         ng-click="onPreprocessingTabClick(this)")
         .list-group
           a.list-group-item(ng-show="selectedAnalysis.tokenAllowed" ng-repeat="tokenizer in tokenizerTypes",
@@ -49,3 +49,5 @@
             input(name="Analysis name:" type="text" ng-model="analysis.analysisName" class="form-control ng-pristine ng-valid ng-touched")
 
         button.btn.btn-lg.btn-primary.full-width(type="submit") Create Analysis
+  button.btn.btn-default-align-left(ng-click="onPreviousButtonClick(this)") Previous
+  button.btn.btn-default-align-right(ng-click="onNextButtonClick(this)") Next

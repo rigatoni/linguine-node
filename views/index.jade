@@ -33,7 +33,7 @@ body(ng-app='linguine')
       .navbar-header
         button.navbar-toggle(type="button" ng-click="collapsed = !collapsed")
           i.fa.fa-bars
-        a.navbar-brand(href='') Linguine
+        a.navbar-brand(href='index') Linguine
       .collapse.navbar-collapse(collapse="collapsed")
         ul.nav.navbar-nav(ng-if='loggedIn')
           li(ng-class='{active: isActive("linguine.corpora")}')
