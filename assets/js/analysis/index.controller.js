@@ -23,5 +23,9 @@
       d.setSeconds(d.getSeconds() + analysis.eta);
       return d.toLocaleTimeString()
     };
+    $scope.showTimeCreated = function(analysis) {
+      var d = new Date(analysis.time_created); 
+      return d.toLocaleDateString() + " " + d.toLocaleTimeString()
+    };
   }
 })();

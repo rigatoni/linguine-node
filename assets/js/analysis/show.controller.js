@@ -35,6 +35,11 @@
     $scope.findCorpus = function (id) {
       return _.find($scope.corpora, {'_id': id});
     };
+    
+    $scope.showTimeCreated = function(analysis) {
+      var d = new Date(analysis.time_created); 
+      return d.toLocaleDateString() + " " + d.toLocaleTimeString()
+    };
 
     $scope.defaultView = function() {
       $scope.results = $scope.analysis.result;

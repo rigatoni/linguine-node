@@ -21,5 +21,5 @@
           br
           span #[b Tokenizer]: {{analysis.tokenizer}}
           br
-          span #[b Time Created]: {{analysis.time_created}}
-          p ETA: {{getEtaTime(analysis)}}
+          span #[b Time Created]: {{showTimeCreated(analysis)}}
+          p(ng-show="!analysis.complete") ETA: {{getEtaTime(analysis)}}
