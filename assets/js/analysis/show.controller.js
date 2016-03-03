@@ -165,8 +165,9 @@
 
     $scope.visualizeParseTree = function(sentiment) {
         
-        //Move this to a listener when supporting multiple sentences
-        data = convertData($scope.results.parse);
+      //Move this to a listener when supporting multiple sentences
+      //#TODO: Make this not a single sentence
+        data = convertData($scope.results[0].sentiment_json);
         renderTree();
 
         //Converts results from flat to heirarchical
@@ -221,27 +222,27 @@
     
             var root = data[0];
     
-            update(root);
+            update(root, tree, svg);
     
             return this;
         }
 
         //Draws the tree from the root
-        function update(source) {
+        function update(source, tree, svg) {
     
             var diagonal = d3.svg.diagonal()
               .projection(function (d) {
                 return [d.x, d.y];
               });
     
-            var nodes = this.tree(this.root).reverse(),
-              links = this.tree.links(nodes);
+            var nodes = tree(source).reverse(),
+              links = tree.links(nodes);
     
             nodes.forEach(function (d) {
               d.y = d.depth * 100;
             });
     
-            var node = this.svg.select('.canvas g')
+            var node = svg.select('.canvas g')
               .selectAll('g.node')
               .data(nodes, function (d, i) {
                   return d.id || (d.id = ++i);
@@ -321,7 +322,7 @@
                   return 'translate(' + d.x + ', ' + d.y + ')';
               });
     
-            var link = this.svg.select('.canvas g')
+            var link = svg.select('.canvas g')
               .selectAll('path.link')
               .data(links, function (d) {
                 return d.target.id;
