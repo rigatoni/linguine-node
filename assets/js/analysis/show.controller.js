@@ -170,7 +170,7 @@
         renderTree();
 
         //Converts results from flat to heirarchical
-        function convertData = function(words) {
+        function convertData(words) {
  
             var rootNode = { 'id': 0, 'value': 'root', 'pos': 'root' };
             words.push(rootNode);
@@ -192,10 +192,10 @@
             });
     
             return treeData;
-        };
+        }
 
         //Builds canvas and creates root
-        function renderTree = function () {
+        function renderTree() {
             var tree = d3.layout.tree().nodeSize([100, 50]);
     
             tree.separation(function (a, b) {
@@ -224,10 +224,10 @@
             update(root);
     
             return this;
-        };
+        }
 
         //Draws the tree from the root
-        function update = function (source) {
+        function update(source) {
     
             var diagonal = d3.svg.diagonal()
               .projection(function (d) {
@@ -272,8 +272,6 @@
               .style('fill', function (d, i) {
                   return (d.pos == 'root') ? '#CCC' : '#333';
               })
-              .style('font-family', 'Cambria, Serif')
-              .style('letter-spacing', '2px')
               .style('font-size', '18px')
               .style('fill-opacity', 1);
             if(sentiment){
@@ -284,10 +282,8 @@
               .attr('dy', '12px')
               .attr('text-anchor', 'middle')
               .attr('class', 'label')
-              .style('font-family', 'sans-serif')
               .style('font-size', '12px')
               .style('font-weight', 500)
-              .style('letter-spacing', '1px')
               .style('fill', '#666')
               .text(function (d) {
                   return d.tag;
@@ -300,13 +296,11 @@
               .attr('dy', '12px')
               .attr('text-anchor', 'middle')
               .attr('class', 'label')
-              .style('font-family', 'sans-serif')
               .style('font-size', '12px')
               .style('font-weight', 500)
-              .style('letter-spacing', '1px')
               .style('fill', '#666')
               .text(function (d) {
-                  switch(d.sentiment){
+                  switch(d.tag){
                     case 0:
                       return "--";
                     case 1:
@@ -359,18 +353,17 @@
               d.x0 = d.x;
               d.y0 = d.y;
             });
-        };
-    }
+        }
+    };
     
 
-    $scope.visualize = function () {
+    $scope.visualize = function(){
       if ($scope.analysis.analysis === "tfidf" ) {
         $scope.visualizeTfidf();
       } else if  ($scope.analysis.analysis == "wordcloudop") {
         $scope.visualizeWordcloud();
       } else if  ($scope.analysis.analysis == "nlp-parse"){
         $scope.visualizeParseTree(false);
-      }
       } else if  ($scope.analysis.analysis == "nlp-sentiment"){
         $scope.visualizeParseTree(true);
       }
