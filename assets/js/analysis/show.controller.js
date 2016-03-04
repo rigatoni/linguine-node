@@ -167,7 +167,10 @@
         
       //Move this to a listener when supporting multiple sentences
       //#TODO: Make this not a single sentence
-        data = convertData($scope.results[0].sentiment_json);
+         
+        var dataToConvert = sentiment? $scope.results[0].sentiment_json :
+          $scope.results[0].deps_json; 
+        data = convertData(dataToConvert);
         renderTree();
 
         //Converts results from flat to heirarchical
@@ -363,7 +366,7 @@
         $scope.visualizeTfidf();
       } else if  ($scope.analysis.analysis == "wordcloudop") {
         $scope.visualizeWordcloud();
-      } else if  ($scope.analysis.analysis == "nlp-parse"){
+      } else if  ($scope.analysis.analysis == "nlp-pos"){
         $scope.visualizeParseTree(false);
       } else if  ($scope.analysis.analysis == "nlp-sentiment"){
         $scope.visualizeParseTree(true);

@@ -13,7 +13,8 @@
   tabset(justified='true')
     tab(heading='Visualization')
       #graph
-        div(ng-if="analysis.analysis !== 'wordcloudop' && analysis.analysis !== 'nlp-sentiment'")
+        div(ng-if="analysis.analysis !== 'wordcloudop' && analysis.analysis !== 'nlp-sentiment' && analysis.analysis !== 'nlp-pos'")
+
           h3 Hold tight. Visualizations for this analysis will be coming later this year!
           img(src="img/soon.png") 
 
