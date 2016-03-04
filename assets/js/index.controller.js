@@ -32,7 +32,8 @@
           frequency: 10
       }]
 
-      var fill = d3.scale.ordinal().range(["#ff7f0e","aec7e8","#ffbb78","#2ca02c","#ff9896","#9467bd","#17becf","#d62728","#d62728"]);
+      var fill = d3.scale.ordinal().range(["#ff7f0e","aec7e8","#ffbb78",
+                  "#2ca02c","#ff9896","#9467bd","#17becf","#d62728","#d62728"]);
 
       d3.layout.cloud().size([400, 400])
           .words(words)
