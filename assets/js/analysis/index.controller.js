@@ -18,6 +18,14 @@
     $scope.findCorpus = function (id) {
       return _.find($scope.corpora, {'_id': id});
     }
-
+    $scope.getEtaTime = function(analysis) {
+      var d = new Date(analysis.time_created); 
+      d.setSeconds(d.getSeconds() + analysis.eta);
+      return d.toLocaleTimeString()
+    };
+    $scope.showTimeCreated = function(analysis) {
+      var d = new Date(analysis.time_created); 
+      return d.toLocaleDateString() + " " + d.toLocaleTimeString()
+    };
   }
 })();

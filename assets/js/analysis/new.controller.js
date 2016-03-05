@@ -222,7 +222,7 @@
       try {
 
         usSpinnerService.spin('analysisProcSpinner');
-
+        theDate = new Date();
         var payload = {
           corpora_ids: _.pluck(_.where($scope.corpora, 'active'), '_id'),
           cleanup: _.map(_.where($scope.cleanupTypes[$scope.selectedAnalysis.unfriendly_name], 'active'), function (cleanupType) {
@@ -233,6 +233,7 @@
           library: "",
           transaction_id: "",
           analysis_name: $scope.analysis.analysisName,
+          time_created: new Date().getTime(),
           user_id: ""
         };
 
