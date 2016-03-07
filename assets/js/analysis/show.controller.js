@@ -283,7 +283,7 @@
               })
               .style('font-size', '18px')
               .style('fill-opacity', 1);
-            if(sentiment){
+            if(!sentiment){
             nodeEnter.append('text')
               .attr('y', function (d, i) {
                   return (d.pos == 'root') ? 0 : -30;
@@ -305,19 +305,19 @@
               .attr('dy', '12px')
               .attr('text-anchor', 'middle')
               .attr('class', 'label')
-              .style('font-size', '12px')
+              .style('font-size', '35px')
               .style('font-weight', 500)
               .style('fill', '#666')
               .text(function (d) {
                   switch(d.tag){
                     case 0:
-                      return "--";
+                      return "- -";
                     case 1:
                       return "-";
                     case 3:
                       return "+";
                     case 4:
-                      return "++";
+                      return "+ +";
                     default:
                       return "";
                   };
