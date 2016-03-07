@@ -43,6 +43,16 @@
 
     $scope.defaultView = function() {
       $scope.results = $scope.analysis.result;
+
+      //TODO: Should the first sentence always be assigned here?
+      $scope.sentimentTreeData = $scope.analysis.result[0].sentiment_json;
+      $scope.depsTreeData = $scope.analysis.result[0].deps_json;
+
+      for(var i = 0; i < $scope.results.length; i++) {
+        $scope.results[i].deps_json = []; 
+        $scope.results[i].sentiment_json = []; 
+      }
+
       // create the editor
       var container = document.getElementById("jsoneditor");
       var editor = new JSONEditor(container);
@@ -173,8 +183,8 @@
       //Move this to a listener when supporting multiple sentences
       //#TODO: Make this not a single sentence
          
-        var dataToConvert = sentiment? $scope.results[0].sentiment_json :
-          $scope.results[0].deps_json; 
+        var dataToConvert = sentiment? $scope.sentimentTreeData : $scope.depsTreeData;
+
         data = convertData(dataToConvert);
         renderTree();
 
