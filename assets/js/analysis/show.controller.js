@@ -43,6 +43,16 @@
 
     $scope.defaultView = function() {
       $scope.results = $scope.analysis.result;
+
+      //TODO: Should the first sentence always be assigned here?
+      $scope.sentimentTreeData = $scope.analysis.result[0].sentiment_json;
+      $scope.depsTreeData = $scope.analysis.result[0].deps_json;
+
+      for(var i = 0; i < $scope.results.length; i++) {
+        $scope.results[i].deps_json = []; 
+        $scope.results[i].sentiment_json = []; 
+      }
+
       // create the editor
       var container = document.getElementById("jsoneditor");
       var editor = new JSONEditor(container);
@@ -118,14 +128,14 @@
         var words = getWords().children;
 
         // setup for the word cloud
-        d3.layout.cloud().size([1000, 400])// width, height
+        d3.layout.cloud().size([1000, 600])// width, height
             .words(words)
             .rotate(function() {
-                return ~~(Math.random() * 2) * 90;
+                return (~~(Math.random() * 6) - 3) * 30;
             })
             .font("Impact")
             .fontSize(function(d) {
-                return 3*(d.frequency)
+                return 8* Math.sqrt(d.frequency);
             })
             .on("end", draw)
             .start();
@@ -133,12 +143,12 @@
 
         // draw the word cloud out
         function draw(words) {
-            var cloud = d3.select("#graph")
+            var cloud = d3.select("#graph").style('overflow', 'scroll').style('width', '1140px').style('height', '600px')
                         .append("svg")
                         .attr("class", "cloud")
-                        .attr("viewBox", "0 0 400 400")
-                        .attr("width", 1000)
-                        .attr("height", 400)
+                        .attr("viewBox", "0 0 500 400")
+                        .attr("width", '110%')
+                        .attr("height", '130%')
                         .append("g")
                         .attr("transform", "translate(150,150)")
                         // individual text
@@ -173,12 +183,12 @@
       //Move this to a listener when supporting multiple sentences
       //#TODO: Make this not a single sentence
          
-        var dataToConvert = sentiment? $scope.results[0].sentiment_json :
-          $scope.results[0].deps_json; 
+        var dataToConvert = sentiment? $scope.sentimentTreeData : $scope.depsTreeData;
+
         data = convertData(dataToConvert);
         renderTree();
 
-        //Converts results from flat to heirarchical
+        //Converts results from flat to hierarchical
         function convertData(words) {
  
             var rootNode = { 'id': 0, 'value': 'root', 'pos': 'root' };
@@ -205,7 +215,7 @@
 
         //Builds canvas and creates root
         function renderTree() {
-            var tree = d3.layout.tree().nodeSize([100, 50]);
+            var tree = d3.layout.tree().nodeSize([50, 50]);
     
             tree.separation(function (a, b) {
                 var w1 = a.value.length;
@@ -215,13 +225,21 @@
     
                 return Math.ceil((w1 * scale) + (w2 * scale) / 2);
             });
-    
-            var svg = d3.select("#graph").append('svg')
+
+            /*
+                 The #graph div is acting as a container for the .svg-container div (which holds the tree).
+                 To make it scrollable, 2 things that must happen:
+                   1. the #graph div must have overflow set to scroll
+                   2. the svg-container div must have width & height greater than the width & height of #graph
+                 Note: right now the width/height percentages are arbitrary and I need to figure out a better way
+            */
+
+            var svg = d3.select("#graph").style('overflow', 'scroll').style('width', '  width:1140px').style('height', '1200px')
+              .append('svg')
               .attr('class', 'svg-container')
-              .style('width', 1500)
-              .style('height', 1500)
-              .style('overflow', 'auto');
-    
+              .style('width', '200%')
+              .style('height', '150%');
+
             var canvas = svg.append('g')
               .attr('class', 'canvas');
     
@@ -283,7 +301,7 @@
               })
               .style('font-size', '18px')
               .style('fill-opacity', 1);
-            if(sentiment){
+            if(!sentiment){
             nodeEnter.append('text')
               .attr('y', function (d, i) {
                   return (d.pos == 'root') ? 0 : -30;
@@ -305,19 +323,19 @@
               .attr('dy', '12px')
               .attr('text-anchor', 'middle')
               .attr('class', 'label')
-              .style('font-size', '12px')
+              .style('font-size', '35px')
               .style('font-weight', 500)
               .style('fill', '#666')
               .text(function (d) {
                   switch(d.tag){
                     case 0:
-                      return "--";
+                      return "- -";
                     case 1:
                       return "-";
                     case 3:
                       return "+";
                     case 4:
-                      return "++";
+                      return "+ +";
                     default:
                       return "";
                   };
