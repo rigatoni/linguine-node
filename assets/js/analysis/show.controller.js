@@ -215,7 +215,7 @@
 
         //Builds canvas and creates root
         function renderTree() {
-            var tree = d3.layout.tree().nodeSize([100, 50]);
+            var tree = d3.layout.tree().nodeSize([50, 50]);
     
             tree.separation(function (a, b) {
                 var w1 = a.value.length;
@@ -226,12 +226,13 @@
                 return Math.ceil((w1 * scale) + (w2 * scale) / 2);
             });
     
-            var svg = d3.select("#graph").append('svg')
+            var svg = d3.select("#graph").style('overflow', 'scroll')
+              .append('svg')
               .attr('class', 'svg-container')
-              .style('width', 1500)
-              .style('height', 1500)
-              .style('overflow', 'auto');
-    
+              .style('width', '110%')
+              .style('height', '1000px');
+              //.style('overflow', 'scroll');
+
             var canvas = svg.append('g')
               .attr('class', 'canvas');
     
