@@ -128,7 +128,7 @@
         var words = getWords().children;
 
         // setup for the word cloud
-        d3.layout.cloud().size([600, 600])// width, height
+        d3.layout.cloud().size([1000, 600])// width, height
             .words(words)
             .rotate(function() {
                 return (~~(Math.random() * 6) - 3) * 30;
