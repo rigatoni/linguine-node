@@ -237,7 +237,7 @@
             var svg = d3.select("#graph").style('overflow', 'scroll').style('width', '  width:1140px').style('height', '1200px')
               .append('svg')
               .attr('class', 'svg-container')
-              .style('width', '250%')
+              .style('width', '200%')
               .style('height', '150%');
 
             var canvas = svg.append('g')
