@@ -128,14 +128,14 @@
         var words = getWords().children;
 
         // setup for the word cloud
-        d3.layout.cloud().size([1000, 400])// width, height
+        d3.layout.cloud().size([1000, 600])// width, height
             .words(words)
             .rotate(function() {
-                return ~~(Math.random() * 2) * 90;
+                return (~~(Math.random() * 6) - 3) * 30;
             })
             .font("Impact")
             .fontSize(function(d) {
-                return 3*(d.frequency)
+                return 8* Math.sqrt(d.frequency);
             })
             .on("end", draw)
             .start();
@@ -143,12 +143,12 @@
 
         // draw the word cloud out
         function draw(words) {
-            var cloud = d3.select("#graph")
+            var cloud = d3.select("#graph").style('overflow', 'scroll').style('width', '1140px').style('height', '600px')
                         .append("svg")
                         .attr("class", "cloud")
-                        .attr("viewBox", "0 0 400 400")
-                        .attr("width", 1000)
-                        .attr("height", 400)
+                        .attr("viewBox", "0 0 500 400")
+                        .attr("width", '110%')
+                        .attr("height", '130%')
                         .append("g")
                         .attr("transform", "translate(150,150)")
                         // individual text
@@ -188,7 +188,7 @@
         data = convertData(dataToConvert);
         renderTree();
 
-        //Converts results from flat to heirarchical
+        //Converts results from flat to hierarchical
         function convertData(words) {
  
             var rootNode = { 'id': 0, 'value': 'root', 'pos': 'root' };
@@ -215,7 +215,7 @@
 
         //Builds canvas and creates root
         function renderTree() {
-            var tree = d3.layout.tree().nodeSize([100, 50]);
+            var tree = d3.layout.tree().nodeSize([50, 50]);
     
             tree.separation(function (a, b) {
                 var w1 = a.value.length;
@@ -225,13 +225,21 @@
     
                 return Math.ceil((w1 * scale) + (w2 * scale) / 2);
             });
-    
-            var svg = d3.select("#graph").append('svg')
+
+            /*
+                 The #graph div is acting as a container for the .svg-container div (which holds the tree).
+                 To make it scrollable, 2 things that must happen:
+                   1. the #graph div must have overflow set to scroll
+                   2. the svg-container div must have width & height greater than the width & height of #graph
+                 Note: right now the width/height percentages are arbitrary and I need to figure out a better way
+            */
+
+            var svg = d3.select("#graph").style('overflow', 'scroll').style('width', '  width:1140px').style('height', '1200px')
+              .append('svg')
               .attr('class', 'svg-container')
-              .style('width', 1500)
-              .style('height', 1500)
-              .style('overflow', 'auto');
-    
+              .style('width', '200%')
+              .style('height', '150%');
+
             var canvas = svg.append('g')
               .attr('class', 'canvas');
     
