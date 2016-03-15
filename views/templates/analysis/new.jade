@@ -49,5 +49,5 @@
             input(name="Analysis name:" type="text" ng-model="analysis.analysisName" class="form-control ng-pristine ng-valid ng-touched")
 
         button.btn.btn-lg.btn-primary.full-width(type="submit") Create Analysis
-  button.btn.btn-lg.btn-primary(ng-click="onPreviousButtonClick(this)") Previous
-  button.btn.btn-lg.btn-primary(ng-click="onNextButtonClick(this)") Next
+  button.btn.btn-lg.btn-primary(type="button" ng-click="onPreviousButtonClick(this)") Previous
+  button.btn.btn-lg.btn-primary(type="button" class="next-btns" ng-click="onNextButtonClick(this)") Next
