@@ -9,9 +9,19 @@
     alert(type='warning')
       | You haven't created any analyses.
   .list-group
-    a.list-group-item(ng-repeat="analysis in analyses",ng-href="analysis/{{analysis._id}}")
+    a.list-group-item(ng-class="{'analysis-disabled': !analysis.complete}" ng-repeat="analysis in analyses | orderBy:analysis.eta:true",ng-href="analysis/{{analysis._id}}")
       h4.list-group-item-heading
-        strong {{ analysis.analysis_name }}
+        strong {{ analysis.analysis_name }} 
+        strong.tag-background(ng-show="{{!analysis.complete}}") INCOMPLETE - Refresh to update 
       p.list-group-item-text
-        div(ng-repeat="corpora_id in analysis.corpora_ids") {{ findCorpus(corpora_id).title }} ({{findCorpus(corpora_id).fileName}})
-        p Analysis type: {{analysis.analysis}}
+        div(ng-repeat="corpora_id in analysis.corpora_ids") 
+          span #[b Analysis]: {{analysis.analysis}}
+          br
+          span #[b Cleanups]:
+          span(ng-repeat="cleanup in analysis.cleanup_ids")  {{cleanup}}
+          br
+          span #[b Tokenizer]: {{analysis.tokenizer}}
+          br
+          span #[b Time Created]: {{showTimeCreated(analysis)}}
+          br
+          span.tag-background(ng-show="!analysis.complete") ETA: {{getEtaTime(analysis)}}
