@@ -15,6 +15,7 @@
               strong {{ analysis.name }}
             p.list-group-item-text
               | {{ analysis.description }}
+        button.btn.btn-lg.btn-primary(type="button" class="next-btns" ng-click="onNextButtonClick(this)") Next
 
       tab(ng-attr-active="tabs[1].active", heading='2. Select Corpora' disabled="analysisNotSelected"
         ng-click="onCorporaTabClick(this)")
@@ -26,6 +27,8 @@
               strong {{ corpus.title }}
             p.list-group-item-text
               | {{ corpus.fileName }}
+        button.btn.btn-lg.btn-primary(type="button" ng-click="onPreviousButtonClick(this)") Previous
+        button.btn.btn-lg.btn-primary(type="button" class="next-btns" ng-click="onNextButtonClick(this)") Next
 
       tab(ng-attr-active="tabs[2].active", disabled="analysisNotSelected" heading='3. Select Preprocessing Options',
         ng-click="onPreprocessingTabClick(this)")
@@ -43,11 +46,11 @@
               strong {{ cleanup.name}}
             p.list-group-item-text
               | {{ cleanup.description}}
-        
+        button.btn.btn-lg.btn-primary(type="button" ng-click="onPreviousButtonClick(this)") Previous
+
+
         div(class="analysis-name-text-field") 
           label(class="analysis-name-label") Analysis Name:
             input(name="Analysis name:" type="text" ng-model="analysis.analysisName" class="form-control ng-pristine ng-valid ng-touched")
 
         button.btn.btn-lg.btn-primary.full-width(type="submit") Create Analysis
-  button.btn.btn-lg.btn-primary(type="button" ng-click="onPreviousButtonClick(this)") Previous
-  button.btn.btn-lg.btn-primary(type="button" class="next-btns" ng-click="onNextButtonClick(this)") Next
