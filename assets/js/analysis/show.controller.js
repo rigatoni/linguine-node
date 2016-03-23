@@ -2,6 +2,9 @@
 
   angular
   .module('linguine.analysis')
+  .config(['$compileProvider', function ($compileProvider) {
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|blob):/);
+  }])
   .controller('AnalysisShowController', AnalysisShowController);
 
   function AnalysisShowController ($http, $scope, $state, $stateParams, $window) {
@@ -13,6 +16,9 @@
     $http.get('api/analysis/' + $stateParams.id)
     .success(function (data) {
       $scope.analysis = data;
+      var blob = new Blob([JSON.stringify(data.result)], {type: 'text/plain'});
+      var url = $window.URL || $window.webkitURL;
+      $scope.fileUrl = url.createObjectURL(blob);
       $scope.defaultView();
       $scope.visualize();
     })
