@@ -35,6 +35,18 @@
     $scope.findCorpus = function (id) {
       return _.find($scope.corpora, {'_id': id});
     };
+
+    $scope.joinTokens = function(tokens) {
+      var tokenString = '';
+      var tokenStringLength = tokens.length < 20? tokens.length : 20;
+
+      for(var i = 0; i < tokenStringLength; i++) {
+        tokenString += ' ' + tokens[i].token;     
+      }
+
+      tokenString += tokens.length >= 20? '...' : '';
+      return tokenString;
+    }
     
     $scope.showTimeCreated = function(analysis) {
       var d = new Date(analysis.time_created); 

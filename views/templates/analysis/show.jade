@@ -22,8 +22,14 @@
 
   tabset(justified='true')
     tab(heading='Visualization')
-      #graph
+      div.dropdown
+        button.btn.btn-primary.dropdown-toggle(type="button" data-toggle="dropdown") Select Sentence 
+          span.caret
+        ul.dropdown-menu
+          li(ng-repeat="result in analysis.result") 
+            {{joinTokens(result.tokens)}}
 
+      #graph
         div(ng-if="analysis.analysis == 'pos_tag'")
           div(ng-repeat="result in analysis.result",style="margin-top: 20px;")
             span(ng-repeat="tag in result.tags")
