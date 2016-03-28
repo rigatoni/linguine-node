@@ -71,6 +71,11 @@
       var container = document.getElementById("jsoneditor");
       var editor = new JSONEditor(container);
       editor.set($scope.results);
+      
+      //The JSON viewer 'expand all' operation is too intensive on large analyses
+      var expandBtn = document.getElementsByClassName('expand-all')[0];
+      expandBtn.parentNode.removeChild(expandBtn);
+
     };
 
     $scope.visualizeTfidf = function() {
