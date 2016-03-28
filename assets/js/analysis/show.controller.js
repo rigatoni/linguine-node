@@ -64,14 +64,8 @@
 
     $scope.defaultView = function() {
       $scope.results = $scope.analysis.result;
-
       $scope.sentimentTreeData = $scope.analysis.result[$scope.sentenceIndex].sentiment_json;
       $scope.depsTreeData = $scope.analysis.result[$scope.sentenceIndex].deps_json;
-
-      //for(var i = 0; i < $scope.results.length; i++) {
-        //$scope.results[i].deps_json = []; 
-        //$scope.results[i].sentiment_json = []; 
-      //}
 
       // create the editor
       var container = document.getElementById("jsoneditor");
