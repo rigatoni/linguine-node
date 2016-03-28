@@ -22,19 +22,18 @@
 
   tabset(justified='true')
     tab(heading='Visualization')
-      div.dropdown
+      div.dropdown(ng-if="analysis.analysis == 'nlp-pos' || analysis.analysis == 'nlp-sentiment'")
         button.btn.btn-primary.dropdown-toggle(type="button" data-toggle="dropdown") Select Sentence 
           span.caret
         ul.dropdown-menu
-          li(ng-repeat="result in analysis.result") 
+          li(ng-repeat="result in analysis.result" ng-click="setSentence($index)") 
+            {{$index}} ) 
             {{joinTokens(result.tokens)}}
 
       #graph
         div(ng-if="analysis.analysis == 'pos_tag'")
           div(ng-repeat="result in analysis.result",style="margin-top: 20px;")
-            span(ng-repeat="tag in result.tags")
-              span(style="padding: 10px; font-size: 22px;" tooltip="{{ tag[1] }}"){{ tag[0] }}
-
+            span(ng-repeat="tag in result.tags") span(style="padding: 10px; font-size: 22px;" tooltip="{{ tag[1] }}"){{ tag[0] }} 
     tab(heading='Default View')
       .white.well
         div(id="jsoneditor", class="jsoneditor")
