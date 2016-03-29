@@ -9,10 +9,12 @@
     $scope.sentenceIndex = 0;
 
     $scope.setSentence = function(index) {
-      $scope.sentenceIndex = index; 
-      $scope.sentimentTreeData = $scope.analysis.result[$scope.sentenceIndex].sentiment_json;
-      $scope.depsTreeData = $scope.analysis.result[$scope.sentenceIndex].deps_json;
-      $scope.visualize();      
+      if(index != $scope.sentenceIndex) {
+        $scope.sentenceIndex = index; 
+        $scope.sentimentTreeData = $scope.analysis.result[$scope.sentenceIndex].sentiment_json;
+        $scope.depsTreeData = $scope.analysis.result[$scope.sentenceIndex].deps_json;
+        $scope.visualize();      
+      }
     };
 
     $scope.back = function () {
@@ -83,7 +85,6 @@
         format = d3.format(".3"),
           color = d3.scale.category20c()
           shift = 0.1;
-          
 
           var bubble = d3.layout.pack().sort(null).size([diameter, diameter]).padding(1.5),
             svg = d3.select("#graph").append("svg").attr("class", "bubble").attr("viewBox", "0 0 100 100");
@@ -205,7 +206,7 @@
       //Move this to a listener when supporting multiple sentences
       //#TODO: Make this not a single sentence
          
-        var dataToConvert = sentiment? $scope.sentimentTreeData : $scope.depsTreeData;
+        var dataToConvert = angular.copy(sentiment? $scope.sentimentTreeData : $scope.depsTreeData);
 
         data = convertData(dataToConvert);
         renderTree();
