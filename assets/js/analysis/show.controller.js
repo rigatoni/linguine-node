@@ -6,6 +6,15 @@
 
   function AnalysisShowController ($http, $scope, $state, $stateParams, $window) {
 
+    $scope.sentenceIndex = 0;
+
+    $scope.setSentence = function(index) {
+      $scope.sentenceIndex = index; 
+      $scope.sentimentTreeData = $scope.analysis.result[$scope.sentenceIndex].sentiment_json;
+      $scope.depsTreeData = $scope.analysis.result[$scope.sentenceIndex].deps_json;
+      $scope.visualize();      
+    };
+
     $scope.back = function () {
       $window.history.back();
     };
@@ -35,6 +44,18 @@
     $scope.findCorpus = function (id) {
       return _.find($scope.corpora, {'_id': id});
     };
+
+    $scope.joinTokens = function(tokens) {
+      var tokenString = '';
+      var tokenStringLength = tokens.length < 20? tokens.length : 20;
+
+      for(var i = 0; i < tokenStringLength; i++) {
+        tokenString += ' ' + tokens[i].token;     
+      }
+
+      tokenString += tokens.length >= 20? '...' : '';
+      return tokenString;
+    }
     
     $scope.showTimeCreated = function(analysis) {
       var d = new Date(analysis.time_created); 
@@ -43,20 +64,18 @@
 
     $scope.defaultView = function() {
       $scope.results = $scope.analysis.result;
-
-      //TODO: Should the first sentence always be assigned here?
-      $scope.sentimentTreeData = $scope.analysis.result[0].sentiment_json;
-      $scope.depsTreeData = $scope.analysis.result[0].deps_json;
-
-      for(var i = 0; i < $scope.results.length; i++) {
-        $scope.results[i].deps_json = []; 
-        $scope.results[i].sentiment_json = []; 
-      }
+      $scope.sentimentTreeData = $scope.analysis.result[$scope.sentenceIndex].sentiment_json;
+      $scope.depsTreeData = $scope.analysis.result[$scope.sentenceIndex].deps_json;
 
       // create the editor
       var container = document.getElementById("jsoneditor");
       var editor = new JSONEditor(container);
       editor.set($scope.results);
+      
+      //The JSON viewer 'expand all' operation is too intensive on large analyses
+      var expandBtn = document.getElementsByClassName('expand-all')[0];
+      expandBtn.parentNode.removeChild(expandBtn);
+
     };
 
     $scope.visualizeTfidf = function() {
@@ -64,6 +83,7 @@
         format = d3.format(".3"),
           color = d3.scale.category20c()
           shift = 0.1;
+          
 
           var bubble = d3.layout.pack().sort(null).size([diameter, diameter]).padding(1.5),
             svg = d3.select("#graph").append("svg").attr("class", "bubble").attr("viewBox", "0 0 100 100");
@@ -179,6 +199,8 @@
     };
 
     $scope.visualizeParseTree = function(sentiment) {
+
+      d3.select(".svg-container").remove();
         
       //Move this to a listener when supporting multiple sentences
       //#TODO: Make this not a single sentence
