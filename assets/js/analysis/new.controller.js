@@ -9,6 +9,7 @@
     $scope.needTokenizer = true; 
     $scope.analysis = {analysisName: ""};
     $scope.preprocAvailable = true;
+    $scope.tabs = [{active: true}, {active: false}, {active: false}];
 
     /*
      * Analyses are the crux of the NLP workflow, so they should be 
@@ -167,6 +168,7 @@
         $rootScope.$emit("event:angularFlash");
       }
       $scope.checkIfNoPreprocessingAvailable();
+      $scope.tabs[0].active = false;$scope.tabs[1].active = false;$scope.tabs[2].active = true;
     };
 
     $scope.onCorporaTabClick = function(e) {
@@ -197,6 +199,29 @@
       if(!$scope.selectedAnalysis) {
         flash.danger.setMessage('Please select an analysis before selecting corpora.');
         $rootScope.$emit("event:angularFlash");
+      }
+      $scope.tabs[0].active = false;$scope.tabs[1].active = true;$scope.tabs[2].active = false;
+    };
+
+    $scope.onAnalysisTabClick = function(e) {
+      $scope.tabs[0].active = true;$scope.tabs[1].active = false;$scope.tabs[2].active = false;
+    };
+
+    $scope.onPreviousButtonClick = function(e) {
+      if ($scope.tabs[1].active) {
+        $scope.onAnalysisTabClick(e);
+      } else if ($scope.tabs[2].active) {
+        $scope.onCorporaTabClick(e);
+      }
+    };
+
+    $scope.onNextButtonClick = function(e) {
+      if (!(($scope.tabs[0].active && $scope.analysisNotSelected) || $scope.tabs[2].active)) {
+        if ($scope.tabs[0].active) {
+          $scope.onCorporaTabClick(e);
+        } else {
+          $scope.onPreprocessingTabClick(e);
+        }
       }
     };
 
