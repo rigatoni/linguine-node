@@ -74,24 +74,29 @@
         name: "Remove Punctuation",
         unfriendly_name: "removepunct",
         description: "Remove all punctuation, using NLTK's Regexp tokenizer to scan the text for patterns of punctuation marks."
+      },
+      "stop_words": {
+        name: "Remove Stop Words",
+        unfriendly_name: "stop_words",
+        description: "Removes NLTK's compiled list of stop words like 'and', 'or', 'but', etc."
       }
     };
-    
+
     /*
      * for each unfriendly_name of an analysis, there is a set of cleanup tasks
-     * that are deemed applicable. 
+     * that are deemed applicable.
      * This object is used to list all cleanup tasks relevant to each analysis on the view.
      *
      * Key[analysisUnfriendlyName] => value [cleanupUnfriendlyName1, unfriendlyName2, ... n]
      */
     $scope.cleanupTypes = {
-      "pos_tag": [cleanups.stem_porter, cleanups.removecapsnnp, cleanups.removepunct ],
-      "wordcloudop": [cleanups.stem_porter, cleanups.removecapsnnp, cleanups.removepunct ],
+      "pos_tag": [cleanups.stem_porter, cleanups.removecapsnnp, cleanups.removepunct, cleanups.stop_words ],
+      "wordcloudop": [cleanups.stem_porter, cleanups.removecapsnnp, cleanups.removepunct, cleanups.stop_words ],
       "nlp-pos": [],
       "nlp-ner": [],
       "nlp-sentiment": []
     };
-    
+
     $scope.tokenizerTypes = [
       {
         name: "Word Tokenize (Penn Treebank)",
