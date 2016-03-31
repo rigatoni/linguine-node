@@ -32,7 +32,7 @@
       $scope.fileUrl = url.createObjectURL(blob);
       $scope.defaultView();
       $scope.visualize();
-    })
+    });
 
     $http.get('api/corpora')
     .success(function (data) {
@@ -64,7 +64,7 @@
       tokenString += tokens.length >= 20? '...' : '';
       return tokenString;
     }
-    
+
     $scope.showTimeCreated = function(analysis) {
       var d = new Date(analysis.time_created); 
       return d.toLocaleDateString() + " " + d.toLocaleTimeString()
@@ -72,8 +72,18 @@
 
     $scope.defaultView = function() {
       $scope.results = $scope.analysis.result;
+
       $scope.sentimentTreeData = $scope.analysis.result[$scope.sentenceIndex].sentiment_json;
       $scope.depsTreeData = $scope.analysis.result[$scope.sentenceIndex].deps_json;
+
+      //TODO: Should the first sentence always be assigned here?
+      $scope.sentimentTreeData = $scope.analysis.result[0].sentiment_json;
+      $scope.depsTreeData = $scope.analysis.result[0].deps_json;
+
+      for(var i = 0; i < $scope.results.length; i++) {
+        $scope.results[i].deps_json = []; 
+        $scope.results[i].sentiment_json = []; 
+      }
 
       // create the editor
       var container = document.getElementById("jsoneditor");
@@ -86,6 +96,17 @@
 
     };
 
+    $scope.getText = function(id)
+    {
+       var temp = {};
+       var defer = $q.defer();
+       $http.get('api/corpora/' + id).success(function(data){
+          temp = data.contents;
+          defer.resolve(data.contents);
+
+       });
+       return defer.promise;
+    };
     $scope.visualizeTfidf = function() {
       var diameter = 100,
         format = d3.format(".3"),
@@ -411,7 +432,38 @@
             });
         }
     };
-    
+
+  $scope.visualizeNER = function(){
+
+      // get the analysis result and split the object into a list of tokens with the word and ner
+      var tokens = [];
+      $scope.analysis.result.forEach(function(obj){
+          obj.tokens.forEach(function(word){
+              tokens.push(word);
+          })
+      });
+
+      // Create a new div under the #graph div
+      var nerDiv = document.getElementById("graph");
+      var textNode =  document.createElement('div');
+      textNode.setAttribute("class", "ner-text");
+
+      // for each token, create a span (so words can be individually bolded)
+      // set the text to be the word. if a NER has been detected, bold the word
+      tokens.forEach(function(word){
+         var wordspace = document.createElement('span');
+         wordspace.setAttribute("title", word.token + ": " + word.ner);
+         wordspace.innerHTML += word.token + " ";
+         if(word.ner !== "O")
+         {
+             wordspace.style.fontWeight = 'bold';
+             wordspace.setAttribute("class", word.ner.toLowerCase());
+         }
+          textNode.appendChild(wordspace);
+      });
+      nerDiv.appendChild( textNode );
+
+  };
 
     $scope.visualize = function(){
       if ($scope.analysis.analysis === "tfidf" ) {
@@ -422,6 +474,8 @@
         $scope.visualizeParseTree(false);
       } else if  ($scope.analysis.analysis == "nlp-sentiment"){
         $scope.visualizeParseTree(true);
+      } else if ($scope.analysis.analysis == "nlp-ner"){
+        $scope.visualizeNER($scope.text);
       }
     }
 
