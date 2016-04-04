@@ -27,12 +27,12 @@
         button.btn.btn-primary.dropdown-toggle(type="button" data-toggle="dropdown") Select Sentence 
           span.caret
         ul.dropdown-menu
-          li(ng-repeat="result in analysis.result" ng-click="setSentence($index)") 
+          li(ng-repeat="result in analysis.result.sentences" ng-click="setSentence($index)") 
             {{$index}} ) 
             {{joinTokens(result.tokens)}}
       #graph
         div(ng-if="analysis.analysis == 'pos_tag'")
-          div(ng-repeat="result in analysis.result",style="margin-top: 20px;")
+          div(ng-repeat="result in analysis.result.sentences",style="margin-top: 20px;")
             span(ng-repeat="tag in result.tags") span(style="padding: 10px; font-size: 22px;" tooltip="{{ tag[1] }}"){{ tag[0] }} 
     tab(heading='Default View')
       .white.well

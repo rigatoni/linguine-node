@@ -14,8 +14,8 @@
     $scope.setSentence = function(index) {
       if(index != $scope.sentenceIndex) {
         $scope.sentenceIndex = index; 
-        $scope.sentimentTreeData = $scope.analysis.result[$scope.sentenceIndex].sentiment_json;
-        $scope.depsTreeData = $scope.analysis.result[$scope.sentenceIndex].deps_json;
+        $scope.sentimentTreeData = $scope.analysis.result.sentences[$scope.sentenceIndex].sentiment_json;
+        $scope.depsTreeData = $scope.analysis.result.sentences[$scope.sentenceIndex].deps_json;
         $scope.visualize();      
       }
     };
@@ -73,8 +73,8 @@
     $scope.defaultView = function() {
       $scope.results = angular.copy($scope.analysis.result);
 
-      $scope.sentimentTreeData = $scope.analysis.result[$scope.sentenceIndex].sentiment_json;
-      $scope.depsTreeData = $scope.analysis.result[$scope.sentenceIndex].deps_json;
+      $scope.sentimentTreeData = $scope.analysis.result.sentences[$scope.sentenceIndex].sentiment_json;
+      $scope.depsTreeData = $scope.analysis.result.sentences[$scope.sentenceIndex].deps_json;
 
       for(var i = 0; i < $scope.results.length; i++) {
         $scope.results[i].deps_json = []; 
@@ -140,7 +140,7 @@
                   // Returns a flattened hierarchy containing all leaf nodes under the root.
                   function classes() {
                     var classes = [];
-                    $scope.analysis.result.forEach(function (node) {
+                    $scope.analysis.result.sentences.forEach(function (node) {
                       var scalar;
                       scalar = Math.log(Math.abs(node.importance))*-1;
 
@@ -158,7 +158,7 @@
         function getWords() {
             var count = 0;
             var classes = [];
-            $scope.analysis.result.forEach(function (node) {
+            $scope.analysis.result.sentences.forEach(function (node) {
 
                 classes.push({text: node.term, frequency: node.frequency});
                 count++;
@@ -433,7 +433,7 @@
 
       // get the analysis result and split the object into a list of tokens with the word and ner
       var tokens = [];
-      $scope.analysis.result.forEach(function(obj){
+      $scope.analysis.result.sentences.forEach(function(obj){
           obj.tokens.forEach(function(word){
               tokens.push(word);
           })
