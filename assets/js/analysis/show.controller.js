@@ -71,14 +71,10 @@
     };
 
     $scope.defaultView = function() {
-      $scope.results = $scope.analysis.result;
+      $scope.results = angular.copy($scope.analysis.result);
 
       $scope.sentimentTreeData = $scope.analysis.result[$scope.sentenceIndex].sentiment_json;
       $scope.depsTreeData = $scope.analysis.result[$scope.sentenceIndex].deps_json;
-
-      //TODO: Should the first sentence always be assigned here?
-      $scope.sentimentTreeData = $scope.analysis.result[0].sentiment_json;
-      $scope.depsTreeData = $scope.analysis.result[0].deps_json;
 
       for(var i = 0; i < $scope.results.length; i++) {
         $scope.results[i].deps_json = []; 
