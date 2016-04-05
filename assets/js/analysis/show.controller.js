@@ -230,6 +230,7 @@
       //#TODO: Make this not a single sentence
          
         var dataToConvert = angular.copy(sentiment? $scope.sentimentTreeData : $scope.depsTreeData);
+        var divToUse = sentiment ? "sentgraph" : "graph"; // sentiment uses a different div due to tab stuff
 
         data = convertData(dataToConvert);
         renderTree();
@@ -273,14 +274,14 @@
             });
 
             /*
-                 The #graph div is acting as a container for the .svg-container div (which holds the tree).
+                 The #graph (or #sentgraph) div is acting as a container for the .svg-container div (which holds the tree).
                  To make it scrollable, 2 things that must happen:
                    1. the #graph div must have overflow set to scroll
                    2. the svg-container div must have width & height greater than the width & height of #graph
                  Note: right now the width/height percentages are arbitrary and I need to figure out a better way
             */
 
-            var svg = d3.select("#graph").style('overflow', 'scroll').style('width', '  width:1140px').style('height', '1200px')
+            var svg = d3.select("#" + divToUse).style('overflow', 'scroll').style('width', '  width:1140px').style('height', '1200px')
               .append('svg')
               .attr('class', 'svg-container')
               .style('width', '200%')
