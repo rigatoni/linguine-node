@@ -10,8 +10,21 @@
 
     $scope.fetchAnalyses = function() {
 			$http.get('api/analysis')
-				.success(function (data) {
-					$scope.analyses = data;
+        .success(function (data) {
+          $scope.analyses = data;
+          $scope.analyses.forEach(function(analysis) {
+
+            var now = new Date();
+            var timeCreatedDate = new Date(analysis.time_created);
+						var timeCreatedDatePlusTwelveHrs = timeCreatedDate.setHours(timeCreatedDate.getHours() + 12);
+
+            if(!analysis.complete && timeCreatedDatePlusTwelveHrs < now) {
+              $http.delete('api/analysis/' + analysis._id) 
+								.error(function (data) {
+								  flash.danger.setMessage("An error occured trying to delete an erraneous analysis");
+							});
+            }
+          });
 			});
     }
       
