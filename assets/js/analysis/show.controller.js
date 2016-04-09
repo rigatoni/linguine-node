@@ -461,19 +461,26 @@
 
   };
 
-    $scope.visualize = function(){
-      if ($scope.analysis.analysis === "tfidf" ) {
-        $scope.visualizeTfidf();
-      } else if  ($scope.analysis.analysis == "wordcloudop") {
-        $scope.visualizeWordcloud();
-      } else if  ($scope.analysis.analysis == "nlp-pos"){
-        $scope.visualizeParseTree(false);
-      } else if  ($scope.analysis.analysis == "nlp-sentiment"){
-        $scope.visualizeParseTree(true);
-      } else if ($scope.analysis.analysis == "nlp-ner"){
-        $scope.visualizeNER($scope.text);
-      }
+  $scope.visualize = function(){
+      switch($scope.analysis.analysis) {
+        case "tfidf":
+          $scope.visualizeTfidf();
+          break;
+        case "wordcloudop":
+          $scope.visualizeWordcloud();
+          break;
+        case "nlp-pos":
+          $scope.visualizeParseTree(false);
+          break;
+        case "nlp-sentiment":
+          $scope.visualizeParseTree(true);
+          break;
+        case "nlp-ner":
+          $scope.visualizeNER($scope.text);
+          break;
+        default:
+          break;
     }
-
+  };
   }
 })();
