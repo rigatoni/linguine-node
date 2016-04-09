@@ -461,6 +461,25 @@
 
   };
 
+  $scope.visualizeCoref = function() {
+    var sentences = $scope.analysis.result.sentences;
+    $scope.analysis.result.entities.forEach(function(entity) {
+      entity.mentions.forEach(function(mention) {
+        
+        //Grab every token that has been mentioned by a given entity 
+        var tokenString = sentences[mention.sentence]
+        .tokens.slice(mention.tokspan_in_sentence[0], mention.tokspan_in_sentence[1] + 1);
+        
+        //Grab the text from every token and append together
+        //to populate the dropdwn list
+        var tokenText = tokenString.reduce(function(prev, cur) {
+          return prev.token? prev.token + ' ' + cur.token : prev + ' ' + cur.token;
+        });
+
+      });
+    });
+  }
+
   $scope.visualize = function(){
       switch($scope.analysis.analysis) {
         case "tfidf":
@@ -479,6 +498,7 @@
           $scope.visualizeNER($scope.text);
           break;
         default:
+          $scope.visualizeCoref();
           break;
     }
   };
