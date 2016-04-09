@@ -10,6 +10,7 @@
   function AnalysisShowController ($http, $scope, $state, $stateParams, $window) {
 
     $scope.sentenceIndex = 0;
+    $scope.corefEntities = [];
 
     $scope.setSentence = function(index) {
       if(index != $scope.sentenceIndex) {
@@ -226,9 +227,6 @@
 
       d3.select(".svg-container").remove();
         
-      //Move this to a listener when supporting multiple sentences
-      //#TODO: Make this not a single sentence
-         
         var dataToConvert = angular.copy(sentiment? $scope.sentimentTreeData : $scope.depsTreeData);
 
         data = convertData(dataToConvert);
@@ -476,8 +474,14 @@
           return prev.token? prev.token + ' ' + cur.token : prev + ' ' + cur.token;
         });
 
+        $scope.corefEntities.push(tokenText);
+
       });
     });
+  }
+
+  $scope.setEntity = function(index) {
+    console.log("Setting entity at ", index);
   }
 
   $scope.visualize = function(){

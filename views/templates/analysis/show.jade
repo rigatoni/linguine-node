@@ -23,13 +23,16 @@
   tabset(justified='true')
     tab(heading='Visualization')
 
-      div.dropdown(ng-if="analysis.analysis == 'nlp-pos' || analysis.analysis == 'nlp-sentiment'")
-        button.btn.btn-primary.dropdown-toggle(type="button" data-toggle="dropdown") Select Sentence 
+      div.dropdown(ng-if="analysis.analysis == 'nlp-pos' || analysis.analysis == 'nlp-sentiment' || analysis.analysis == 'nlp-coref'")
+        button.btn.btn-primary.dropdown-toggle(type="button" data-toggle="dropdown") Select {{analysis.analysis == 'nlp-coref'? 'Entity' : 'Sentence'}} 
           span.caret
         ul.dropdown-menu
-          li(ng-repeat="result in analysis.result.sentences" ng-click="setSentence($index)") 
+          li(ng-if="analysis.analysis == 'nlp-pos' || analysis.analysis == 'nlp-sentiment'" ng-repeat="result in analysis.result.sentences" ng-click="setSentence($index)") 
             {{$index}} ) 
             {{joinTokens(result.tokens)}}
+          li(ng-if="analysis.analysis == 'nlp-coref'" ng-repeat="coref in corefEntities track by $index" ng-click="setEntity($index)") 
+            {{$index}} ) 
+            {{coref}}
       #graph
         div(ng-if="analysis.analysis == 'pos_tag'")
           div(ng-repeat="result in analysis.result.sentences",style="margin-top: 20px;")
