@@ -102,7 +102,8 @@
       "wordcloudop": [cleanups.stem_porter, cleanups.removecapsnnp, cleanups.removepunct, cleanups.stop_words ],
       "nlp-pos": [],
       "nlp-ner": [],
-      "nlp-sentiment": []
+      "nlp-sentiment": [],
+      "nlp-relation": []
     };
 
     $scope.tokenizerTypes = [
