@@ -72,7 +72,7 @@
     };
 
     $scope.defaultView = function() {
-      $scope.results = angular.copy($scope.analysis.result);
+      $scope.results = angular.copy($scope.analysis.result.sentences);
 
       $scope.sentimentTreeData = $scope.analysis.result.sentences[$scope.sentenceIndex].sentiment_json;
       $scope.depsTreeData = $scope.analysis.result.sentences[$scope.sentenceIndex].deps_json;
