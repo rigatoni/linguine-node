@@ -33,6 +33,10 @@
                 .success(function(data){
                   $state.go('linguine.corpora.index');
                 })
+                .error(function(err) {
+                  flash.danger.setMessage('The file size is too large! (over 35KB)');
+                  $rootScope.$emit("event:angularFlash");
+                })
           }
         }
       } else {
