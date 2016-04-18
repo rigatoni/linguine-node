@@ -432,11 +432,14 @@
   };
 
   $scope.renderPlainText = function(type) {
-    
+			var canvas = document.getElementById('plaintext-canvas');
+   		if(canvas){canvas.remove(); }
+
       // Create a new div under the #graph div
       var textDiv = document.getElementById("graph");
       var textNode =  document.createElement('div');
       textNode.setAttribute("class", "ner-text");
+      textNode.setAttribute("id", "plaintext-canvas");
 
       var tokens = {};
       $scope.analysis.result.sentences.forEach(function(obj, sentenceIndex){
@@ -460,6 +463,14 @@
 							 wordspace.setAttribute("class", word.ner.toLowerCase());
 					 }
 
+					 if(type == 'coref' && 
+					 $scope.selectedEntity.sentence == sk &&
+			     wk >= $scope.selectedEntity.startInd && 
+					 wk <= $scope.selectedEntity.endInd) {
+							 wordspace.style.fontWeight = 'bold';
+							 wordspace.setAttribute("class", 'organization');
+					 }
+
 						textNode.appendChild(wordspace);
 			    });
       });
@@ -481,10 +492,17 @@
           return prev.token? prev.token + ' ' + cur.token : prev + ' ' + cur.token;
         });
 
-        $scope.corefEntities.push(tokenText);
+        $scope.corefEntities.push({
+				  'text': tokenText, 
+					'sentence': mention.sentence, 
+					'startInd': mention.tokspan_in_sentence[0],
+					'endInd': mention.tokspan_in_sentence[1]
+				});
 
       });
     });
+ 	
+    $scope.selectedEntity = $scope.corefEntities[0];    
 
     //Render text in document to highlight with entities 
     $scope.renderPlainText('coref');
@@ -492,6 +510,7 @@
 
   $scope.setEntity = function(index) {
 		$scope.selectedEntity = $scope.corefEntities[index];
+		$scope.renderPlainText('coref');
   }
 
   $scope.visualize = function(){
