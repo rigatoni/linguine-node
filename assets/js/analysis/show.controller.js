@@ -438,25 +438,30 @@
       var textNode =  document.createElement('div');
       textNode.setAttribute("class", "ner-text");
 
-      var tokens = [];
-      $scope.analysis.result.sentences.forEach(function(obj){
-          obj.tokens.forEach(function(word){
-              tokens.push(word);
+      var tokens = {};
+      $scope.analysis.result.sentences.forEach(function(obj, sentenceIndex){
+					tokens[sentenceIndex] = {}; 
+          obj.tokens.forEach(function(word, tokenIndex){
+					  tokens[sentenceIndex][tokenIndex] = word;
           })
       });
 
-      tokens.forEach(function(word){
-         var wordspace = document.createElement('span');
-         wordspace.setAttribute("title", word.token + ": " + word.ner);
-         wordspace.innerHTML += word.token + " ";
+      Object.keys(tokens).forEach(function(sk){
+				 Object.keys(tokens[sk]).forEach(function(wk) {
+					 var word = tokens[sk][wk];
+					 var wordspace = document.createElement('span');
 
-         if(type == 'ner' && word.ner !== "O")
-         {
-             wordspace.style.fontWeight = 'bold';
-             wordspace.setAttribute("class", word.ner.toLowerCase());
-         }
+					 wordspace.setAttribute("title", word.token + ": " + word.ner);
+					 wordspace.innerHTML += word.token + " ";
 
-          textNode.appendChild(wordspace);
+					 if(type == 'ner' && word.ner !== "O")
+					 {
+							 wordspace.style.fontWeight = 'bold';
+							 wordspace.setAttribute("class", word.ner.toLowerCase());
+					 }
+
+						textNode.appendChild(wordspace);
+			    });
       });
       textDiv.appendChild( textNode );
   }
@@ -486,7 +491,7 @@
   }
 
   $scope.setEntity = function(index) {
-    console.log("Setting entity at ", index);
+		$scope.selectedEntity = $scope.corefEntities[index];
   }
 
   $scope.visualize = function(){
