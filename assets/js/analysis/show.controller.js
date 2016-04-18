@@ -451,10 +451,11 @@
 
       Object.keys(tokens).forEach(function(sk){
 				 Object.keys(tokens[sk]).forEach(function(wk) {
+					 var corefCount = 0;
 					 var word = tokens[sk][wk];
 					 var wordspace = document.createElement('span');
 
-					 wordspace.setAttribute("title", word.token + ": " + word.ner);
+					 if(type == 'ner') { wordspace.setAttribute("title", word.token + ": " + word.ner); }
 					 wordspace.innerHTML += word.token + " ";
 
 					 if(type == 'ner' && word.ner !== "O")
@@ -468,7 +469,9 @@
 			     wk >= $scope.selectedEntity.startInd && 
 					 wk <= $scope.selectedEntity.endInd) {
 							 wordspace.style.fontWeight = 'bold';
+					 		 wordspace.setAttribute("title", word.token + ": " + JSON.stringify($scope.analysis.result.entities[sk].mentions[corefCount], null, 2));
 							 wordspace.setAttribute("class", 'organization');
+							 corefCount++;
 					 }
 
 						textNode.appendChild(wordspace);
