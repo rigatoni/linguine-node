@@ -427,9 +427,17 @@
         }
     };
 
-  $scope.visualizeNER = function(){
+  $scope.visualizeNER = function() {
+    $scope.renderPlainText('ner');
+  };
 
-      // get the analysis result and split the object into a list of tokens with the word and ner
+  $scope.renderPlainText = function(type) {
+    
+      // Create a new div under the #graph div
+      var textDiv = document.getElementById("graph");
+      var textNode =  document.createElement('div');
+      textNode.setAttribute("class", "ner-text");
+
       var tokens = [];
       $scope.analysis.result.sentences.forEach(function(obj){
           obj.tokens.forEach(function(word){
@@ -437,27 +445,21 @@
           })
       });
 
-      // Create a new div under the #graph div
-      var nerDiv = document.getElementById("graph");
-      var textNode =  document.createElement('div');
-      textNode.setAttribute("class", "ner-text");
-
-      // for each token, create a span (so words can be individually bolded)
-      // set the text to be the word. if a NER has been detected, bold the word
       tokens.forEach(function(word){
          var wordspace = document.createElement('span');
          wordspace.setAttribute("title", word.token + ": " + word.ner);
          wordspace.innerHTML += word.token + " ";
-         if(word.ner !== "O")
+
+         if(type == 'ner' && word.ner !== "O")
          {
              wordspace.style.fontWeight = 'bold';
              wordspace.setAttribute("class", word.ner.toLowerCase());
          }
+
           textNode.appendChild(wordspace);
       });
-      nerDiv.appendChild( textNode );
-
-  };
+      textDiv.appendChild( textNode );
+  }
 
   $scope.visualizeCoref = function() {
     var sentences = $scope.analysis.result.sentences;
@@ -478,6 +480,9 @@
 
       });
     });
+
+    //Render text in document to highlight with entities 
+    $scope.renderPlainText('coref');
   }
 
   $scope.setEntity = function(index) {
@@ -501,8 +506,10 @@
         case "nlp-ner":
           $scope.visualizeNER($scope.text);
           break;
-        default:
+        case "nlp-coref":
           $scope.visualizeCoref();
+          break;
+        default:
           break;
     }
   };
