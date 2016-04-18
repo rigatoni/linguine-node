@@ -4,6 +4,10 @@ var router = express.Router();
 var Corpus = require('../models/corpus');
 var fs = require('fs');
 
+//Max file size is 35Kb by default (5x length of 'The Raven')
+var maxSize = process.env.LINGUINE_MAX_FILESIZE_KB? 
+  process.env.LINGUINE_MAX_FILESIZE_KB * 1000 : 35 * 1000 
+
 // Middleware runs on all corpora API calls
 router.use(function(req, res, next) {
   if (!req.user) {
@@ -49,6 +53,10 @@ router.get('/quota', function(req, res) {
   });
 })
 
+router.get('/max_size', function(req, res) {
+  res.json({max_size_kb: maxSize / 1000});
+})
+
 router.get('/:id', function (req, res) {
   Corpus.findById(req.params.id, function (err, corpus) {
     res.json(corpus);
@@ -64,8 +72,8 @@ router.post('', function(req, res) {
   } else {
     var file = req.files.file;
     var size = fs.statSync(file.path)['size'];
-
-    if(size <= 35000){
+    
+    if(size <= maxSize){
 
       fs.readFile(file.path, function(err, data){
         var corpus = {
