@@ -451,6 +451,7 @@
             });
 
             var sentimentTitle = document.createElement('span');
+            sentimentTitle.setAttribute("title", results.parse);
             sentimentTitle.innerHTML = "Sentence Sentiment: " + results.sentiment + "<br />";
             if(results.sentiment == "Very negative")
             {
