@@ -58,8 +58,9 @@
                    li(ng-repeat="result in analysis.result" ng-click="setSentence($index)")
                       {{$index}} )
                       {{joinTokens(result.tokens)}}
-               #senttext test
-    tab(ng-if="analysis.analysis != ''" heading='Default View')  // added this ng-if to fix an issue with this being default tab because it loaded faster
+               #senttext
+                 // added this ng-if to fix an issue with this being default tab because it loaded faster
+    tab(ng-if="analysis.analysis != ''" heading='Default View')
       .white.well
         div(id="jsoneditor", class="jsoneditor")
       a.btn.btn-lg.btn-primary(style="margin-bottom: 20px", ng-href="{{ fileUrl }}", download="{{analysis.analysis_name}}.json") Download JSON

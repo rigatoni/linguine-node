@@ -13,7 +13,8 @@
 
     $scope.setSentence = function(index) {
       if(index != $scope.sentenceIndex) {
-        $scope.sentenceIndex = index; 
+        $scope.sentenceIndex = index;
+        $scope.sentenceData = $scope.analysis.result[$scope.sentenceIndex];
         $scope.sentimentTreeData = $scope.analysis.result[$scope.sentenceIndex].sentiment_json;
         $scope.depsTreeData = $scope.analysis.result[$scope.sentenceIndex].deps_json;
         $scope.visualize();      
@@ -430,6 +431,35 @@
         }
     };
 
+    $scope.visualizeSentimentText = function()
+    {
+       // var results =  $scope.analysis.result[$scope.sentenceIndex];
+        var results = $scope.sentenceData;
+
+        updateSentence(results);
+
+
+
+        function updateSentence(results)
+        {
+            var sentDiv = document.getElementById("senttext");
+            var textNode =  document.createElement('div');
+            textNode.setAttribute("class", "sentiment-text");
+
+            var tokens = [];
+            results.tokens.forEach(function(word){
+                tokens.push(word);
+            });
+            tokens.forEach(function(word){
+                var wordspace = document.createElement('span');
+                wordspace.setAttribute("title", "Sentiment: " + word.sentiment + " Value: " + word.sentimentValue);
+                wordspace.innerHTML += word.token + " ";
+                textNode.appendChild(wordspace);
+            });
+            sentDiv.appendChild( textNode );
+        }
+    };
+
   $scope.visualizeNER = function(){
 
       // get the analysis result and split the object into a list of tokens with the word and ner
@@ -471,6 +501,7 @@
         $scope.visualizeParseTree(false);
       } else if  ($scope.analysis.analysis == "nlp-sentiment"){
         $scope.visualizeParseTree(true);
+        $scope.visualizeSentimentText();
       } else if ($scope.analysis.analysis == "nlp-ner"){
         $scope.visualizeNER($scope.text);
       }
