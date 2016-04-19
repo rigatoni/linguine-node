@@ -21,7 +21,32 @@
     span #[b Time Created]:  {{showTimeCreated(analysis)}}
 
   tabset(justified='true')
-    // ============= tab for all analyses except sentiment analysis (no subtabs)
+    // ============= tab for all analyses except sentiment analysis (no subtabs) //
+    // ======== Sentiment analysis special tab: 2 visualization so there are subtabs ===================== //
+    tab(ng-if="analysis.analysis == 'nlp-sentiment'" heading='Visualization')
+        tabset(justified='true')
+            tab(heading="Tree" class="treeTab")
+                div.dropdown(ng-if="analysis.analysis == 'nlp-pos' || analysis.analysis == 'nlp-sentiment'")
+                  button.btn.btn-primary.dropdown-toggle(type="button" data-toggle="dropdown") Select Sentence
+                    span.caret
+                  ul.dropdown-menu
+                    li(ng-repeat="result in analysis.result" ng-click="setSentence($index)")
+                      {{$index}} )
+                      {{joinTokens(result.tokens)}}
+                #sentgraph
+                  div(ng-if="analysis.analysis == 'pos_tag'")
+                    div(ng-repeat="result in analysis.result",style="margin-top: 20px;")
+                      span(ng-repeat="tag in result.tags") span(style="padding: 10px; font-size: 22px;" tooltip="{{ tag[1] }}"){{ tag[0] }}
+            tab(heading="Text" class="textTab")
+               div.dropdown(ng-if="analysis.analysis == 'nlp-pos' || analysis.analysis == 'nlp-sentiment'")
+                 button.btn.btn-primary.dropdown-toggle(type="button" data-toggle="dropdown") Select Sentence
+                    span.caret
+                 ul.dropdown-menu
+                   li(ng-repeat="result in analysis.result" ng-click="setSentence($index)")
+                      {{$index}} )
+                      {{joinTokens(result.tokens)}}
+               #senttext
+                 // added this ng-if to fix an issue with this being default tab because it loaded faster
     tab(ng-if="analysis.analysis != 'nlp-sentiment'"  heading='Visualization')
       div.dropdown(ng-if="analysis.analysis == 'nlp-pos'")
         button.btn.btn-primary.dropdown-toggle(type="button" data-toggle="dropdown") Select Sentence
@@ -35,32 +60,8 @@
           div(ng-repeat="result in analysis.result",style="margin-top: 20px;")
             span(ng-repeat="tag in result.tags") span(style="padding: 10px; font-size: 22px;" tooltip="{{ tag[1] }}"){{ tag[0] }}
 
-    // ======== Sentiment analysis special tab: 2 visualization so there are subtabs ===================== //
-    tab(ng-if="analysis.analysis == 'nlp-sentiment'" heading='Visualizations')
-        tabset(justified='true')
-            tab(heading="Tree" )
-                div.dropdown(ng-if="analysis.analysis == 'nlp-pos' || analysis.analysis == 'nlp-sentiment'")
-                  button.btn.btn-primary.dropdown-toggle(type="button" data-toggle="dropdown") Select Sentence
-                    span.caret
-                  ul.dropdown-menu
-                    li(ng-repeat="result in analysis.result" ng-click="setSentence($index)")
-                      {{$index}} )
-                      {{joinTokens(result.tokens)}}
-                #sentgraph
-                  div(ng-if="analysis.analysis == 'pos_tag'")
-                    div(ng-repeat="result in analysis.result",style="margin-top: 20px;")
-                      span(ng-repeat="tag in result.tags") span(style="padding: 10px; font-size: 22px;" tooltip="{{ tag[1] }}"){{ tag[0] }}
-            tab(heading="Text")
-               div.dropdown(ng-if="analysis.analysis == 'nlp-pos' || analysis.analysis == 'nlp-sentiment'")
-                 button.btn.btn-primary.dropdown-toggle(type="button" data-toggle="dropdown") Select Sentence
-                    span.caret
-                 ul.dropdown-menu
-                   li(ng-repeat="result in analysis.result" ng-click="setSentence($index)")
-                      {{$index}} )
-                      {{joinTokens(result.tokens)}}
-               #senttext
-                 // added this ng-if to fix an issue with this being default tab because it loaded faster
-    tab(heading='Default View')
+
+    tab(ng-if="analysis.analysis != ''" heading='Default View')
       .white.well
         div(id="jsoneditor", class="jsoneditor")
       a.btn.btn-lg.btn-primary(style="margin-bottom: 20px", ng-href="{{ fileUrl }}", download="{{analysis.analysis_name}}.json") Download JSON

@@ -470,18 +470,6 @@
                 var wordspace = document.createElement('span');
                 wordspace.setAttribute("title", word.token + "- Sentiment: " + word.sentiment + ", Value: " + word.sentimentValue);
                 wordspace.innerHTML += word.token + " ";
-               /* if(word.sentiment == "Very negative")
-                {
-                    wordspace.setAttribute("class", "VeryNegative");
-                }
-                else if(word.sentiment == "Very positive")
-                {
-                    wordspace.setAttribute("class", "VeryPositive");
-                }
-                else
-                {
-                    wordspace.setAttribute("class", word.sentiment);
-                }*/
                 textNode.appendChild(wordspace);
             });
             sentDiv.appendChild( textNode );
