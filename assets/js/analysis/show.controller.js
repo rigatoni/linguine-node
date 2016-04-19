@@ -433,14 +433,13 @@
 
     $scope.visualizeSentimentText = function()
     {
-        var svg = d3.select(".sentiment-text");
-        svg.remove();
+        d3.select(".sentiment-text").remove();
+
         var results = $scope.sentenceData;
         if(results != null)
         {
             updateSentence(results);
         }
-
         function updateSentence(results)
         {
             var sentDiv = document.getElementById("senttext");
@@ -451,10 +450,37 @@
                 tokens.push(word);
             });
 
+            var sentimentTitle = document.createElement('span');
+            sentimentTitle.innerHTML = "Sentence Sentiment: " + results.sentiment + "<br />";
+            if(results.sentiment == "Very negative")
+            {
+                sentimentTitle.setAttribute("class", "VeryNegative");
+            }
+            else if(results.sentiment == "Very positive")
+            {
+                sentimentTitle.setAttribute("class", "VeryPositive");
+            }
+            else
+            {
+                sentimentTitle.setAttribute("class", results.sentiment);
+            }
+            textNode.appendChild(sentimentTitle);
             tokens.forEach(function(word){
                 var wordspace = document.createElement('span');
-                wordspace.setAttribute("title", "Sentiment: " + word.sentiment + ", Value: " + word.sentimentValue);
+                wordspace.setAttribute("title", word.token + "- Sentiment: " + word.sentiment + ", Value: " + word.sentimentValue);
                 wordspace.innerHTML += word.token + " ";
+               /* if(word.sentiment == "Very negative")
+                {
+                    wordspace.setAttribute("class", "VeryNegative");
+                }
+                else if(word.sentiment == "Very positive")
+                {
+                    wordspace.setAttribute("class", "VeryPositive");
+                }
+                else
+                {
+                    wordspace.setAttribute("class", word.sentiment);
+                }*/
                 textNode.appendChild(wordspace);
             });
             sentDiv.appendChild( textNode );
