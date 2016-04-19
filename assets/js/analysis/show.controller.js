@@ -433,26 +433,27 @@
 
     $scope.visualizeSentimentText = function()
     {
-       // var results =  $scope.analysis.result[$scope.sentenceIndex];
+        var svg = d3.select(".sentiment-text");
+        svg.remove();
         var results = $scope.sentenceData;
-
-        updateSentence(results);
-
-
+        if(results != null)
+        {
+            updateSentence(results);
+        }
 
         function updateSentence(results)
         {
             var sentDiv = document.getElementById("senttext");
             var textNode =  document.createElement('div');
             textNode.setAttribute("class", "sentiment-text");
-
             var tokens = [];
             results.tokens.forEach(function(word){
                 tokens.push(word);
             });
+
             tokens.forEach(function(word){
                 var wordspace = document.createElement('span');
-                wordspace.setAttribute("title", "Sentiment: " + word.sentiment + " Value: " + word.sentimentValue);
+                wordspace.setAttribute("title", "Sentiment: " + word.sentiment + ", Value: " + word.sentimentValue);
                 wordspace.innerHTML += word.token + " ";
                 textNode.appendChild(wordspace);
             });
