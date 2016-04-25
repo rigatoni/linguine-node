@@ -10,6 +10,7 @@
   function AnalysisShowController ($http, $scope, $state, $stateParams, $window) {
 
     $scope.sentenceIndex = 0;
+    $scope.corefEntities = [];
 
     $scope.setSentence = function(index) {
       if(index != $scope.sentenceIndex) {
@@ -226,9 +227,6 @@
 
       d3.select(".svg-container").remove();
         
-      //Move this to a listener when supporting multiple sentences
-      //#TODO: Make this not a single sentence
-         
         var dataToConvert = angular.copy(sentiment? $scope.sentimentTreeData : $scope.depsTreeData);
 
         data = convertData(dataToConvert);
@@ -429,51 +427,118 @@
         }
     };
 
-  $scope.visualizeNER = function(){
+  $scope.visualizeNER = function() {
+    $scope.renderPlainText('ner');
+  };
 
-      // get the analysis result and split the object into a list of tokens with the word and ner
-      var tokens = [];
-      $scope.analysis.result.sentences.forEach(function(obj){
-          obj.tokens.forEach(function(word){
-              tokens.push(word);
+  $scope.renderPlainText = function(type) {
+			var canvas = document.getElementById('plaintext-canvas');
+   		if(canvas){canvas.remove(); }
+
+      // Create a new div under the #graph div
+      var textDiv = document.getElementById("graph");
+      var textNode =  document.createElement('div');
+      textNode.setAttribute("class", "ner-text");
+      textNode.setAttribute("id", "plaintext-canvas");
+
+      var tokens = {};
+      $scope.analysis.result.sentences.forEach(function(obj, sentenceIndex){
+					tokens[sentenceIndex] = {}; 
+          obj.tokens.forEach(function(word, tokenIndex){
+					  tokens[sentenceIndex][tokenIndex] = word;
           })
       });
 
-      // Create a new div under the #graph div
-      var nerDiv = document.getElementById("graph");
-      var textNode =  document.createElement('div');
-      textNode.setAttribute("class", "ner-text");
+      Object.keys(tokens).forEach(function(sk){
+				 Object.keys(tokens[sk]).forEach(function(wk) {
+					 var corefCount = 0;
+					 var word = tokens[sk][wk];
+					 var wordspace = document.createElement('span');
 
-      // for each token, create a span (so words can be individually bolded)
-      // set the text to be the word. if a NER has been detected, bold the word
-      tokens.forEach(function(word){
-         var wordspace = document.createElement('span');
-         wordspace.setAttribute("title", word.token + ": " + word.ner);
-         wordspace.innerHTML += word.token + " ";
-         if(word.ner !== "O")
-         {
-             wordspace.style.fontWeight = 'bold';
-             wordspace.setAttribute("class", word.ner.toLowerCase());
-         }
-          textNode.appendChild(wordspace);
+					 if(type == 'ner') { wordspace.setAttribute("title", word.token + ": " + word.ner); }
+					 wordspace.innerHTML += word.token + " ";
+
+					 if(type == 'ner' && word.ner !== "O")
+					 {
+							 wordspace.style.fontWeight = 'bold';
+							 wordspace.setAttribute("class", word.ner.toLowerCase());
+					 }
+
+					 if(type == 'coref' && 
+					 $scope.selectedEntity.sentence == sk &&
+			     wk >= $scope.selectedEntity.startInd && 
+					 wk <= $scope.selectedEntity.endInd) {
+							 wordspace.style.fontWeight = 'bold';
+					 		 wordspace.setAttribute("title", word.token + ": " + JSON.stringify($scope.analysis.result.entities[sk].mentions[corefCount], null, 2));
+							 wordspace.setAttribute("class", 'organization');
+							 corefCount++;
+					 }
+
+						textNode.appendChild(wordspace);
+			    });
       });
-      nerDiv.appendChild( textNode );
+      textDiv.appendChild( textNode );
+  }
 
-  };
+  $scope.visualizeCoref = function() {
+    var sentences = $scope.analysis.result.sentences;
+    $scope.analysis.result.entities.forEach(function(entity) {
+      entity.mentions.forEach(function(mention) {
+        
+        //Grab every token that has been mentioned by a given entity 
+        var tokenString = sentences[mention.sentence]
+        .tokens.slice(mention.tokspan_in_sentence[0], mention.tokspan_in_sentence[1] + 1);
+        
+        //Grab the text from every token and append together
+        //to populate the dropdwn list
+        var tokenText = tokenString.reduce(function(prev, cur) {
+          return prev.token? prev.token + ' ' + cur.token : prev + ' ' + cur.token;
+        });
 
-    $scope.visualize = function(){
-      if ($scope.analysis.analysis === "tfidf" ) {
-        $scope.visualizeTfidf();
-      } else if  ($scope.analysis.analysis == "wordcloudop") {
-        $scope.visualizeWordcloud();
-      } else if  ($scope.analysis.analysis == "nlp-pos"){
-        $scope.visualizeParseTree(false);
-      } else if  ($scope.analysis.analysis == "nlp-sentiment"){
-        $scope.visualizeParseTree(true);
-      } else if ($scope.analysis.analysis == "nlp-ner"){
-        $scope.visualizeNER($scope.text);
-      }
+        $scope.corefEntities.push({
+				  'text': tokenText, 
+					'sentence': mention.sentence, 
+					'startInd': mention.tokspan_in_sentence[0],
+					'endInd': mention.tokspan_in_sentence[1]
+				});
+
+      });
+    });
+ 	
+    $scope.selectedEntity = $scope.corefEntities[0];    
+
+    //Render text in document to highlight with entities 
+    $scope.renderPlainText('coref');
+  }
+
+  $scope.setEntity = function(index) {
+		$scope.selectedEntity = $scope.corefEntities[index];
+		$scope.renderPlainText('coref');
+  }
+
+  $scope.visualize = function(){
+      switch($scope.analysis.analysis) {
+        case "tfidf":
+          $scope.visualizeTfidf();
+          break;
+        case "wordcloudop":
+          $scope.visualizeWordcloud();
+          break;
+        case "nlp-pos":
+          $scope.visualizeParseTree(false);
+          break;
+        case "nlp-sentiment":
+          $scope.visualizeParseTree(true);
+          break;
+        case "nlp-ner":
+          $scope.visualizeNER($scope.text);
+          break;
+        case "nlp-coref":
+          $scope.visualizeCoref();
+          break;
+        default:
+          break;
     }
-
+  };
   }
 })();
