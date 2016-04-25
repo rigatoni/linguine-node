@@ -12,11 +12,13 @@
     $scope.sentenceIndex = 0;
 
     $scope.setSentence = function(index) {
-        $scope.sentenceIndex = index;
-        $scope.sentenceData = $scope.analysis.result[$scope.sentenceIndex];
-        $scope.sentimentTreeData = $scope.analysis.result[$scope.sentenceIndex].sentiment_json;
-        $scope.depsTreeData = $scope.analysis.result[$scope.sentenceIndex].deps_json;
-        $scope.visualize();
+        if(index != $scope.sentenceIndex) {
+            $scope.sentenceIndex = index;
+            $scope.sentenceData = $scope.analysis.result[$scope.sentenceIndex];
+            $scope.sentimentTreeData = $scope.analysis.result[$scope.sentenceIndex].sentiment_json;
+            $scope.depsTreeData = $scope.analysis.result[$scope.sentenceIndex].deps_json;
+            $scope.visualize();
+        }
     };
 
     $scope.back = function () {
