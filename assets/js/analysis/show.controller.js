@@ -433,8 +433,15 @@
 
     $scope.visualizeSentimentText = function()
     {
+        // clear any existing text & sentiment data when dropdown is changed
         d3.select(".sentiment-text").remove();
+        d3.select(".VeryNegative").remove();
+        d3.select(".Negative").remove();
+        d3.select(".Neutral").remove();
+        d3.select(".Positive").remove();
+        d3.select(".VeryPositive").remove();
 
+        // get the selected sentence & update the visual. Default sentence is index 0 of result
         var results = $scope.sentenceData;
         updateSentence(results);
 

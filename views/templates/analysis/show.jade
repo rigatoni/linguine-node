@@ -22,8 +22,8 @@
 
     // tabset for all analyses which are not sentiment
   tabset(justified='true')
-    tab(ng-if="analysis.analysis != 'nlp-sentiment'" heading='Visualization')
-      div.dropdown(ng-if="analysis.analysis == 'nlp-pos'")
+    tab(heading='Visualization')
+      div.dropdown(ng-if="analysis.analysis == 'nlp-pos' || analysis.analysis == 'nlp-sentiment'")
         button.btn.btn-primary.dropdown-toggle(type="button" data-toggle="dropdown") Select Sentence
           span.caret
         ul.dropdown-menu
@@ -31,23 +31,12 @@
             {{$index}} )
             {{joinTokens(result.tokens)}}
       #graph
+      #senttext
+      #sentgraph
         div(ng-if="analysis.analysis == 'pos_tag'")
           div(ng-repeat="result in analysis.result",style="margin-top: 20px;")
             span(ng-repeat="tag in result.tags") span(style="padding: 10px; font-size: 22px;" tooltip="{{ tag[1] }}"){{ tag[0] }}
 
-    tab(ng-if="analysis.analysis == 'nlp-sentiment'" heading='Visualization')
-        div.dropdown(ng-if="analysis.analysis == 'nlp-pos' || analysis.analysis == 'nlp-sentiment'")
-            button.btn.btn-primary.dropdown-toggle(type="button" data-toggle="dropdown") Select Sentence
-                span.caret
-            ul.dropdown-menu
-                li(ng-repeat="result in analysis.result" ng-click="setSentence($index)")
-                    {{$index}} )
-                    {{joinTokens(result.tokens)}}
-        #senttext
-        #sentgraph
-        div(ng-if="analysis.analysis == 'pos_tag'")
-            div(ng-repeat="result in analysis.result",style="margin-top: 20px;")
-                span(ng-repeat="tag in result.tags") span(style="padding: 10px; font-size: 22px;" tooltip="{{ tag[1] }}"){{ tag[0] }}
 
     tab( heading='Default View')
       .white.well
