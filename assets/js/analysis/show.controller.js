@@ -12,13 +12,11 @@
     $scope.sentenceIndex = 0;
 
     $scope.setSentence = function(index) {
-      if(index != $scope.sentenceIndex) {
         $scope.sentenceIndex = index;
         $scope.sentenceData = $scope.analysis.result[$scope.sentenceIndex];
         $scope.sentimentTreeData = $scope.analysis.result[$scope.sentenceIndex].sentiment_json;
         $scope.depsTreeData = $scope.analysis.result[$scope.sentenceIndex].deps_json;
-        $scope.visualize();      
-      }
+        $scope.visualize();
     };
 
     $scope.back = function () {
@@ -74,6 +72,7 @@
     $scope.defaultView = function() {
       $scope.results = angular.copy($scope.analysis.result);
 
+      $scope.sentenceData = $scope.analysis.result[$scope.sentenceIndex];
       $scope.sentimentTreeData = $scope.analysis.result[$scope.sentenceIndex].sentiment_json;
       $scope.depsTreeData = $scope.analysis.result[$scope.sentenceIndex].deps_json;
 
@@ -83,10 +82,11 @@
       }
 
       // create the editor
+
       var container = document.getElementById("jsoneditor");
       var editor = new JSONEditor(container);
       editor.set($scope.results);
-      
+
       //The JSON viewer 'expand all' operation is too intensive on large analyses
       var expandBtn = document.getElementsByClassName('expand-all')[0];
       expandBtn.parentNode.removeChild(expandBtn);
@@ -436,43 +436,45 @@
         d3.select(".sentiment-text").remove();
 
         var results = $scope.sentenceData;
-        if(results != null)
-        {
-            updateSentence(results);
-        }
+        updateSentence(results);
+
         function updateSentence(results)
         {
             var sentDiv = document.getElementById("senttext");
-            var textNode =  document.createElement('div');
-            textNode.setAttribute("class", "sentiment-text");
-            var tokens = [];
-            results.tokens.forEach(function(word){
-                tokens.push(word);
-            });
+            if(sentDiv != null)
+            {
+                var textNode =  document.createElement('div');
+                textNode.setAttribute("class", "sentiment-text");
+                var tokens = [];
+                results.tokens.forEach(function(word){
+                    tokens.push(word);
+                });
+                var sentimentTitle = document.createElement('span');
+                sentimentTitle.setAttribute("title", results.parse);
+                sentimentTitle.innerHTML = "Sentence Sentiment: " + results.sentiment + "<br />";
 
-            var sentimentTitle = document.createElement('span');
-            sentimentTitle.setAttribute("title", results.parse);
-            sentimentTitle.innerHTML = "Sentence Sentiment: " + results.sentiment + "<br />";
-            if(results.sentiment == "Very negative")
-            {
-                sentimentTitle.setAttribute("class", "VeryNegative");
+                if(results.sentiment == "Very negative")
+                {
+                    sentimentTitle.setAttribute("class", "VeryNegative");
+                }
+                else if(results.sentiment == "Very positive")
+                {
+                    sentimentTitle.setAttribute("class", "VeryPositive");
+                }
+                else
+                {
+                    sentimentTitle.setAttribute("class", results.sentiment);
+                }
+
+                tokens.forEach(function(word){
+                    var wordspace = document.createElement('span');
+                    wordspace.setAttribute("title", word.token + "- Sentiment: " + word.sentiment + ", Value: " + word.sentimentValue);
+                    wordspace.innerHTML += word.token + " ";
+                    textNode.appendChild(wordspace);
+                });
+                sentDiv.appendChild(sentimentTitle);
+                sentDiv.appendChild( textNode );
             }
-            else if(results.sentiment == "Very positive")
-            {
-                sentimentTitle.setAttribute("class", "VeryPositive");
-            }
-            else
-            {
-                sentimentTitle.setAttribute("class", results.sentiment);
-            }
-            textNode.appendChild(sentimentTitle);
-            tokens.forEach(function(word){
-                var wordspace = document.createElement('span');
-                wordspace.setAttribute("title", word.token + "- Sentiment: " + word.sentiment + ", Value: " + word.sentimentValue);
-                wordspace.innerHTML += word.token + " ";
-                textNode.appendChild(wordspace);
-            });
-            sentDiv.appendChild( textNode );
         }
     };
 
