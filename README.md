@@ -48,12 +48,15 @@ linguine-node assembles an HTTP request to send to the Python server. The reques
 
 ```javascript
 {
-  "transaction_id": "transactionId", // An ID associated with the current request.
-  "operation": "tfidf", // The analytic operation to be performed.
-  "library": "nltk", // The library to use when executing the analysis.
-  "corpora_ids": ["id1", "id2", "etc"] // The corpora ID's to run the analysis on.
-  "user_id": "user1", // The user who requested the analysis.
-  "cleanup": ["removeCapsGreedy","removePunct", "etc"] // The cleanup operations to perform on the text.
+	"corpora_ids": ["12345"], //Collection of corpora to pipe into analysis
+	"cleanup": ['stopwords'], //Cleanup steps to add
+	"operation": "nlp-relation", //Type of analysis to be preformed
+	"tokenizer": "", //Tokenizer used (if required)
+	"library": "", //Library associated w/ analysis (if required)
+	"transaction_id": "", (Field to be populated by linguine-python)
+	"analysis_name": "Relation Extraction (Stanford CoreNLP)", //Name to display in text fields
+	"time_created": 1461342250445, //Used to calculate ETA of analyses
+	"user_id": "12345" //Unique identifier of user who created analysis
 }
 ```
 
@@ -82,21 +85,15 @@ To run tests:
 All of these commands were run from the main directory of this project.  Some of them do not need to be run from there, but some do.  For the sake of making this easy, just run all of them from there.
 
 #### Install nodejs
-1. `sudo apt-get install nodejs`
-2. `sudo apt-get install nodejs-legacy` (for a symlink from `node` -> `nodejs`)
+1. `curl --silent --location https://rpm.nodesource.com/setup | bash -`
+1. `sudo yum install nodejs`
 
 #### Install npm
 1. `sudo apt-get install npm`
 
 #### Install mongodb
-1. `sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10`
-2. `echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list`
-3. `sudo apt-get update`
-4. `sudo apt-get install -y mongodb-org`
-5. The service will not start right away because of a bug in the mongo config file that you will need to patch.  Run `sudo vim /etc/init/mongod.conf` and comment out the line that starts with `limit nofile` (it was line 9 for me).
-6. Ensure that mongodb is running by issuing the command `service mongod status`.
-
-Details for instructions taken from [here](https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-14-04).
+1. `sudo yum install mongodb-org`
+2. Ensure that mongodb is running by issuing the command `service mongod status`.
 
 #### Set environment variable to development
 1. `export NODE_ENV=developent`
@@ -110,7 +107,7 @@ Details for instructions taken from [here](https://www.digitalocean.com/communit
 #### Building and starting the service
 1. `sudo npm install`
 2. `bower install` You may have to change owners for your `configstore` directory since you cannot run `bower` as sudo.  If so, simply run `sudo chown -R username /home/username/.config/configstore`.
-3. During bower install, you will be asked to choose a version of `angular`.  I chose option 1 for version 1.3.3 that was required by `linguine-node`.
+3. During bower install, you may be asked to choose a version of `angular`.  choose the version required by `linguine-node`.
 4. `gulp build`
 5. `npm start`
 6. Navigate to http://localhost:3000 and you should finally see the site up and running!

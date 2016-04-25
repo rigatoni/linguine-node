@@ -50,6 +50,14 @@
         tokenAllowed: false,
         multipleCorporaAllowed: false,
         tokenizerRequired: false
+      },
+      {
+        name: "Relation Extraction (Stanford CoreNLP)",
+        unfriendly_name: "nlp-relation",
+        description: "This operation will attempt to find relationship triples between words based on Stanford Core NLP models in the OpenIE libraries.",
+        tokenAllowed: false,
+        multipleCorporaAllowed: false,
+        tokenizerRequired: false
       }
     ];
     
@@ -94,7 +102,8 @@
       "wordcloudop": [cleanups.stem_porter, cleanups.removecapsnnp, cleanups.removepunct, cleanups.stop_words ],
       "nlp-pos": [],
       "nlp-ner": [],
-      "nlp-sentiment": []
+      "nlp-sentiment": [],
+      "nlp-relation": []
     };
 
     $scope.tokenizerTypes = [
