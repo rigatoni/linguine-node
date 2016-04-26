@@ -12,6 +12,14 @@
 			$http.get('api/analysis')
 			.success(function (data) {
 				$scope.analyses = data;
+                $scope.analyses.sort(function(a, b) {
+                  if (a.time_created == undefined) {
+                    return 1;
+                  } else if (b.time_created == undefined) {
+                    return -1;
+                  }
+                    return new Date(b.time_created) - new Date(a.time_created);
+                });
 				$scope.analyses.forEach(function(analysis) {
 
 					var now = new Date();
