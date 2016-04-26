@@ -519,11 +519,7 @@
 					 {
 							 wordspace.style.fontWeight = 'bold';
 							 wordspace.setAttribute("class", word.ner.toLowerCase());
-           }
-
-           if(type == 'relation') {
-             //if($scope.analysis.result.sentences[sk].relations)  
-           }
+					 }
 
 					 if(type == 'coref' && 
 					 $scope.selectedEntity.sentence == sk &&
@@ -577,10 +573,6 @@
 		$scope.renderPlainText('coref');
   }
 
-  $scope.visualizeRelation = function() {
-    $scope.renderPlainText('relation');
-  }
-
   $scope.visualize = function(){
       switch($scope.analysis.analysis) {
         case "tfidf":
@@ -601,9 +593,6 @@
           break;
         case "nlp-coref":
           $scope.visualizeCoref();
-          break;
-        case "nlp-relation":
-          $scope.visualizeRelation();
           break;
         default:
           break;
