@@ -13,12 +13,13 @@
     $scope.corefEntities = [];
 
     $scope.setSentence = function(index) {
-      if(index != $scope.sentenceIndex) {
-        $scope.sentenceIndex = index; 
-        $scope.sentimentTreeData = $scope.analysis.result.sentences[$scope.sentenceIndex].sentiment_json;
-        $scope.depsTreeData = $scope.analysis.result.sentences[$scope.sentenceIndex].deps_json;
-        $scope.visualize();      
-      }
+        if(index != $scope.sentenceIndex) {
+            $scope.sentenceIndex = index;
+            $scope.sentenceData = $scope.analysis.result.sentences[$scope.sentenceIndex];
+            $scope.sentimentTreeData = $scope.analysis.result.sentences[$scope.sentenceIndex].sentiment_json;
+            $scope.depsTreeData = $scope.analysis.result.sentences[$scope.sentenceIndex].deps_json;
+            $scope.visualize();
+        }
     };
 
     $scope.back = function () {
@@ -73,7 +74,8 @@
 
     $scope.defaultView = function() {
       $scope.results = angular.copy($scope.analysis.result.sentences);
-
+        
+      $scope.sentenceData = $scope.analysis.result.sentences[$scope.sentenceIndex];
       $scope.sentimentTreeData = $scope.analysis.result.sentences[$scope.sentenceIndex].sentiment_json;
       $scope.depsTreeData = $scope.analysis.result.sentences[$scope.sentenceIndex].deps_json;
 
@@ -83,10 +85,11 @@
       }
 
       // create the editor
+
       var container = document.getElementById("jsoneditor");
       var editor = new JSONEditor(container);
       editor.set($scope.results);
-      
+
       //The JSON viewer 'expand all' operation is too intensive on large analyses
       var expandBtn = document.getElementsByClassName('expand-all')[0];
       expandBtn.parentNode.removeChild(expandBtn);
@@ -271,7 +274,7 @@
             });
 
             /*
-                 The #graph div is acting as a container for the .svg-container div (which holds the tree).
+                 The #graph (or #sentgraph) div is acting as a container for the .svg-container div (which holds the tree).
                  To make it scrollable, 2 things that must happen:
                    1. the #graph div must have overflow set to scroll
                    2. the svg-container div must have width & height greater than the width & height of #graph
@@ -427,9 +430,63 @@
         }
     };
 
+    $scope.visualizeSentimentText = function()
+    {
+        // clear any existing text & sentiment data when dropdown is changed
+        d3.select(".sentiment-text").remove();
+        d3.select(".VeryNegative").remove();
+        d3.select(".Negative").remove();
+        d3.select(".Neutral").remove();
+        d3.select(".Positive").remove();
+        d3.select(".VeryPositive").remove();
+
+        // get the selected sentence & update the visual. Default sentence is index 0 of result
+        var results = $scope.sentenceData;
+        updateSentence(results);
+
+        function updateSentence(results)
+        {
+            var sentDiv = document.getElementById("senttext");
+            if(sentDiv != null)
+            {
+                var textNode =  document.createElement('div');
+                textNode.setAttribute("class", "sentiment-text");
+                var tokens = [];
+                results.tokens.forEach(function(word){
+                    tokens.push(word);
+                });
+                var sentimentTitle = document.createElement('span');
+                sentimentTitle.setAttribute("title", results.parse);
+                sentimentTitle.innerHTML = "Sentence Sentiment: " + results.sentiment + "<br />";
+
+                if(results.sentiment == "Very negative")
+                {
+                    sentimentTitle.setAttribute("class", "VeryNegative");
+                }
+                else if(results.sentiment == "Very positive")
+                {
+                    sentimentTitle.setAttribute("class", "VeryPositive");
+                }
+                else
+                {
+                    sentimentTitle.setAttribute("class", results.sentiment);
+                }
+
+                tokens.forEach(function(word){
+                    var wordspace = document.createElement('span');
+                    wordspace.setAttribute("title", word.token + "- Sentiment: " + word.sentiment + ", Value: " + word.sentimentValue);
+                    wordspace.innerHTML += word.token + " ";
+                    textNode.appendChild(wordspace);
+                });
+                sentDiv.appendChild(sentimentTitle);
+                sentDiv.appendChild( textNode );
+            }
+        }
+    };
+
   $scope.visualizeNER = function() {
     $scope.renderPlainText('ner');
-  };
+  }
 
   $scope.renderPlainText = function(type) {
 			var canvas = document.getElementById('plaintext-canvas');
@@ -529,6 +586,7 @@
           break;
         case "nlp-sentiment":
           $scope.visualizeParseTree(true);
+          $scope.visualizeSentimentText();
           break;
         case "nlp-ner":
           $scope.visualizeNER($scope.text);
