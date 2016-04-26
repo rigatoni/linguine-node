@@ -36,6 +36,14 @@
         tokenizerRequired: false
       },
       {
+        name: "Coreference Resolution (Stanford CoreNLP)",
+        unfriendly_name: "nlp-coref",
+        description: "Determine entities in the given corpus and show where each entity is mentioned",
+        multipleCorporaAllowed: false,
+        tokenAllowed: false,
+        tokenizerRequired: false
+      },
+      {
         name: "Named Entity Recognition (Stanford CoreNLP)",
         unfriendly_name: "nlp-ner",
         description: "This operation will classify each word in the corpus based on its status as a place, organization, location, or expression of time. If a term does not match as a named entity, it will recieve a status of '0' ", 
@@ -102,6 +110,7 @@
       "wordcloudop": [cleanups.stem_porter, cleanups.removecapsnnp, cleanups.removepunct, cleanups.stop_words ],
       "nlp-pos": [],
       "nlp-ner": [],
+      "nlp-coref": [],
       "nlp-sentiment": [],
       "nlp-relation": []
     };

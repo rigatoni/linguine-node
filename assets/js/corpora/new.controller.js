@@ -33,6 +33,14 @@
                 .success(function(data){
                   $state.go('linguine.corpora.index');
                 })
+                .error(function(err) {
+                  $http.get('api/corpora/max_size')
+                  .success(function (data) {
+                    flash.danger.setMessage('The file size is too large! (over ' 
+                         + data.max_size_kb + 'KB)');
+                    $rootScope.$emit("event:angularFlash");
+                  })
+                });
           }
         }
       } else {
@@ -40,7 +48,5 @@
         $rootScope.$emit("event:angularFlash");
       }
     }
-
-
   }
 })();
