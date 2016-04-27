@@ -73,7 +73,7 @@
     };
 
     $scope.defaultView = function() {
-      $scope.results = angular.copy($scope.analysis.result.sentences);
+      $scope.results = angular.copy($scope.analysis.result);
         
       $scope.sentenceData = $scope.analysis.result.sentences[$scope.sentenceIndex];
       $scope.sentimentTreeData = $scope.analysis.result.sentences[$scope.sentenceIndex].sentiment_json;
@@ -522,7 +522,20 @@
            }
 
            if(type == 'relation') {
-             //if($scope.analysis.result.sentences[sk].relations)  
+             var relationTitle = '';
+
+             $scope.analysis.result.sentences[sk].relations.forEach(function(relation) {
+               var startInd = relation.subject.start;
+               var endInd = relation.object.end - 1;
+               
+               if(wk >= startInd && wk <= endInd) {
+                 wordspace.style.fontWeight = 'bold';
+                 wordspace.style.textDecoration = 'underline';
+                 relationTitle += JSON.stringify(relation, null, 2) + '\n';
+               }
+             });
+
+             wordspace.setAttribute('title', relationTitle);
            }
 
 					 if(type == 'coref' && 
