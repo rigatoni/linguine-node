@@ -531,7 +531,9 @@
                if(wk >= startInd && wk <= endInd) {
                  wordspace.style.fontWeight = 'bold';
                  wordspace.style.textDecoration = 'underline';
-                 relationTitle += JSON.stringify(relation, null, 2) + '\n';
+
+                 var relationTriple = relation.subject.lemma + ' (' + relation.relation.lemma + ') ' + relation.object.lemma;
+                 relationTitle += relationTriple + '\n'; 
                }
              });
 
