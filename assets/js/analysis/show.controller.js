@@ -80,7 +80,7 @@
     };
 
     $scope.defaultView = function() {
-      $scope.results = angular.copy($scope.analysis.result.sentences);
+      $scope.results = angular.copy($scope.analysis.result);
         
       $scope.sentenceData = $scope.analysis.result.sentences[$scope.sentenceIndex];
       $scope.sentimentTreeData = $scope.analysis.result.sentences[$scope.sentenceIndex].sentiment_json;
@@ -526,7 +526,26 @@
 					 {
 							 wordspace.style.fontWeight = 'bold';
 							 wordspace.setAttribute("class", word.ner.toLowerCase());
-					 }
+           }
+
+           if(type == 'relation') {
+             var relationTitle = '';
+
+             $scope.analysis.result.sentences[sk].relations.forEach(function(relation) {
+               var startInd = relation.subject.start;
+               var endInd = relation.object.end - 1;
+               
+               if(wk >= startInd && wk <= endInd) {
+                 wordspace.style.fontWeight = 'bold';
+                 wordspace.style.textDecoration = 'underline';
+
+                 var relationTriple = relation.subject.lemma + ' (' + relation.relation.lemma + ') ' + relation.object.lemma;
+                 relationTitle += relationTriple + '\n'; 
+               }
+             });
+
+             wordspace.setAttribute('title', relationTitle);
+           }
 
 					 if(type == 'coref' && 
 					 $scope.selectedEntity.sentence == sk &&
@@ -580,6 +599,10 @@
 		$scope.renderPlainText('coref');
   }
 
+  $scope.visualizeRelation = function() {
+    $scope.renderPlainText('relation');
+  }
+
   $scope.visualize = function(){
       switch($scope.analysis.analysis) {
         case "tfidf":
@@ -600,6 +623,9 @@
           break;
         case "nlp-coref":
           $scope.visualizeCoref();
+          break;
+        case "nlp-relation":
+          $scope.visualizeRelation();
           break;
         default:
           break;
