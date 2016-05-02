@@ -60,11 +60,6 @@ linguine-node assembles an HTTP request to send to the Python server. The reques
 }
 ```
 
-## Dependencies
-
-* Node and npm
-* MongoDB
-
 ## Development
 
 1. `npm install`
@@ -81,20 +76,6 @@ To run tests:
 
 ## Installation
 
-### Ubuntu 14.04
-All of these commands were run from the main directory of this project.  Some of them do not need to be run from there, but some do.  For the sake of making this easy, just run all of them from there.
-
-#### Install nodejs
-1. `curl --silent --location https://rpm.nodesource.com/setup | bash -`
-1. `sudo yum install nodejs`
-
-#### Install npm
-1. `sudo apt-get install npm`
-
-#### Install mongodb
-1. `sudo yum install mongodb-org`
-2. Ensure that mongodb is running by issuing the command `service mongod status`.
-
 #### Set environment variable to development
 1. `export NODE_ENV=developent`
 
@@ -105,8 +86,8 @@ All of these commands were run from the main directory of this project.  Some of
 1. `sudo npm install -g gulp`
 
 #### Building and starting the service
-1. `sudo npm install`
-2. `bower install` You may have to change owners for your `configstore` directory since you cannot run `bower` as sudo.  If so, simply run `sudo chown -R username /home/username/.config/configstore`.
+1. `npm install`
+2. `bower install`
 3. During bower install, you may be asked to choose a version of `angular`.  choose the version required by `linguine-node`.
 4. `gulp build`
 5. `npm start`
