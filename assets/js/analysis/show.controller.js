@@ -51,6 +51,13 @@
       })
     };
 
+    $scope.confirmDelete = function() {
+        if($window.confirm("Are you sure you want to delete this analysis?"))
+        {
+            $scope.delete();
+        }
+    };
+      
     $scope.findCorpus = function (id) {
       return _.find($scope.corpora, {'_id': id});
     };

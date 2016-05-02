@@ -6,7 +6,7 @@
           strong {{ analysis.analysis_name }}
       .pull-right
         btn.btn.btn-lg.btn-default(ng-click="back()") Back
-        btn.btn.btn-lg.btn-default(ng-click="delete()")
+        btn.btn.btn-lg.btn-default(ng-click="confirmDelete()")
           .glyphicon.glyphicon-trash
             br
   h6.no-margin(ng-repeat="corpora_id in analysis.corpora_ids") Corpora: {{ findCorpus(corpora_id).title }}
