@@ -1,3 +1,5 @@
+![Build-Indicator](https://travis-ci.org/Pastafarians/linguine-node.svg?branch=master)
+
 # linguine-node
 
 ## Overview
@@ -46,29 +48,47 @@ linguine-node assembles an HTTP request to send to the Python server. The reques
 
 ```javascript
 {
-  "transaction_id": "transactionId", // An ID associated with the current request.
-  "operation": "tfidf", // The analytic operation to be performed.
-  "library": "nltk", // The library to use when executing the analysis.
-  "corpora_ids": ["id1", "id2", "etc"] // The corpora ID's to run the analysis on.
-  "user_id": "user1", // The user who requested the analysis.
-  "cleanup": ["removeCapsGreedy","removePunct", "etc"] // The cleanup operations to perform on the text.
+	"corpora_ids": ["12345"], //Collection of corpora to pipe into analysis
+	"cleanup": ['stopwords'], //Cleanup steps to add
+	"operation": "nlp-relation", //Type of analysis to be preformed
+	"tokenizer": "", //Tokenizer used (if required)
+	"library": "", //Library associated w/ analysis (if required)
+	"transaction_id": "", (Field to be populated by linguine-python)
+	"analysis_name": "Relation Extraction (Stanford CoreNLP)", //Name to display in text fields
+	"time_created": 1461342250445, //Used to calculate ETA of analyses
+	"user_id": "12345" //Unique identifier of user who created analysis
 }
 ```
-
-## Dependencies
-
-* Node and npm
-* MongoDB
 
 ## Development
 
 1. `npm install`
-2. `bower install`
-3. `gulp build` (Or `gulp` if you want watch enabled and unminified assets)
-4. `npm start`
+2. `npm run ldap`
+3. `bower install`
+4. `gulp build` (Or `gulp` if you want watch enabled and unminified assets)
+5. `npm start`
 
 To run tests:
 
 1. `npm install`
 2. `bower install`
 3. `npm test`
+
+## Installation
+
+#### Set environment variable to development
+1. `export NODE_ENV=developent`
+
+#### Install bower
+1. `sudo npm install -g bower`
+
+#### Install gulp
+1. `sudo npm install -g gulp`
+
+#### Building and starting the service
+1. `npm install`
+2. `bower install`
+3. During bower install, you may be asked to choose a version of `angular`.  choose the version required by `linguine-node`.
+4. `gulp build`
+5. `npm start`
+6. Navigate to http://localhost:3000 and you should finally see the site up and running!

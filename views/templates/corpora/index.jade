@@ -1,19 +1,23 @@
 .container.app-container
   .input-group.input-group-lg
     .input-group-btn
-      a(ng-href="/corpora/new").new-corpus.btn.btn-primary
+      a(ng-href="corpora/new").new-corpus.btn.btn-primary
         | Create Corpus
     input.form-control(placeholder="Search by title, filename, and tags..." ng-model="searchText")
   div(ng-repeat="corpus in corpora | filter:searchText")
     .col-xs-12.col-sm-6.col-md-4.col-lg-3
       .card
         h3.no-margin
-          a(ng-href="/corpora/{{corpus._id}}") {{ corpus.title }}
+          a(ng-href="corpora/{{corpus._id}}") {{ corpus.title }}
         h4 {{ corpus.fileName }}
         p
           span(ng-repeat="tag in corpus.tags track by $index")
-            span.label.label-primary(style="margin-right: 5px;", ng-click="removeTag(corpus._id, corpus.tags[$index])") {{ corpus.tags[$index] }}
-          span.label.label-primary(ng-click="openPopup(corpus._id)") +
+            span.label.label-primary(style="margin-right: 5px;", ng-click="") {{ corpus.tags[$index] }}
+            span.label.label-primary(style="margin-left:-10px; margin-right:5px;cursor:pointer", ng-click="removeTag(corpus._id, corpus.tags[$index])") X
+          span.label.label-primary(style="cursor:pointer" ng-click="openPopup(corpus._id)") +
   div.col-md-12
   .pull-right
     p Usage: {{ quota.documents }}/25, {{quota.total_size }} bytes
+
+
+    ///*removeTag(corpus._id, corpus.tags[$index])

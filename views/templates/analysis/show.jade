@@ -3,20 +3,45 @@
     .col-xs-12
       .pull-left
         h2.no-margin
-          strong {{ analysis.analysis }} Analysis
+          strong {{ analysis.analysis_name }}
       .pull-right
         btn.btn.btn-lg.btn-default(ng-click="back()") Back
-        btn.btn.btn-lg.btn-default(ng-click="delete()")
+        btn.btn.btn-lg.btn-default(ng-click="confirmDelete()")
           .glyphicon.glyphicon-trash
-  br
-  h4.no-margin(ng-repeat="corpora_id in analysis.corpora_ids") {{ findCorpus(corpora_id).title }} ({{findCorpus(corpora_id).fileName}})
+            br
+  h6.no-margin(ng-repeat="corpora_id in analysis.corpora_ids") Corpora: {{ findCorpus(corpora_id).title }}
+    br
+    span #[b Analysis]: {{analysis.analysis}}
+    br
+    span #[b Cleanups]:
+    span(ng-repeat="cleanup in analysis.cleanup_ids")  {{cleanup}}
+    br
+    span #[b Tokenizer]:  {{analysis.tokenizer}}
+    br
+    span #[b Time Created]:  {{showTimeCreated(analysis)}}
+
+    // tabset for all analyses which are not sentiment
   tabset(justified='true')
-      tab(heading='Default View')
-        .white.well
-          .wrap{{ results }}
-      tab(heading='Visualization')
-        #graph
+    tab(heading='Visualization')
+      div.dropdown(ng-if="analysis.analysis == 'nlp-pos' || analysis.analysis == 'nlp-sentiment' || analysis.analysis == 'nlp-coref'" || analysis.analysis == 'nlp-sentiment')
+        button.btn.btn-primary.dropdown-toggle(type="button" data-toggle="dropdown") Select {{analysis.analysis == 'nlp-coref'? 'Entity' : 'Sentence'}} 
+          span.caret
+        ul.dropdown-menu
+          li(ng-if="analysis.analysis == 'nlp-pos' || analysis.analysis == 'nlp-sentiment'" ng-repeat="result in analysis.result.sentences" ng-click="setSentence($index)") 
+            {{$index}} ) 
+            {{joinTokens(result.tokens)}}
+          li(ng-if="analysis.analysis == 'nlp-coref'" ng-repeat="coref in corefEntities track by $index" ng-click="setEntity($index)") 
+            {{$index}} ) 
+            {{coref.text}}
+      
+      #senttext
+      #graph
         div(ng-if="analysis.analysis == 'pos_tag'")
-          div(ng-repeat="result in analysis.result",style="margin-top: 20px;")
-            span(ng-repeat="tag in result.tags")
-              span(style="padding: 10px; font-size: 22px;" tooltip="{{ tag[1] }}"){{ tag[0] }}
+          div(ng-repeat="result in analysis.result.sentences",style="margin-top: 20px;")
+            span(ng-repeat="tag in result.tags") span(style="padding: 10px; font-size: 22px;" tooltip="{{ tag[1] }}"){{ tag[0] }} 
+
+    tab(heading='Default View')
+      .white.well
+        div(id="jsoneditor", class="jsoneditor")
+      a.btn.btn-lg.btn-primary(style="margin-bottom: 20px", ng-href="{{ fileUrl }}", download="{{analysis.analysis_name}}.json") Download JSON
+

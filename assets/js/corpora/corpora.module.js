@@ -13,7 +13,7 @@
       })
       .state('linguine.corpora.index', {
         url: '',
-        templateUrl: '/templates/corpora/index',
+        templateUrl: 'templates/corpora/index',
         controller: 'CorporaIndexController',
         resolve: {
           loggedIn: function(loggedIn) {
@@ -23,7 +23,7 @@
       })
       .state('linguine.corpora.new', {
         url: '/new',
-        templateUrl: '/templates/corpora/new',
+        templateUrl: 'templates/corpora/new',
         controller: 'CorporaNewController',
         resolve: {
           loggedIn: function(loggedIn) {
@@ -33,7 +33,7 @@
       })
       .state('linguine.corpora.show', {
         url: '/:id',
-        templateUrl: '/templates/corpora/show',
+        templateUrl: 'templates/corpora/show',
         controller: 'CorporaShowController',
         resolve: {
           loggedIn: function(loggedIn) {

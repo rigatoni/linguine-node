@@ -1,32 +1,56 @@
 .container.app-container
-  form(ng-submit="onCreateAnalysis()")
+
+  //Instantiate loading spinner for those long analyses
+  span(us-spinner="{radius:30, width:8, length: 16, color:'blue'}" spinner-key="analysisProcSpinner")
+
+  form(name="analysisForm" ng-submit="onCreateAnalysis()")
     tabset(justified='true')
-      tab(heading='1. Select Corpora')
+
+      tab(ng-attr-active="tabs[0].active", heading='1. Select Analysis Type' ng-click="onAnalysisTabClick(this)")
         .list-group
-          a.list-group-item(ng-repeat="corpus in corpora",ng-class="{active:corpus.active}",ng-click="onCorpusClick(this)")
-            h4.list-group-item-heading
-              strong {{ corpus.title }}
-            p.list-group-item-text
-              | {{ corpus.fileName }}
-      tab(heading='2. Select Cleanup')
-        .list-group
-          a.list-group-item(ng-repeat="cleanup in cleanupTypes",ng-class="{active:cleanup.active}",ng-click="onCleanupClick(this)")
-            h4.list-group-item-heading
-              strong {{ cleanup.name}}
-            p.list-group-item-text
-              | {{ cleanup.description}}
-      tab(heading='3. Tokenization Type')
-        .list-group
-          a.list-group-item(ng-repeat="tokenizer in tokenizerTypes",ng-class="{active:selectedTokenizer==tokenizer}",ng-click="onTokenizerClick(this)")
-            h4.list-group-item-heading
-              strong {{ tokenizer.name }}
-            p.list-group-item-text
-              | {{ tokenizer.description }}
-      tab(heading='4. Analysis Type')
-        .list-group
-          a.list-group-item(ng-repeat="analysis in analysisTypes",ng-class="{active:selectedAnalysis==analysis}",ng-click="onAnalysisClick(this)")
+          a.list-group-item(ng-repeat="analysis in analysisTypes",
+            ng-class="{active:selectedAnalysis==analysis}",ng-click="onAnalysisClick(this)")
+
             h4.list-group-item-heading
               strong {{ analysis.name }}
             p.list-group-item-text
               | {{ analysis.description }}
+        button.btn.btn-lg.btn-primary(type="button" class="next-btns" ng-click="onNextButtonClick(this)") Next
+
+      tab(ng-attr-active="tabs[1].active", heading='2. Select Corpora' disabled="analysisNotSelected"
+        ng-click="onCorporaTabClick(this)")
+
+        .list-group
+          a.list-group-item(ng-repeat="corpus in corpora",
+            ng-class="{active:corpus.active}",ng-click="onCorpusClick(this)")
+            h4.list-group-item-heading
+              strong {{ corpus.title }}
+            p.list-group-item-text
+              | {{ corpus.fileName }}
+        button.btn.btn-lg.btn-primary(type="button" ng-click="onPreviousButtonClick(this)") Previous
+        button.btn.btn-lg.btn-primary(type="button" class="next-btns" ng-click="onNextButtonClick(this)") Next
+
+      tab(ng-attr-active="tabs[2].active", disabled="analysisNotSelected" heading='3. Select Preprocessing Options',
+        ng-click="onPreprocessingTabClick(this)")
+        .list-group
+          a.list-group-item(ng-show="selectedAnalysis.tokenAllowed" ng-repeat="tokenizer in tokenizerTypes",
+            ng-class="{active:selectedTokenizer==tokenizer}", ng-click="onTokenizerClick(this)")
+            h4.list-group-item-heading
+              strong {{ tokenizer.name }}
+            p.list-group-item-text
+              | {{ tokenizer.description }}
+
+          a.list-group-item(ng-repeat="cleanup in cleanupTypes[selectedAnalysis.unfriendly_name]",
+            ng-class="{active:cleanup.active}",ng-click="onCleanupClick(this)")
+            h4.list-group-item-heading
+              strong {{ cleanup.name}}
+            p.list-group-item-text
+              | {{ cleanup.description}}
+        button.btn.btn-lg.btn-primary(type="button" ng-click="onPreviousButtonClick(this)") Previous
+
+
+        div(class="analysis-name-text-field") 
+          label(class="analysis-name-label") Analysis Name:
+            input(name="Analysis name:" type="text" ng-model="analysis.analysisName" class="form-control ng-pristine ng-valid ng-touched")
+
         button.btn.btn-lg.btn-primary.full-width(type="submit") Create Analysis

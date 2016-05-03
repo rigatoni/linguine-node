@@ -42,7 +42,8 @@ router.post('', function(req, res) {
       url:     'http://localhost:5555',
       body:    JSON.stringify(payload)
     }, function(error, response, body) {
-      res.json(body);
+      console.log(error);
+      res.status(response.statusCode).json(body);
     });
   }
 });

@@ -13,17 +13,17 @@
       })
       .state('linguine.documentation.index', {
         url: '',
-        templateUrl: '/templates/documentation/index',
+        templateUrl: 'templates/documentation/index',
         controller: 'DocumentationIndexController',
       })
       .state('linguine.documentation.tutorial', {
         url: '/tutorial',
-        templateUrl: '/templates/documentation/tutorial',
+        templateUrl: 'templates/documentation/tutorial',
         controller: 'DocumentationTutorialController',
       })
       .state('linguine.documentation.about', {
         url: '/about',
-        templateUrl: '/templates/documentation.about',
+        templateUrl: 'templates/documentation.about',
         controller: 'DocumentationAboutController',
       });
   }
